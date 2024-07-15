@@ -1,8 +1,48 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
-build-backend = "flit_core.buildapi"
+requires = ["setuptools >=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
 
 [project]
-name = "lumache"
-authors = [{name = "Graziella", email = "graziella@lumache"}]
-dynamic = ["version", "description"]
+name = "chrombert"
+version = "0.1.0"
+description = "ChromBERT: a BERT model for chromatin accessibility prediction"
+authors = [
+    {name = "dxyang", email= "dxyang@tongji.edu.cn"}
+    ]
+readme = "README.md"
+# license = "MIT"
+
+requires-python = ">=3.8"
+dependencies = [
+    "jupyter",
+    "pyfaidx",
+    "ninja",
+    "packaging",
+    "torch",
+    "numpy",
+    "pandas",
+    "h5py",
+    "lightning",
+    "transformers",
+    "triton",
+    "huggingface_hub[cli]",
+]
+
+[project.optional-dependencies]
+full = [
+    "pyarrow",
+    "torchvision",
+    "tensorboard",
+    "scikit-learn",
+]
+
+
+[project.scripts]
+chrombert_make_dataset = "chrombert.scripts.chrombert_make_dataset:main"
+chrombert_get_region_emb = "chrombert.scripts.chrombert_get_region_emb:main"
+chrombert_prepare_env = "chrombert.scripts.chrombert_prepare_env:main"
+
+[tool.setuptools]
+packages = ["chrombert"]
+

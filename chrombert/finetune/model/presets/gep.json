@@ -1,0 +1,10 @@
+{
+    "task":"gep",
+    "mtx_mask":"config/hg38_6k_mask_matrix.tsv",
+    "ignore": false,
+    "pretrain_ckpt":"checkpoint/hg38_6k_1kb_pretrain.ckpt",
+    "gep_flank_window":4,
+    "gep_parallel_embedding":false,
+    "gep_gradient_checkpoint":false,
+    "gep_zero_inflation":true
+}
