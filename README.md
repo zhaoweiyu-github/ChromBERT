@@ -1,7 +1,7 @@
-# ChromBERT: Uncovering Chromatin Regulatory Architecture with Transfer Learning
+# A pre-trained foundation model for context-specific transcriptional regulatory network 
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Version: 1.2.3](https://img.shields.io/badge/Version-1.2.3-brightgreen.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 **ChromBERT** is a pre-trained deep learning model designed to learn latent representations for genome-wide co-association among approximately one thousand transcription regulators. This enables the accurate prediction and interpretation of context-specific human regulatory networks in various downstream tasks. ChromBERT aims to establish a foundational model for transcription regulatory omics through transfer learning.
 
@@ -60,7 +60,7 @@ ChromBERT has been pre-trained on the human Cistrome-Human-6K dataset at 1-kb re
 
 | Model Name                | Description                                              | Download Link                                                                                     |
 | :------------------------ | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| Human-6K-1kb (recommended) | Pre-trained on Cistrome-Human-6K dataset at 1-kb resolution | [Download](https://huggingface.co/datasets/TongjiZhanglab/chrombert) |
+| Human-6K-1kb | Pre-trained on Cistrome-Human-6K dataset at 1-kb resolution | [Download](https://huggingface.co/datasets/TongjiZhanglab/chrombert) |
 
 Notion: you can also download by running `chrombert_prepare_env` in the terminal.
 
