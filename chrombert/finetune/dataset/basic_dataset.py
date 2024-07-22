@@ -9,6 +9,7 @@ import json
 from torch.utils.data import Dataset
 from typing import Any
 from .dataset_config import DatasetConfig
+from functools import lru_cache
     
 class BasicDataset(Dataset):
     '''
@@ -82,14 +83,18 @@ class PerturbationDataset(BasicDataset):
         
     def __getitem__(self, index):
         item = super().__getitem__(index)
-        if self.config.perturbation and self.config.perturbation_object is not None:
+        if self.config.perturbation and self.config.perturbation_object is not None and self.config.perturbation_object is not "none":
             self.perturb_gsmids_index = self.process_perturbation_target(self.config.perturbation_object)
             perturb_mask = np.in1d(item["position_ids"], self.perturb_gsmids_index + 1) 
             item['input_ids'][perturb_mask] = self.perturbation_value + self.config.vocab_shift
         return item
         
+    @lru_cache(maxsize=32)
     def process_perturbation_target(self, perturbation_object):
         perturbation_objects = perturbation_object.lower().split(";")
+        # remove 'none'
+        perturbation_objects = [i for i in perturbation_objects if i != 'none']
+
         perturbation_gsmids = list(sorted(set(perturbation_objects) & set(self.gsmids)))
         perturbation_regulators = list(sorted(set(perturbation_objects) & set(self.regulators)))
         assert len(perturbation_gsmids) + len(perturbation_regulators) == len(set(perturbation_objects)), f"Detect unknown perturbation objects: {set(perturbation_objects) - set(perturbation_gsmids) - set(perturbation_regulators)}"
@@ -138,7 +143,7 @@ class IgnoreDataset(PerturbationDataset):
         else:
             return len(self.gsmid_index)
     
-    
+    @lru_cache(maxsize=32)
     def process_ignore_object(self, ignore_object):
         ignore_objects = ignore_object.lower().split(";")
         ignore_gsmids = list(sorted(set(ignore_objects) & set(self.gsmids)))

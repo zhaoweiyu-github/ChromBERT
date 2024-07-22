@@ -61,6 +61,7 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
         ("hg38_6k_1kb_cistrome_cell_prompt_chr1_cache.h5", "cache"),
         ("hg38_6k_1kb_expression_cell_prompt_cache.pkl", "cache"),
         ("hg38_6k_1kb_regulator_prompt_chr1_cache.h5", "cache"),
+        ("pbmc10k_scgpt_cell_prompt_cache.pkl","cache")
         ("hg38_6k_1kb_pretrain.ckpt", "checkpoint"),
         ("hg38_6k_1kb_prompt_cistrome.ckpt", "checkpoint"),
         ("hg38_6k_1kb_prompt_expression.ckpt", "checkpoint"),
@@ -70,6 +71,7 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
         ("hg38_6k_1kb_region.bed", "config"),
         ("hg38_6k_meta.json", "config"),
         ("hg38_6k_mask_matrix.tsv", "config"),
+        
     ]
 
     files_to_decompress = [

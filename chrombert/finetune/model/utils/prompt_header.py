@@ -16,7 +16,7 @@ class PromptHeader(nn.Module):
         for arg in args:
             assert isinstance(arg, torch.Tensor)
 
-        full_emb = torch.cat(args, dim = -1).bfloat16()
+        full_emb = torch.cat(args, dim = -1)
         logit = self.fcs(full_emb).squeeze(-1)
         assert len(logit.shape) == 1
         return logit   

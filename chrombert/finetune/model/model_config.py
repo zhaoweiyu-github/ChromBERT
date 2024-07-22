@@ -128,6 +128,15 @@ class ChromBERTFTConfig:
             model.load_ckpt(finetune_config.finetune_ckpt)
         return model
         
+    @classmethod
+    def get_ckpt_type(cls, ckpt):
+        assert isinstance(ckpt, str)
+        ckpt = torch.load(ckpt, map_location='cpu')
+        if "state" in ckpt:
+            return "finetune"
+        else:
+            return "pretrain"
+
 
 
 

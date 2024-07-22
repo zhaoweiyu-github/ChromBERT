@@ -16,6 +16,7 @@ class CistromeEmbeddingManager(nn.Module):
         if ignore:
             ignore_gsmid_index = ignore_index[0]
             ignore_regulator_index = ignore_index[1]
+            print(f"Ignoring {len(ignore_gsmid_index)} cistromes and {len(ignore_regulator_index)} regulators")
             rows_to_keep = torch.tensor([i not in ignore_gsmid_index for i in range(self.mtx_mask.shape[0])])
             cols_to_keep = torch.tensor([j not in ignore_regulator_index for j in range(self.mtx_mask.shape[1])])
             self.mtx_mask=self.mtx_mask[rows_to_keep][:, cols_to_keep]

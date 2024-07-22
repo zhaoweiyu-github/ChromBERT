@@ -61,7 +61,7 @@ class ChromBERT(nn.Module):
         Noting: if trainable >=0, embedding layer will be frozen. 
         '''
         assert isinstance(trainable, int), 'trainable should be an integer'
-        if trainable > 0:
+        if trainable >= 0:
             for name, parameter in self.named_parameters():
                 parameter.requires_grad = False
 
@@ -72,7 +72,7 @@ class ChromBERT(nn.Module):
 
 
         if trainable < 0:
-            for name, parameter in self.parameters():
+            for name, parameter in self.named_parameters():
                 parameter.requires_grad = True
 
         return None

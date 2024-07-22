@@ -5,7 +5,6 @@ from copy import deepcopy
 from typing import Optional, Union, Any, Dict,Tuple
 from dataclasses import dataclass, field, asdict
 import numpy as np
-from chrombert.base import ChromBERTConfig
 
 @dataclass
 class TrainConfig:
@@ -22,12 +21,12 @@ class TrainConfig:
     max_epochs: int = field(default=10, metadata={"help": "number of epochs"})
     gradient_accumulation_steps: int = field(default=1, metadata={"help": "gradient accumulation steps"})
 
-    batch_size: int = field(default=4, metadata={"help": "batch size"})
-    num_workers: int = field(default=4, metadata={"help": "number of workers"})
-    gradient_accumulation_steps: int = field(default=1, metadata={"help": "gradient accumulation steps"})
-    limit_validation_batch: int = field(default=50, metadata={"help":'number of batches to use for each validation'})
-    validation_check_interval: int = field(default=50, metadata={"help":'validation check interval'})
-    checkpoint_metric: str = field(default='loss', metadata={"help": "checkpoint metric"})
+
+    accumulate_grad_batches: int = field(default=1, metadata={"help": "gradient accumulation steps"})
+    limit_val_batches: int = field(default=64, metadata={"help":'number of batches to use for each validation'})
+    val_check_interval: int = field(default=64, metadata={"help":'validation check interval'})
+    checkpoint_metric: str = field(default='bce', metadata={"help": "checkpoint metric"})
+    checkpoint_mode: str = field(default='min', metadata={"help": "checkpoint mode"})
 
 
     def __post_init__(self):
@@ -99,8 +98,38 @@ class TrainConfig:
         else:
             raise(ValueError("Not supported kind!"))
 
-        trainer = T(model, train_config)
+        pl_module = T(model, train_config)
 
+        return pl_module
+
+    def init_trainer(self, name="chrombert-ft", **kwargs):
+        ''' 
+        a simple wrapper for PyTorch Lightning Trainer. For advanced usage, please use PyTorch Lightning Trainer directly.
+        '''
+        import lightning.pytorch as pl
+
+        # trainer = Trainer(**kwargs)
+        params = {
+            "max_epochs": self.max_epochs,
+            "accumulate_grad_batches": self.accumulate_grad_batches,
+            "limit_val_batches": self.limit_val_batches,
+            "val_check_interval": self.val_check_interval,
+        }
+        params.update(kwargs)
+        checkpoint_callback = pl.callbacks.ModelCheckpoint(
+            monitor=f"{self.tag}_validation/{self.checkpoint_metric}",
+            mode= self.checkpoint_mode,
+            save_top_k=kwargs.get("save_top_k", 1), 
+            save_last=True,
+            filename='{epoch}-{step}',
+            verbose=True,
+        )
+        params.pop("save_top_k", None)
+        trainer = pl.Trainer(
+            logger = pl.loggers.TensorBoardLogger(save_dir=os.path.join(os.getcwd(),"lightning_logs"),name = name),
+            callbacks = [checkpoint_callback, pl.callbacks.LearningRateMonitor()],
+            **params
+        )
         return trainer
         
 

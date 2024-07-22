@@ -44,8 +44,10 @@ class GeneralDataset(IgnoreDataset):
         if self.config.perturbation:
             if self.config.perturbation_object is not None:
                 self.perturbation_object = [self.config.perturbation_object] * (self.supervised_indices_len)
+                print("use perturbation_object in dataset config which high priority than supervised_file")
             elif "perturbation_object" in df.columns:
-                self.perturbation_object = df['perturbation_object'].values                
+                self.perturbation_object = df['perturbation_object'].fillna("none").values
+                print("use perturbation_object in supervised_file")                
             else:
                 raise AttributeError("When perturbation is set, perturbation_object should be set correctly. you can provided 'perturbation_object' column in your supervised_file or you can set perturbation_object in dataset config")
             

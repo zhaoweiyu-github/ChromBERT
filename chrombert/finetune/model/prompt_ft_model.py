@@ -25,12 +25,12 @@ class ChromBERTPrompt(BasicModel):
 
     def forward(self,batch):
 
-        emb_cell,emb_regulator,emb_all = self.get_emb_parts(batch)
+        emb_cell,emb_regulator,emb_all = self.get_emb_parts(batch, dtype = self.ft_header.fcs[0].fc1.weight.dtype)
         header_out = self.ft_header(emb_cell,emb_regulator,emb_all)
         
         return header_out 
 
-    def get_emb_parts(self,batch):    
+    def get_emb_parts(self,batch, dtype =torch.bfloat16):    
         input_ids = batch["input_ids"]
         position_ids = batch["position_ids"]
         if 'emb_cell' not in batch.keys() or 'emb_regulator' not in batch.keys():
@@ -56,4 +56,4 @@ class ChromBERTPrompt(BasicModel):
         if self.finetune_config.prompt_kind == 'expression':
             emb_cell = self.adapter_cell_emb(emb_cell)
         
-        return emb_cell, emb_regulator, emb_all
+        return emb_cell.to(dtype), emb_regulator.to(dtype), emb_all.to(dtype)

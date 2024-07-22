@@ -12,9 +12,10 @@
 You must install [PyTorch](https://pytorch.org/get-started/locally/) and [flash-attention](https://github.com/Dao-AILab/flash-attention) before installing ChromBERT. 
 ```shell
 # Below is instruction for installing flash-attention. For PyTorch, please refer to the official website.
+# Flash-attention 3 is not supported yet. Please install flash-attention 2 
 pip install packaging
 pip install ninja
-pip install flash-attn --no-build-isolation
+pip install flash-attn==2.* --no-build-isolation 
 ```
 <!-- ChromBERT is being developed into a Python package and will be released soon. -->
 ```shell

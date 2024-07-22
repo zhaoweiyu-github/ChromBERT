@@ -41,7 +41,7 @@ def validate_args(args):
 def get_pretrain_config(args):
 
     if args.pretrain_ckpt is not None:
-        config = ChromBERTConfig(genome=args.genome, dropout_prob = 0, ckpt = args.pretrain_ckpt)
+        pretrain_ckpt = args.pretrain_ckpt
     else:
         assert os.path.exists(args.basedir), f"Basedir does not exist: {args.basedir}. If you use default basedir, please make sure environment initialized correctly (see readme of the repo). "
         if args.hr:
@@ -49,7 +49,11 @@ def get_pretrain_config(args):
         else:
             res = "1kb"
         pretrain_ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")
-        config = ChromBERTConfig(genome=args.genome, dropout_prob = 0, ckpt = pretrain_ckpt)
+    
+    assert os.path.exists(pretrain_ckpt), f"Pretrain checkpoint does not exist: {pretrain_ckpt}"
+    assert ChromBERTConfig.get_ckpt_type(pretrain_ckpt) == "pretrain", f"Invalid pretrain checkpoint: {args.pretrain_ckpt}. Only pretrain checkpoint is allowed." 
+
+    config = ChromBERTConfig(genome=args.genome, dropout = 0, ckpt = pretrain_ckpt)
     return config
 
 def get_dataset_config(args):
@@ -74,9 +78,11 @@ def get_dataset_config(args):
 
 def main():
     args = parse_args()
+    validate_args(args)
+
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
     config = get_pretrain_config(args)
-    model = config.from_pretrained().cuda().bfloat16().eval()
+    model = config.init_model().cuda().bfloat16().eval()
     dc = get_dataset_config(args)
     dl = dc.init_dataloader()
     ds = dc.init_dataset()
@@ -85,8 +91,8 @@ def main():
             for batch in tqdm(dl, total = len(dl)):
                 emb = model(batch["input_ids"].cuda(), batch["position_ids"].cuda()).mean(dim=1).float().cpu().detach().numpy()
                 region = np.concatenate([
-                    batch["region"].long().numpy(), 
-                    batch["build_region_index"].long().unsqueeze(-1).numpy()
+                    batch["region"].long().cpu().numpy(), 
+                    batch["build_region_index"].long().cpu().unsqueeze(-1).numpy()
                     ], axis = 1
                 )
                 h5.insert(region = region, emb = emb)

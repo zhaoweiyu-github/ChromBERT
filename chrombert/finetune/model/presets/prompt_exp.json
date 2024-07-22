@@ -1,0 +1,9 @@
+{
+    "task":"prompt",
+    "prompt_kind":"expression",
+    "prompt_dim_external":512,
+    "mtx_mask":"config/hg38_6k_mask_matrix.tsv",
+    "ignore": false,
+    "pretrain_ckpt":"checkpoint/hg38_6k_1kb_pretrain.ckpt",
+    "finetune_ckpt":"checkpoint/hg38_6k_1kb_prompt_expression.ckpt"
+}

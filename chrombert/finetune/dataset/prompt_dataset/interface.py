@@ -101,6 +101,8 @@ class ExpCellEmbInterface():
             item["emb_cell"] = self.emb_dict[cell]
         elif self.valid_cell(re_cell):  
            item["emb_cell"] = self.emb_dict[re_cell]
+        else:
+            raise ValueError(f'{cell} not in embedding flie')
         return item
 
 class PromptsCistromInterface():

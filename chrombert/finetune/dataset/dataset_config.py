@@ -64,7 +64,7 @@ class DatasetConfig:
         # [perturbation]
         self.perturbation: bool = False
         self.perturbation_object:str = None
-        self.perturbation_value: Optional[int] = None
+        self.perturbation_value: Optional[int] = 0
 
         # [prompt]
         self.prompt_kind: str = None
@@ -155,8 +155,10 @@ class DatasetConfig:
     def items(self):
         return self.to_dict().items()
     
-    def clone(self):
-        return DatasetConfig(config=self.to_dict())
+    def clone(self, **kwargs):
+        dc =  DatasetConfig(config=self.to_dict())
+        dc.update(**kwargs)
+        return dc
     
     def init_dataset(self, return_config = False, **kwargs):
         '''
@@ -196,7 +198,7 @@ def get_preset_dataset_config(preset: str = "default", basedir: str = os.path.ex
     A method to get the preset dataset configuration.
     Args:
         preset: str, the pre-defined preset name of the dataset, or defined by user self.
-        basedir: str, the basedir of the preset file. Default is "".
+        basedir: str, the basedir of the preset file. Default is "~/.cache/chrombert/data".
         kwargs: dict, the additional arguments to update the preset. See chrombert.DatasetConfig for more details.
     '''
     assert "supervised_file" in kwargs, "supervised_file must be provided"
@@ -219,9 +221,10 @@ def get_preset_dataset_config(preset: str = "default", basedir: str = os.path.ex
         if key.endswith("_file") and key != "supervised_file":
             # print(key, value)
             print(f"update path: {key} = {value}")
-            if os.path.abspath(value) != value:
-                config[key] = os.path.join(basedir, value)
-                assert os.path.exists(config[key]), f"{key}={config[key]} does not exist"
+            if value is not None:
+                if os.path.abspath(value) != value:
+                    config[key] = os.path.join(basedir, value)
+                    assert os.path.exists(config[key]), f"{key}={config[key]} does not exist"
 
     dc = DatasetConfig(**config)
     return dc

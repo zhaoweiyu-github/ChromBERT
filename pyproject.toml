@@ -41,6 +41,8 @@ full = [
 [project.scripts]
 chrombert_make_dataset = "chrombert.scripts.chrombert_make_dataset:main"
 chrombert_get_region_emb = "chrombert.scripts.chrombert_get_region_emb:main"
+chrombert_get_cistrome_emb = "chrombert.scripts.chrombert_get_cistrome_emb:main"
+chrombert_get_regulator_emb = "chrombert.scripts.chrombert_get_regulator_emb:main"
 chrombert_prepare_env = "chrombert.scripts.chrombert_prepare_env:main"
 
 [tool.setuptools]
