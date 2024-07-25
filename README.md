@@ -1,9 +1,11 @@
 # A pre-trained foundation model for context-specific transcription regulatory network 
-
+[![Documentation](https://img.shields.io/badge/docs-available-brightgreen)](https://chrombert.readthedocs.io/en/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-brightgreen.svg)](https://chrombert.readthedocs.io/en/)
 
 **ChromBERT** is a pre-trained deep learning model designed to learn latent representations for genome-wide co-association among approximately one thousand transcription regulators. This enables the accurate prediction and interpretation of context-specific human regulatory networks in various downstream tasks. ChromBERT aims to establish a foundational model for transcription regulatory omics through transfer learning.
+
+See the [documentation](https://chrombert.readthedocs.io/en/) for more information.
 
 ![ChromBERT Framework](docs/_static/ChromBERT_framework.png "Framework")
 

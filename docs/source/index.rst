@@ -1,13 +1,9 @@
-Welcome to Lumache's documentation!
-===================================
+Welcome to ChromBERT's documentation!
+======================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**ChromBERT** is a pre-trained deep learning model designed to learn latent representations for genome-wide co-association among approximately one thousand transcription regulators. This enables the accurate prediction and interpretation of context-specific human regulatory networks in various downstream tasks. ChromBERT aims to establish a foundational model for transcription regulatory omics through transfer learning.
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+Check out the :doc:`installation` section to get started.
 
 .. note::
 
@@ -15,8 +11,19 @@ how to :ref:`installation` the project.
 
 Contents
 --------
+.. toctree:: 
+    :maxdepth: 2    
+    :caption: Basics:
+
+    installation
+    developing
 
 .. toctree::
+    :maxdepth: 1
+    :caption: Tutorials: 
+    
+    tutorial_embedding_extraction
+    tutorial_locus_specific_TRN_ezh2
+    tutorial_prompt_cistrome_generation
 
-   usage
-   api
+.. 

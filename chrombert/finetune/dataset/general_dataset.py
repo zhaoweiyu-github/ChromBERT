@@ -68,8 +68,7 @@ class GeneralDataset(IgnoreDataset):
         basic_index = self.supervised_indices[index]
         
         if self.config.perturbation: 
-            if self.perturbation_object is not None:
-                self.config.perturbation_object = self.perturbation_object[index]
+            self.config.perturbation_object = self.perturbation_object[index]
           
         if self.config.ignore and self.config.ignore_object is None:
             raise AttributeError("When ignore is set, ignore_object should be set correctly. you can provided 'ignore_object' column in your supervised_file or you can set ignore_object in dataset config")
