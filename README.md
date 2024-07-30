@@ -21,8 +21,8 @@ pip install flash-attn==2.* --no-build-isolation
 ```
 <!-- ChromBERT is being developed into a Python package and will be released soon. -->
 ```shell
-git clone git@github.com:qianachen/ChromBERT_reorder.git
-cd ChromBERT_reorder
+git clone git@github.com:TongjiZhanglab/ChromBERT.git
+cd ChromBERT
 pip install .
 chrombert_prepare_env # download required files to ~/.cache/chrombert/data
 ```

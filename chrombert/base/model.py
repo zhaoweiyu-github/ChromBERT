@@ -11,6 +11,8 @@ class ChromBERT(nn.Module):
             config (:obj:`ChromBERTConfig`): configuration of the model. 
         """
         super().__init__()
+        self.config = config 
+
         self.hidden = config.hidden_dim
         self.n_layers = config.num_layers
         self.attn_heads = config.num_attention_heads

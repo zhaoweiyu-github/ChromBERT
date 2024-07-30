@@ -22,14 +22,14 @@ class PoolFlankWindow(nn.Module):
         x.requires_grad = True
         if not self.parallel_embedding:
             embeddings = []
-            if self.gradient_checkpoint == 0:
+            if not self.gradient_checkpoint:
                 for i in range(self.flank_region_num):
                     x_i = x[:,i,:].clone()
                     position_ids_i = position_ids[:,i,:].clone() 
                     x_i = self.pretrain_model(x_i, position_ids_i)
                     embeddings.append(x_i)
                 x = torch.stack(embeddings, dim = 1)
-            elif self.gradient_checkpoint == 1:
+            else:
                 all_embeddings = torch.zeros((batch_size, self.flank_region_num, seq_len, 768), device=x.device)
                 for i in range(self.flank_region_num):
                     all_embeddings[:, i, :, :] = checkpoint(

@@ -4,6 +4,7 @@ from torch import nn
 from abc import abstractmethod, ABC
 from chrombert import ChromBERT
 from .utils import ChromBERTEmbedding
+from .utils import PoolFlankWindow
 
 class BasicModel(nn.Module, ABC):
     def __init__(self, pretrain_config, finetune_config):

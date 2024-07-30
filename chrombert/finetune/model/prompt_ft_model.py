@@ -20,7 +20,8 @@ class ChromBERTPrompt(BasicModel):
             )
 
         self.gather_emb = PromptsEmb()
-        self.ft_header = PromptHeader(n_parts = self.finetune_config.n_prompt_parts + 1)
+        self.ft_header = PromptHeader(n_parts = self.finetune_config.n_prompt_parts + 1,
+                                      dropout=self.finetune_config.dropout)
         return None 
 
     def forward(self,batch):

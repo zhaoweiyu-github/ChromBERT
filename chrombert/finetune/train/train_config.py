@@ -23,14 +23,17 @@ class TrainConfig:
 
 
     accumulate_grad_batches: int = field(default=1, metadata={"help": "gradient accumulation steps"})
-    limit_val_batches: int = field(default=64, metadata={"help":'number of batches to use for each validation'})
-    val_check_interval: int = field(default=64, metadata={"help":'validation check interval'})
-    checkpoint_metric: str = field(default='bce', metadata={"help": "checkpoint metric"})
+    limit_val_batches: Union[int, float] = field(default=64, metadata={"help":'number of batches to use for each validation'})
+    val_check_interval: Union[int, float] = field(default=64, metadata={"help":'validation check interval'})
+    checkpoint_metric: str = field(default=None, metadata={"help": "checkpoint metric"})
     checkpoint_mode: str = field(default='min', metadata={"help": "checkpoint mode"})
 
 
     def __post_init__(self):
+        if self.checkpoint_metric is None:
+            self.checkpoint_metric = self.loss
         self.validation()
+
     
     def to_dict(self):
         state = {}

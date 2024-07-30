@@ -27,6 +27,7 @@ class ChromBERTGeneral(BasicModel):
             self.finetune_config.mtx_mask, 
             self.finetune_config.ignore,
             self.finetune_config.ignore_index,
+            self.finetune_config.dropout
             )
         return None
 

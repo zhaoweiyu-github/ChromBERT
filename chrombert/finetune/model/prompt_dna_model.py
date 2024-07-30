@@ -18,7 +18,8 @@ class ChromBERTPromptDNA(BasicModel):
 
         self.pretrain_model = self.pretrain_config.init_model()
         self.dnabert2 = DNABERT2Interface(self.finetune_config.dnabert2_ckpt, pooling="mean")
-        self.adapter_dna_emb = AdapterExternalEmb(self.finetune_config.prompt_dim_external, dropout = 0.1)
+        self.adapter_dna_emb = AdapterExternalEmb(self.finetune_config.prompt_dim_external, 
+                                                  dropout = self.finetune_config.dropout)
 
         self.adapter_chrombert = GeneralHeader(
             self.pretrain_config.hidden_dim, 
@@ -26,8 +27,9 @@ class ChromBERTPromptDNA(BasicModel):
             self.finetune_config.mtx_mask, 
             self.finetune_config.ignore,
             self.finetune_config.ignore_index,
+            self.finetune_config.dropout
             )
-        self.head_output = PromptHeader(n_parts = 2)
+        self.head_output = PromptHeader(n_parts = 2,dropout=self.finetune_config.dropout)
         return None 
     
     def valid_batch(self, batch):

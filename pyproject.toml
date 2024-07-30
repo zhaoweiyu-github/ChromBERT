@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chrombert"
-version = "0.1.0"
+version = "1.0.0"
 description = "ChromBERT: a BERT model for chromatin accessibility prediction"
 authors = [
     {name = "dxyang", email= "dxyang@tongji.edu.cn"}
@@ -22,15 +22,13 @@ dependencies = [
     "torch",
     "numpy",
     "pandas",
+    "matplotlib",
+    "torchinfo",
     "h5py",
     "lightning",
     "transformers",
     "triton",
     "huggingface_hub[cli]",
-]
-
-[project.optional-dependencies]
-full = [
     "pyarrow",
     "torchvision",
     "tensorboard",
@@ -46,5 +44,16 @@ chrombert_get_regulator_emb = "chrombert.scripts.chrombert_get_regulator_emb:mai
 chrombert_prepare_env = "chrombert.scripts.chrombert_prepare_env:main"
 
 [tool.setuptools]
-packages = ["chrombert"]
+include-package-data = true 
 
+[tool.setuptools.packages.find]
+where = ["."]  # list of folders that contain the packages (["."] by default)
+include = ["chrombert*"]  # package names should match these glob patterns (["*"] by default)
+
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.rst"]
+
+[tool.setuptools.dynamic]
+version = {attr = "chrombert.VERSION"}
+readme = {file = ["README.md"]}

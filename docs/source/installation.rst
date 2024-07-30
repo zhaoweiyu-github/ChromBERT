@@ -15,8 +15,8 @@ Then, you can install ChromBERT by running the following commands:
 
 .. code-block:: shell 
 
-    git clone git@github.com:qianachen/ChromBERT_reorder.git
-    cd ChromBERT_reorder
+    git clone git@github.com:TongjiZhanglab/ChromBERT.git 
+    cd ChromBERT
     pip install .
     chrombert_prepare_env # download required files to ~/.cache/chrombert/data
 

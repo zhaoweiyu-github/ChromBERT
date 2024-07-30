@@ -3,13 +3,13 @@ from torch import nn
 from .residual_block import ResidualBlock
 
 class PromptHeader(nn.Module):
-    def __init__(self, n_parts = 3):
+    def __init__(self, n_parts = 3,dropout = 0.1):
         super().__init__()
         self.fcs = nn.Sequential(
-            ResidualBlock(n_parts * 768, n_parts * 768),
-            ResidualBlock(n_parts * 768, 768),
-            ResidualBlock(768, 768),
-            ResidualBlock(768, 64),
+            ResidualBlock(n_parts * 768, n_parts * 768, dropout = dropout),
+            ResidualBlock(n_parts * 768, 768, dropout = dropout),
+            ResidualBlock(768, 768, dropout = dropout),
+            ResidualBlock(768, 64, dropout = dropout),
             nn.Linear(64, 1),
         )
     def forward(self, *args):

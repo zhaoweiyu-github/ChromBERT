@@ -99,10 +99,11 @@ class ChromBERTFTConfig:
         pretrain_ckpt = self.pretrain_ckpt if kwargs.get('pretrain_ckpt') is None else kwargs.get('pretrain_ckpt')
         if pretrain_ckpt is None:
             print("Warning: pretrain_ckpt is not specified in fine-tune model initiation")
-        pretrain_config = ChromBERTConfig.load(ckpt=pretrain_ckpt, genome=self.genome, dropout=self.dropout)
         finetune_config = self.clone()
         finetune_config.update(**kwargs)
         
+        pretrain_config = ChromBERTConfig.load(ckpt=pretrain_ckpt, genome=finetune_config.genome, dropout=finetune_config.dropout)
+
         if finetune_config.task == 'gep':
             if finetune_config.gep_zero_inflation:
                 from .gep_ft_model import ChromBERTGEP

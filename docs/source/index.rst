@@ -16,6 +16,7 @@ Contents
     :caption: Basics:
 
     installation
+    scripts
     developing
 
 .. toctree::
@@ -23,7 +24,9 @@ Contents
     :caption: Tutorials: 
     
     tutorial_embedding_extraction
-    tutorial_locus_specific_TRN_ezh2
     tutorial_prompt_cistrome_generation
+    tutorial_locus_specific_TRN_ezh2
+    tutorial_locus_specific_TRN_starr
+    tutorial_transdifferentiation
 
 .. 

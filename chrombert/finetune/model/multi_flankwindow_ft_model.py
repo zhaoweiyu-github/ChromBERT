@@ -14,7 +14,7 @@ class ChromBERTMultiFlankWindow(BasicModel):
         pretrain_model = self.pretrain_config.init_model()
         self.flank_region_num = int(self.finetune_config.gep_flank_window) * 2 + 1 
         self.pool_flank_window = PoolFlankWindow(
-                flank_region_num = self.finetune_config.gep_flank_window,
+                flank_region_num = self.flank_region_num,
                 pretrain_model = pretrain_model,
                 parallel_embedding = self.finetune_config.gep_parallel_embedding,
                 gradient_checkpoint=self.finetune_config.gep_gradient_checkpoint
@@ -26,6 +26,7 @@ class ChromBERTMultiFlankWindow(BasicModel):
             self.finetune_config.mtx_mask, 
             self.finetune_config.ignore,
             self.finetune_config.ignore_index,
+            self.finetune_config.dropout
             )
         return None
 
