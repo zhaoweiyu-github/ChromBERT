@@ -16,6 +16,13 @@ class FileManager:
         if result.returncode != 0:
             print(f"Error decompressing {file_path}")
 
+    @staticmethod
+    def unpack_tar(file_path, output_dir):
+        command = ["tar", "-xzf", file_path, "-C", output_dir]
+        result = subprocess.run(command)
+        if result.returncode != 0:
+            print(f"Error unpacking {file_path}")
+
 class HuggingFaceDownloader:
     @staticmethod
     def download(ifile, odir, hf_endpoint="https://huggingface.co"):
@@ -61,7 +68,7 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
         ("hg38_6k_1kb_cistrome_cell_prompt_chr1_cache.h5", "cache"),
         ("hg38_6k_1kb_expression_cell_prompt_cache.pkl", "cache"),
         ("hg38_6k_1kb_regulator_prompt_chr1_cache.h5", "cache"),
-        ("pbmc10k_scgpt_cell_prompt_cache.pkl","cache")
+        ("pbmc10k_scgpt_cell_prompt_cache.pkl","cache"), 
         ("hg38_6k_1kb_pretrain.ckpt", "checkpoint"),
         ("hg38_6k_1kb_prompt_cistrome.ckpt", "checkpoint"),
         ("hg38_6k_1kb_prompt_expression.ckpt", "checkpoint"),
@@ -71,11 +78,17 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
         ("hg38_6k_1kb_region.bed", "config"),
         ("hg38_6k_meta.json", "config"),
         ("hg38_6k_mask_matrix.tsv", "config"),
+        ("hg38.fa", "other"),
+        ("demo.tar.gz",".")
         
     ]
 
     files_to_decompress = [
-        "hg38_6k_1kb.hdf5.gz"
+        "hg38_6k_1kb.hdf5.gz",
+    ]
+
+    files_to_unpack = [
+        ("demo.tar.gz", ".")
     ]
 
     for ifile, odir in files_to_download:
@@ -86,6 +99,9 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
     for file in files_to_decompress:
         if not os.path.exists(os.path.join(basedir, file.replace(".gz", ""))):
             FileManager.decompress_file(os.path.join(basedir, file))
+        
+    for file, output_dir in files_to_unpack:
+        FileManager.unpack_tar(os.path.join(basedir, file), os.path.join(basedir, output_dir))
     return basedir
 
 def main():

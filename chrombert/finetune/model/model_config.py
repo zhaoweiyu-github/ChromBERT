@@ -93,6 +93,14 @@ class ChromBERTFTConfig:
             return 1
         else:
             raise ValueError(f"prompt_kind must be one of ['cistrome', 'expression', 'dna'], but got {self.prompt_kind}")
+
+    def __str__(self):
+        s = self.to_dict()
+        s = json.dumps(s, indent=4)
+        return s
+
+    def __repr__(self):
+        return f"ChromBERTFTConfig:\n{str(self)}"
     
     def init_model(self, **kwargs):
 
@@ -115,6 +123,10 @@ class ChromBERTFTConfig:
         elif finetune_config.task == 'prompt':
             if finetune_config.prompt_kind == 'dna':
                 assert finetune_config.dnabert2_ckpt is not None, "dnabert2_ckpt must be specified for prompt_kind=dna"
+                if finetune_config.dnabert2_ckpt is not None:
+                    assert isinstance(finetune_config.dnabert2_ckpt, str)
+                    if not os.path.exists(finetune_config.dnabert2_ckpt):
+                        print(f"Warning: {finetune_config.dnabert2_ckpt} does not exist! Try to use huggingface cached...")
                 from .prompt_dna_model import ChromBERTPromptDNA
                 model =  ChromBERTPromptDNA(pretrain_config, finetune_config)
             else:
@@ -165,7 +177,7 @@ def get_preset_model_config(preset: str = "default", basedir: str = os.path.expa
         config = json.load(f)
     config.update(kwargs)
     for key, value in config.items():
-        if key in ["mtx_mask", "pretrain_ckpt", "finetune_ckpt", "dnabert2_ckpt"]:
+        if key in ["mtx_mask", "pretrain_ckpt", "finetune_ckpt"]:
             # print(key, value)
             print(f"update path: {key} = {value}")
             if value is not None:

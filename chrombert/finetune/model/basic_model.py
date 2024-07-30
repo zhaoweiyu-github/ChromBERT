@@ -125,4 +125,10 @@ class BasicModel(nn.Module, ABC):
         model_emb = ChromBERTEmbedding(pretrain_model, finetune_config.mtx_mask, finetune_config.ignore, finetune_config.ignore_index)
         return model_emb
 
-
+    def save_ckpt(self, save_path):
+        '''
+        save the model checkpoint
+        '''
+        state_dict = self.state_dict()
+        torch.save(state_dict, save_path)
+        return None 

@@ -51,6 +51,7 @@ class ChromBERTPromptDNA(BasicModel):
         logit = self.head_output(dna_emb, chrom_embedding)
         return logit 
 
+    @DeprecationWarning
     def get_factor_emb(self, batch):
         self.valid_batch(batch)
         chrom_embedding = self.pretrain_model(
