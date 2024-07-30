@@ -6,9 +6,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "chrombert"
 version = "1.0.0"
-description = "ChromBERT: a BERT model for chromatin accessibility prediction"
+description = "ChromBERT: A pre-trained foundation model for context-specific transcription regulatory network"
 authors = [
-    {name = "dxyang", email= "dxyang@tongji.edu.cn"}
+    {name = "Zhaowei Yu", email = "zhaoweiyu@tongji.edu.cn"},
+    {name = "Dongxu Yang", email= "dx_yang@tongji.edu.cn"},
+    {name = "Qianqian Chen", email= "2211083@tongji.edu.cn"},
+    {name = "Yuxuan Zhang", email= "2211289@tongji.edu.cn"}
     ]
 readme = "README.md"
 # license = "MIT"
