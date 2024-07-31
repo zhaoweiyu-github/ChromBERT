@@ -22,9 +22,16 @@ Contents
 .. toctree::
     :maxdepth: 1
     :caption: Tutorials: 
-    
+
+    tutorial_finetuning_ChromBERT_from_scratch
     tutorial_embedding_extraction
+
+.. toctree:: 
+    :maxdepth: 1
+    :caption: Examples:
+
     tutorial_prompt_cistrome_generation
+    tutorial_locus_specific_TRN_eqtl
     tutorial_locus_specific_TRN_ezh2
     tutorial_locus_specific_TRN_starr
     tutorial_transdifferentiation
