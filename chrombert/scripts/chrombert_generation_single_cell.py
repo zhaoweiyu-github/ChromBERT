@@ -22,8 +22,7 @@ DEFAULT_BASEDIR = os.path.expanduser("~/.cache/chrombert/data")
 def parse_args():
     parser = argparse.ArgumentParser(description="Extract region embeddings from ChromBERT")
     parser.add_argument("--supervised_file", type=str, help="Path to the supervised file")
-    parser.add_argument("--o_bw", type=str, required=False, default=None, help="Path of the bw file")
-    parser.add_argument("--o_table", type=str, required=False, default=None, help="Path to the output table if you want to output the table")
+    parser.add_argument("--o_h5", type=str, required=True, help="Path of the hdf5 file")
 
     parser.add_argument("--basedir", type=str, default = DEFAULT_BASEDIR, help="Base directory for the required files")
     
@@ -50,7 +49,6 @@ def parse_args():
 
 def validate_args(args):
     assert os.path.exists(args.supervised_file), f"Supervised file does not exist: {args.supervised_file}"
-
 
 def get_finetune_config(args):
 
@@ -98,7 +96,7 @@ def get_dataset_config(args):
         )
     return dataset_config
 
-def predict(dl, ds, model, o_table, o_bw):
+def predict(dl, ds, model, o_h5):
     regions, logits, probs, labels= [], [], [], []
 
     with torch.no_grad():
@@ -107,68 +105,29 @@ def predict(dl, ds, model, o_table, o_bw):
                 if isinstance(batch[k], torch.Tensor):
                     batch[k] = batch[k].cuda()
             y = model(batch).float().cpu()
-            region = np.concatenate([
-                    batch["region"].long().cpu().numpy(), 
-                    batch["build_region_index"].long().unsqueeze(-1).cpu().numpy()
-                    ], axis = 1
-                )
-            if 'label' in batch.keys():
-                label = batch['label'].cpu()
-                labels.append(label)
             logits.append(y)
-            regions.append(region)
 
-    regions = np.vstack(regions)
     logits = torch.cat(logits)
     probs = torch.sigmoid(logits).cpu().numpy()
     logits = logits.cpu().numpy()
+    regions = ds.h5_regions
     cells = ds.prompt_celltype
     regulators = ds.prompt_regulator
 
-    df = get_table(regions, logits, probs, labels, cells, regulators)
-    if o_table:
-        output_table(df, o_table)
-    if o_bw:
-        assert len(set(cells)) == 1, f"only predicition of single cell is support when output bigwig files, but get {len(set(cells))} cells"
-        get_bw(df, o_bw)
+    get_hdf5(regions, probs, logits, cells, regulators, o_h5)
 
-    return df
 
-def get_table(regions, logits, probs, labels, cells, regulators):
-    dict_id_to_name = {i:f"chr{i}" for i in range(23)}
-    dict_id_to_name[24] = "chrX"
-    dict_id_to_name[25] = "chrY"
-    df_region = pd.DataFrame(regions, columns=['chrom', 'start', 'end', 'build_region_index'])
-    df_result = pd.DataFrame({'logit': logits, 'prob': probs, 'cell':cells, 'regulator':regulators})
-    df = pd.concat([df_region, df_result], axis=1)
-    if len(labels) > 0:
-        labels = torch.cat(labels).cpu().numpy()
-        df['label'] = labels
-    df['chrom'] = df['chrom'].map(dict_id_to_name)
-    return df
+def get_hdf5(regions, probs, logits, cells, regulators, o_h5):
+    num_regions = regions.shape[0]
+    probs = probs.reshape(num_regions, -1)
+    logits = logits.reshape(num_regions, -1)
+    with h5py.File(o_h5, 'w') as f:
+        f1 = f.create_dataset("regions", data=regions)
+        f2= f.create_dataset("probs", data=probs)
+        f3= f.create_dataset("logits", data=logits)
+        f2.attrs['cells'] = cells
+        f2.attrs['regulators'] = regulators
 
-def output_table(df, opath):
-    if opath.endswith('.parquet'):
-        df.to_parquet(opath, engine='pyarrow')
-    elif opath.endswith('.csv'):
-        df.to_csv(opath, index=False)
-    elif opath.endswith('.tsv'):
-        df.to_csv(opath, sep='\t', index=False)
-    else:
-        file_extension = opath.split('.')[-1]
-        assert False, f"outfile should be .csv, .tsv, or .parquet, but got {file_extension}"
-
-def get_bw(df, opath):
-    chrom_sizes = bf.fetch_chromsizes('hg38')
-    chrom_order = list(chrom_sizes.keys())
-
-    df['chrom'] = pd.Categorical(df['chrom'], categories=chrom_order, ordered=True)
-    df = df.sort_values(by=['chrom', 'start'])
-
-    bw = pyBigWig.open(opath, 'w')
-    bw.addHeader(list(chrom_sizes.items()))
-    bw.addEntries(df['chrom'].tolist(), df['start'].tolist(), ends=df['end'].tolist(), values=df['prob'].tolist())
-    bw.close()
 
 def main():
     args = parse_args()
@@ -178,10 +137,10 @@ def main():
 
     dc = get_dataset_config(args)
     dl = dc.init_dataloader()
-    ds = dc.init_dataset()
-    ds = ds.dataset.sv_dataset
+    ds = dc.init_dataset().dataset.sv_dataset
+    
 
-    predict(dl, ds, model, args.o_table, args.o_bw)
+    predict(dl, ds, model, args.o_h5)
 
 
 if __name__ == "__main__":
