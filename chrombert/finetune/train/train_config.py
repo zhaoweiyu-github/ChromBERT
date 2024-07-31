@@ -41,6 +41,12 @@ class TrainConfig:
             state[k] = deepcopy(getattr(self, k))
         return state
 
+    def __str__(self):
+        return json.dumps(self.to_dict(), indent=4)
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}({self.__str__()})"
+
     def __iter__(self):
         for name, value in self.to_dict().items():
             yield name, value
@@ -119,9 +125,19 @@ class TrainConfig:
             "val_check_interval": self.val_check_interval,
         }
         params.update(kwargs)
+        checkpoint_metric = kwargs.get("checkpoint_metric", self.checkpoint_metric)
+        checkpoint_mode = kwargs.get("checkpoint_mode", self.checkpoint_mode)
+        tag = kwargs.get("tag", self.tag)
+        if "checkpoint_metric" in kwargs:
+            params.pop("checkpoint_metric")
+        if "checkpoint_mode" in kwargs:
+            params.pop("checkpoint_mode")
+        if "tag" in kwargs:
+            params.pop("tag")
+
         checkpoint_callback = pl.callbacks.ModelCheckpoint(
-            monitor=f"{self.tag}_validation/{self.checkpoint_metric}",
-            mode= self.checkpoint_mode,
+            monitor=f"{tag}_validation/{checkpoint_metric}",
+            mode= checkpoint_mode,
             save_top_k=kwargs.get("save_top_k", 1), 
             save_last=True,
             filename='{epoch}-{step}',
