@@ -1,4 +1,4 @@
-Tutorial for key regulators inference during cell state transition
+Example for key regulators inference during cell state transition
 ============================================================
 
 
