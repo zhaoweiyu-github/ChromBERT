@@ -21,6 +21,7 @@ extensions = [
     "nbsphinx",
     "nbsphinx_link",
     "recommonmark",
+    "sphinx.ext.viewcode"
 ]
 
 intersphinx_mapping = {

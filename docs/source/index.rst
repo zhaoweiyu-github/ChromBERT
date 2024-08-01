@@ -13,6 +13,7 @@ Welcome to ChromBERT's documentation!
     :caption: Getting started:
 
     installation
+    cli
 
 .. toctree::
     :maxdepth: 2
