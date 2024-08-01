@@ -3,6 +3,10 @@ chrombert_prepare_env
 
 Download required files to ~/.cache/chrombert/data, or other path your like.
 
+.. code-block:: shell 
+
+    chrombert_prepare_env [OPTIONS]
+
 .. rubric:: Options 
 
 .. option:: --help

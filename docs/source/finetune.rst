@@ -1,5 +1,9 @@
-Fine-tuning of ChromBERT
--------------------------
+Compiled Scripts for fine-tuning of ChromBERT
+=============================================
+
+
+Overview
+----------
 
 For a hands-on tutorial, see the documentation on :doc:`tutorial_finetuning_ChromBERT_from_scratch`.  
 
@@ -12,18 +16,15 @@ For detailed usage instructions, run the following command:
     python <script.py> --help
 
 .. csv-table:: Fine-Tune Scripts
-    :header: "Type", "Description"
+    :header: "Type", "Download", "Description"
 
-    "`General`_", "Suitable for most purposes."
-    "Prompt", "Designed for prompt-enhanced tasks, such as cistrome generation."
-    "Multi-window", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
+    "`General`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py>`_ ", "Suitable for most purposes."
+    "Prompt", "download not available now", "Designed for prompt-enhanced tasks, such as cistrome generation."
+    "Multi-window", "download not available now", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
 
-.. _General: https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py 
+Details 
+---------
+
+.. include:: scripts/ft_general.rst
 
 
-
-.. toctree:: 
-    :maxdepth: 1 
-
-    scripts/finetune
-    tutorial_finetuning_ChromBERT_from_scratch
