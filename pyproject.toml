@@ -45,6 +45,8 @@ chrombert_get_region_emb = "chrombert.scripts.chrombert_get_region_emb:main"
 chrombert_get_cistrome_emb = "chrombert.scripts.chrombert_get_cistrome_emb:main"
 chrombert_get_regulator_emb = "chrombert.scripts.chrombert_get_regulator_emb:main"
 chrombert_prepare_env = "chrombert.scripts.chrombert_prepare_env:main"
+chrombert_generation_cistrome = "chrombert.scripts.chrombert_generation:main"
+chrombert_generation_cistrome_sc = "chrombert.scripts.chrombert_generation_sc:main"
 
 [tool.setuptools]
 include-package-data = true 

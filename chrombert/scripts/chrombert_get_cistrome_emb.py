@@ -19,7 +19,7 @@ DEFAULT_BASEDIR = os.path.expanduser("~/.cache/chrombert/data")
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Extract region embeddings from ChromBERT")
+    parser = argparse.ArgumentParser(description="Extract cistrome embeddings from ChromBERT")
     parser.add_argument("supervised_file", type=str, help="Path to the supervised file")
     parser.add_argument("ids", nargs="+", type=str, help="IDs to extract. can be GSMID or regulator:cellline format id. To generate cache file for prompt, use 'regulator:cellline' format. ")
 
@@ -28,16 +28,15 @@ def parse_args():
     parser.add_argument("--basedir", type=str, default = DEFAULT_BASEDIR, help="Base directory for the required files")
     
     parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
-    parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint. Optial if it could infered from other arguments")
+    parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the pretrain or fine-tuned checkpoint. Optial if it could infered from other arguments")
     parser.add_argument("--meta", type=str, required=False, default=None, help="Path to the meta file. Optional if it could infered from other arguments")
     parser.add_argument("--mask", type=str, required=False, default=None, help="Path to the mtx mask file. Optional if it could infered from other arguments")
 
     parser.add_argument("-d","--hdf5-file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
-    parser.add_argument("--gpu", type=int, default = 0, help="GPU index") 
-    parser.add_argument("--batch_size", type=int, required=False, default=8, help="batch size")
-    parser.add_argument("--num_workers", type=int, required=False, default=8, help="number of workers for dataloader")
+    parser.add_argument("--batch-size", dest="batch_size", type=int, required=False, default=8, help="batch size")
+    parser.add_argument("--num-workers",dest="num_workers", type=int, required=False, default=8, help="number of workers for dataloader")
 
     return parser.parse_args()
 
@@ -127,8 +126,6 @@ def get_cistrome_ids(ids, meta_file):
 def main():
     args = parse_args()
     validate_args(args)
-
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(args.gpu)
     config = get_model_config(args)
     model = config.init_model().get_embedding_manager().cuda().bfloat16()
     dc = get_dataset_config(args)
@@ -145,7 +142,7 @@ def main():
                 for k,v in batch.items():
                     if isinstance(v, torch.Tensor):
                         batch[k] = v.cuda()
-                emb = model(batch).mean(dim=1).float().cpu().detach().numpy()
+                model(batch) # initialize the cache 
                 region = np.concatenate([
                     batch["region"].long().cpu().numpy(), 
                     batch["build_region_index"].long().cpu().unsqueeze(-1).numpy()

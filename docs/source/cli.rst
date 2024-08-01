@@ -10,13 +10,32 @@ We provide a set of command line scripts for your convenience. All scripts can b
     :header: "Script", "Description"
 
     "`chrombert_prepare_env`_", "Download required files to ~/.cache/chrombert/data, or other path your like."
-    "chrombert_make_dataset", "Make dataset for ChromBERT forward. "
-    "chrombert_get_region_emb", "Get mean pooled TRN embedding (region embedding) and store in a file."
-    "chrombert_get_cistrome_emb", "Get cistrome embedding and store in a file. "
-    "chrombert_get_regulator_emb", "Get regulator embedding and store in a file."
+    "`chrombert_make_dataset`_", "Make dataset for ChromBERT forward. "
+    "`chrombert_get_region_emb`_", "Get mean pooled TRN embedding (region embedding) and store in a file."
+    "`chrombert_get_cistrome_emb`_", "Get cistrome embedding and store in a file. "
+    "`chrombert_get_regulator_emb`_", "Get regulator embedding and store in a file."
+    "chrombert_generation_cistrome", "Generate cistromes using prompt-enhanced ChromBERT. "
+    "chrombert_generation_cistrome_sc", "Generate cistromes using prompt-enhanced ChromBERT, specified for single-cell data. "
 
+-----
 
 Details 
 ---------
 
 .. include:: scripts/chrombert_prepare_env.rst 
+
+----
+
+.. include:: scripts/chrombert_make_dataset.rst
+
+----
+
+.. include:: scripts/chrombert_get_region_emb.rst
+
+----
+
+.. include:: scripts/chrombert_get_cistrome_emb.rst
+
+----
+
+.. include:: scripts/chrombert_get_regulator_emb.rst

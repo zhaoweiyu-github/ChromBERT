@@ -1,5 +1,6 @@
 chrombert_prepare_env
-**********************
+*************************
+
 
 Download required files to ~/.cache/chrombert/data, or other path your like.
 
@@ -20,5 +21,4 @@ Download required files to ~/.cache/chrombert/data, or other path your like.
 .. option:: --hf-endpoint
 
     The endpoint of the Hugging Face model. 
-
 
