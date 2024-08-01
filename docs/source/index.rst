@@ -9,8 +9,7 @@ Check out the :doc:`installation` section to get started.
 
    This project is under active development.
 
-Contents
---------
+
 .. toctree:: 
     :maxdepth: 2    
     :caption: Basics:

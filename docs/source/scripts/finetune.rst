@@ -1,4 +1,4 @@
-ChromBERT Fine-Tuning Scripts
+ChromBERT fine-tuning scripts
 =============================
 
 We provide three scripts for fine-tuning, designed for your convenience. All scripts can be downloaded and executed anywhere, provided that your installation is correct.
