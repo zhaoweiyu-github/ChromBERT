@@ -18,8 +18,8 @@ Welcome to ChromBERT's documentation!
     :maxdepth: 2
     :caption: Tutorials: 
 
-    finetune
     tutorial_embedding_extraction
+    finetune
     scripts
 
 .. toctree:: 
