@@ -25,7 +25,7 @@ def get_args():
     # checkpoint arguments
     parser.add_argument("--name", type=str, default="chrombert-ft-general", help="Name of the trainer. ")
     parser.add_argument("--save-top-k", dest="save_top_k", type=int, default=3, help="Save top k checkpoints. ")
-    parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default="bce", help="Checkpoint metric. ")
+    parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default=None, help="Checkpoint metric. ")
     parser.add_argument("--checkponit-mode", dest="checkpoint_mode", type=str, default="min", help="Checkpoint mode. ")
     parser.add_argument("--log-every-n-steps",dest="log_every_n_steps", type=int, default=50, help="Log every n steps. ")
     # loss arguments
@@ -93,7 +93,10 @@ def get_datamodule(args):
         val_params={"supervised_file": args.valid},
         test_params={"supervised_file": args.test},
     )
-    ignore_index = data_module.train_config.init_dataset()[1]["ignore_index"]
+    if args.ignore:
+        ignore_index = data_module.train_config.init_dataset()[1]["ignore_index"]
+    else:
+        ignore_index = None
 
     return data_module, ignore_index
 
@@ -136,6 +139,10 @@ def get_train_config(args):
         args.limit_val_batches = int(args.limit_val_batches)
     if args.val_check_interval > 1:
         args.val_check_interval = int(args.val_check_interval)
+    if args.checkpoint_metric is None:
+        checkpoint_metric = args.loss
+    else:
+        checkpoint_metric = args.checkpoint_metric
     config = chrombert.finetune.TrainConfig(
         kind = args.kind,
         loss = args.loss,
@@ -146,7 +153,7 @@ def get_train_config(args):
         accumulate_grad_batches = args.grad_samples // args.batch_size // torch.cuda.device_count(),
         limit_val_batches = args.limit_val_batches,
         val_check_interval = args.val_check_interval,
-        checkpoint_metric = args.checkpoint_metric, 
+        checkpoint_metric = checkpoint_metric, 
         checkpoint_mode = args.checkpoint_mode
 
     )

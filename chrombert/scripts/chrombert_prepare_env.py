@@ -53,7 +53,7 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
     print(f"Downloading files to {basedir}")
 
     directories = [
-        "config"
+        "config",
         "checkpoint",
         "cache",
         "other",
