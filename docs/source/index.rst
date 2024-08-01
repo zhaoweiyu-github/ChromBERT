@@ -1,7 +1,7 @@
 Welcome to ChromBERT's documentation!
 ======================================
 
-**ChromBERT** is a pre-trained deep learning model designed to learn latent representations for genome-wide co-association among approximately one thousand transcription regulators. This enables the accurate prediction and interpretation of context-specific human regulatory networks in various downstream tasks. ChromBERT aims to establish a foundational model for transcription regulatory omics through transfer learning.
+**ChromBERT** is a pre-trained deep learning model designed to capture the genome-wide co-association patterns of approximately one thousand transcription regulators, thereby enabling accurate representations of context-specific transcriptional regulatory networks (TRNs). As a foundational model, ChromBERT can be fine-tuned to adapt to various biological contexts through transfer learning and provide insights into the roles of transcription regulators in the specific biological contexts without the need of additional genomic.
 
 Check out the :doc:`installation` section to get started.
 

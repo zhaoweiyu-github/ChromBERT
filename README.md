@@ -51,7 +51,7 @@ ChromBERT has been initially trained on the human Cistrome-Human-6K dataset at 1
 | :------------------------ | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
 | Human-6K-1kb | Pre-trained on Cistrome-Human-6K dataset at 1-kb resolution | [Download](https://huggingface.co/datasets/TongjiZhanglab/chrombert) |
 
-Note: Models can also be downloaded via the chrombert_prepare_env command, as outlined in the installation section.
+Note: Models can also be downloaded via the `chrombert_prepare_env` command, as outlined in the installation section.
 
 ## Fine-tuning ChromBERT for downstream tasks
 
