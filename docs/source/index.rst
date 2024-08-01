@@ -13,16 +13,15 @@ Welcome to ChromBERT's documentation!
     :caption: Getting started:
 
     installation
-    cli
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: Tutorials: 
 
     tutorial_finetuning_ChromBERT_from_scratch
     finetune
     tutorial_embedding_extraction
-    scripts
+    cli
 
 .. toctree:: 
     :maxdepth: 1

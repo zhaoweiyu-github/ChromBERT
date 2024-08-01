@@ -1,5 +1,5 @@
 chrombert_prepare_env
-=====================
+**********************
 
 Download required files to ~/.cache/chrombert/data, or other path your like.
 

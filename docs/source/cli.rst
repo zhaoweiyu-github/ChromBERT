@@ -1,6 +1,9 @@
 CLI Reference
 =============
 
+Overview
+-----------
+
 We provide a set of command line scripts for your convenience. All scripts can be called in your terminal directly. See the following sections for more details.
 
 .. csv-table:: Scripts Instruction 
@@ -14,6 +17,6 @@ We provide a set of command line scripts for your convenience. All scripts can b
 
 
 Details 
-========= 
+---------
 
-    .. include:: scripts/chrombert_prepare_env.rst 
+.. include:: scripts/chrombert_prepare_env.rst 
