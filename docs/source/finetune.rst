@@ -1,5 +1,5 @@
-Fine-tuning 
--------------------------
+Fine-tuning ChromBERT from scratch 
+-----------------------------------
 
 For a hands-on tutorial, see the documentation on :doc:`tutorial_finetuning_ChromBERT_from_scratch`.  
 

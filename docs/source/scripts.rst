@@ -1,7 +1,7 @@
-Scripts
-=========
+CLI Reference
+=============
 
-We provide a set of scripts for your convenience. All scripts can be called in your terminal directly. See the following sections for more details.
+We provide a set of command line scripts for your convenience. All scripts can be called in your terminal directly. See the following sections for more details.
 
 .. csv-table:: Scripts Instruction 
     :header: "Script", "Description"

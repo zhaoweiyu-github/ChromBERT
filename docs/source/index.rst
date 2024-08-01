@@ -13,8 +13,6 @@ Welcome to ChromBERT's documentation!
     :caption: Getting started:
 
     installation
-    scripts
-    developing
 
 .. toctree::
     :maxdepth: 2
@@ -22,6 +20,7 @@ Welcome to ChromBERT's documentation!
 
     finetune
     tutorial_embedding_extraction
+    scripts
 
 .. toctree:: 
     :maxdepth: 1

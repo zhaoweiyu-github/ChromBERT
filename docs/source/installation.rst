@@ -1,11 +1,11 @@
 Installation
 ============
 
-``ChromBERT`` is compatible with Python versions 3.8 or higher and requires ``PyTorch`` 2.0 or above, along with ``FlashAttention-2``. These dependencies must be installed prior to ``ChromBERT``.
+``ChromBERT`` is compatible with Python versions 3.8 or higher and requires ``PyTorch`` version 2.0 or above, along with ``FlashAttention-2``. These dependencies must be installed prior to ``ChromBERT``.
 
 Installing PyTorch
 ------------------
-Follow the detailed instructions on `PyTorch’s official site <https://pytorch.org/get-started/locally/>`__ to install PyTorch according to your device and CUDA version specifications.
+Follow the detailed instructions on `PyTorch’s official site <https://pytorch.org/get-started/locally/>`__ to install ``PyTorch`` according to your device and CUDA version specifications.
 
 Installing FlashAttention-2
 ---------------------------
