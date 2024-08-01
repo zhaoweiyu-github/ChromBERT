@@ -18,8 +18,9 @@ Welcome to ChromBERT's documentation!
     :maxdepth: 2
     :caption: Tutorials: 
 
-    tutorial_embedding_extraction
+    tutorial_finetuning_ChromBERT_from_scratch
     finetune
+    tutorial_embedding_extraction
     scripts
 
 .. toctree:: 
