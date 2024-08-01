@@ -5,7 +5,7 @@ import sphinx_rtd_theme
 
 project = 'ChromBERT'
 copyright = '2024, Zhang Lab'
-author = 'Zhaowei Yu, Dongxu Yang, Qianqian Cheng, Yuxuan Zhang'
+author = 'Zhaowei Yu, Dongxu Yang, Qianqian Chen, Yuxuan Zhang'
 
 release = '1.0.0'
 version = '1.0.0'

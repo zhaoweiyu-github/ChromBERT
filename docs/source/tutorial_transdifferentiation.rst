@@ -1,4 +1,4 @@
-Tutorial for drived regulators during cell fate transition 
+Tutorial for key regulators inference during cell state transition
 ============================================================
 
 
