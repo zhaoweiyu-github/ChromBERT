@@ -3,6 +3,8 @@ import torch.nn as nn
 import lightning.pytorch as pl
 from .utils import BERTEmbedding
 from .utils import EncoderTransformerBlock
+from .utils import ChromBERTEmbedding
+
 class ChromBERT(nn.Module):
     def __init__(self, config):
         """
@@ -94,3 +96,14 @@ class ChromBERT(nn.Module):
                 else:
                     print(name, ": frozen")
         return o 
+
+    def get_embedding_manager(self, mtx_mask, ignore = False, ignore_index= None):
+        '''
+        get a embedding manager for the pretrain model.
+        params:
+            mtx_mask: a matrix that mask the embedding, 1 for available, 0 for unavailable. 
+            ignore: if True, ignore the embedding of the specified index. 
+            ignore_index: the index to be ignored. 
+        '''
+        model_emb = ChromBERTEmbedding(self, mtx_mask = mtx_mask, ignore = ignore, ignore_index = ignore_index)
+        return model_emb
