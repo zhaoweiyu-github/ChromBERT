@@ -33,14 +33,14 @@ def parse_args():
     parser.add_argument("-d","--hdf5-file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
-    parser.add_argument("-fc", "--finetune_ckpt", type=str, required=True, default=None, help="Path to the finetune checkpoint")
-    parser.add_argument("-pk", "--prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
+    parser.add_argument("--finetune_ckpt", type=str, required=True, default=None, help="Path to the finetune checkpoint")
+    parser.add_argument("--prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
     parser.add_argument("--prompt_dim_external", type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
     
-    parser.add_argument("-file_ct", "--prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file")
-    parser.add_argument("-file_rl", "--prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file")
-    parser.add_argument("-prompt_ct", "--prompt_celltype", type=str, required=False, default=None, help="the cell-type-specific prompt. For example, 'dnase:k562' for cistrome prompt and 'k562' for expression prompt. It can also be provided in the supervised file if the format supports.")
-    parser.add_argument("-prompt_rl", "--prompt_regulator", type=str, required=False, default=None, help="the regulator prompt. Determine the kind of output. For example, 'ctcf' or 'h3k27ac'. It can also be provided in the supervised file if the format supports.")
+    parser.add_argument("--prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file")
+    parser.add_argument("--prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file")
+    parser.add_argument("--prompt_celltype", type=str, required=False, default=None, help="the cell-type-specific prompt. For example, 'dnase:k562' for cistrome prompt and 'k562' for expression prompt. It can also be provided in the supervised file if the format supports.")
+    parser.add_argument("--prompt_regulator", type=str, required=False, default=None, help="the regulator prompt. Determine the kind of output. For example, 'ctcf' or 'h3k27ac'. It can also be provided in the supervised file if the format supports.")
 
     parser.add_argument("--gpu", type=int, default = 0, help="GPU index") 
     parser.add_argument("--batch_size", type=int, required=False, default=8, help="batch size")
