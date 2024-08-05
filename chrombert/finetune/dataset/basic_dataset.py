@@ -83,7 +83,7 @@ class PerturbationDataset(BasicDataset):
         
     def __getitem__(self, index):
         item = super().__getitem__(index)
-        if self.config.perturbation and self.config.perturbation_object is not None and self.config.perturbation_object is not "none":
+        if self.config.perturbation and self.config.perturbation_object is not None and self.config.perturbation_object != "none":
             self.perturb_gsmids_index = self.process_perturbation_target(self.config.perturbation_object)
             perturb_mask = np.in1d(item["position_ids"], self.perturb_gsmids_index + 1) 
             item['input_ids'][perturb_mask] = self.perturbation_value + self.config.vocab_shift

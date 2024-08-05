@@ -145,7 +145,7 @@ class ChromBERTFTConfig:
     def get_ckpt_type(cls, ckpt):
         assert isinstance(ckpt, str)
         ckpt = torch.load(ckpt, map_location='cpu')
-        if "state" in ckpt:
+        if "state_dict" in ckpt:
             return "finetune"
         else:
             return "pretrain"
