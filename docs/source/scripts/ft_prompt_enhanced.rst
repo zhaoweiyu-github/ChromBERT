@@ -5,7 +5,7 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 
 .. code-block:: shell
 
-    ft_prompt_enhanced [OPTIONS] --train TRAIN_PATH --valid VALID_PATH --test TEST_PATH --prompt-kind KIND --preset-data PRESET_PATH1 --preset-model PRESET_PATH2 --prompt_regulator_cache_file CACHE_PATH1 --prompt_celltype_cache_file CACHE_PATH2
+    ft_prompt_enhanced [OPTIONS] --train TRAIN_PATH --valid VALID_PATH --test TEST_PATH --prompt-kind KIND --prompt_regulator_cache_file CACHE_PATH1 --prompt_celltype_cache_file CACHE_PATH2
 
 .. rubric:: Options
 
@@ -116,14 +116,6 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 .. option:: -hr, --high-resolution
 
     Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.
-
-.. option:: --preset-data
-
-    Path to the preset file of data. This option is required.
-
-.. option:: --preset-model
-
-    Path to the preset file of the model. This option is required.
 
 .. option:: --prompt-kind
 

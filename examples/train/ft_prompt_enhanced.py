@@ -44,7 +44,7 @@ def get_args():
     parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
 
     parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the checkpoints used to initialize the model")
-    parser.add_argument("--mask", type=str, required=False, default=None, help="Path to the mtx mask file. Optional if it could infered from other arguments")
+    parser.add_argument("--mask", type=str, required=False, default="config/hg38_6k_mask_matrix.tsv", help="Path to the mtx mask file. Optional if it could infered from other arguments")
 
     parser.add_argument("-d","--hdf5-file", dest="hdf5_file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
     parser.add_argument("--dropout", type=float, default=0.1, help="Dropout rate. ")
@@ -52,8 +52,6 @@ def get_args():
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
     # cache_arguments
-    parser.add_argument("--preset-data", dest="preset_data", type=str, required=True, help="the path to the preset file of data")
-    parser.add_argument("--preset-model", dest="preset_model", type=str, required=True, help="the path to the preset file of model")
     parser.add_argument("--prompt-kind", dest="prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
     parser.add_argument("--prompt-dim-external", dest="prompt_dim_external", type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
     parser.add_argument("--prompt-celltype-cache-file", dest="prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file, provided if you want to customize the cache file")
@@ -76,6 +74,7 @@ def get_datamodule(args):
         hdf5_file = os.path.join(args.basedir, f"{args.genome}_6k_{res}.hdf5")
 
     params = {
+        "kind": "PromptDataset",
         "hdf5_file": hdf5_file,
         "batch_size": args.batch_size,
         "num_workers": args.num_workers,
@@ -86,7 +85,7 @@ def get_datamodule(args):
     if params["prompt_kind"] == "expression":
         assert params["prompt_celltype_cache_file"] is not None, "prompt_celltype_cache_file must be provided if the prompt kind is expression"
 
-    dc = chrombert.get_preset_dataset_config(args.preset_data,**params, supervised_file = None)
+    dc = chrombert.DatasetConfig(**params, supervised_file = None)
 
     data_module = chrombert.LitChromBERTFTDataModule(
         config = dc,
@@ -100,10 +99,11 @@ def get_datamodule(args):
 def get_model_config(args):
     assert args.genome == "hg38", "Only hg38 is supported now"  
     parameters = {
+        "task":"prompt",
         "genome": args.genome,
         "dropout": args.dropout,
-        "preset": args.preset_model,
-        "prompt_kind": args.prompt_kind
+        "prompt_kind": args.prompt_kind,
+        "prompt_dim_external":args.prompt_dim_external
     }
     if args.ckpt is not None:
         if chrombert.ChromBERTFTConfig.get_ckpt_type(args.ckpt) == "pretrain":
@@ -117,10 +117,7 @@ def get_model_config(args):
     if args.mask is not None:
         parameters["mtx_mask"] = args.mask
 
-    config = chrombert.get_preset_model_config(
-        basedir = args.basedir,
-        **parameters
-    )
+    config = chrombert.ChromBERTFTConfig.load(**parameters)
 
     return config
 

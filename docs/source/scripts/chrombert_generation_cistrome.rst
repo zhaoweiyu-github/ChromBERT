@@ -3,6 +3,10 @@ chrombert_generation_cistrome
 
 Generate prediction result (full bigwig file or table) from ChromBERT when given cell type name, region and regulator.
 
+.. note::
+
+   Either --o-bw or --o-table must be provided, depends on which format you want to output the results.
+
 .. code-block:: shell
 
     chrombert_generation [OPTIONS] SUPERVISED_FILE --o-bw BW_PATH --o-table TABLE_PATH --finetune-ckpt CKPT --prompt-kind KIND
@@ -15,11 +19,11 @@ Generate prediction result (full bigwig file or table) from ChromBERT when given
 
 .. option:: --o-bw
 
-    Path of the output BigWig file. Optional.
+    Path of the output BigWig file.
 
 .. option:: --o-table
 
-    Path to the output table if you want to output the table. Optional.
+    Path to the output table if you want to output the table.
 
 .. option:: --basedir
 
