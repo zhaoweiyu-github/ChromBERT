@@ -1,11 +1,25 @@
 Prompt-enhanced
 *******************
 
+
 Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 
 .. code-block:: shell
 
-    ft_prompt_enhanced [OPTIONS] --train TRAIN_PATH --valid VALID_PATH --test TEST_PATH --prompt-kind KIND --prompt_regulator_cache_file CACHE_PATH1 --prompt_celltype_cache_file CACHE_PATH2
+    python ft_prompt_enhanced.py [OPTIONS] --prompt-kind KIND \  
+        --train TRAIN_PATH \  
+        --valid VALID_PATH \  
+        --test TEST_PATH  
+
+    # use cache file for acceleration 
+    python ft_prompt_enhanced.py [OPTIONS] \  
+        --prompt-kind KIND  \  
+        --prompt_regulator_cache_file CACHE_PATH1 \  
+        --prompt_celltype_cache_file CACHE_PATH2 \  
+        --train TRAIN_PATH \  
+        --valid VALID_PATH \  
+        --test TEST_PATH 
+
 
 .. rubric:: Options
 
@@ -123,12 +137,12 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 
 .. option:: --prompt-dim-external
 
-    Dimension of external data. Use *512* for *scgpt*. Default is *512*.
+    Dimension of external data. Use *512* for *scgpt*, and *768* for *ChromBERT*'s embedding. Default is *512*.
 
 .. option:: --prompt-celltype-cache-file
 
-    Path to the cell type specific prompt cache file. Provided if you want to customize the cache file. Optional.
+    Path to the cell type specific prompt cache file. Provided if you want to customize the cache file. Optional. Default is not use it. 
 
 .. option:: --prompt-regulator-cache-file
 
-    Path to the regulator prompt cache file. Provided if you want to customize the cache file. Optional.
+    Path to the regulator prompt cache file. Provided if you want to customize the cache file. Optional.  Default is not use it. 

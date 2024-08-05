@@ -1,5 +1,5 @@
 Example for key regulators inference during cell state transition
-============================================================
+====================================================================
 
 
 .. toctree:: 

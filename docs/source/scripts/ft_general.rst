@@ -5,7 +5,8 @@ This script is suitable for most purposes. It is designed to be a general-purpos
 
 .. code-block:: shell
 
-    ft_general [OPTIONS] --train TRAIN_PATH --valid VALID_PATH --test TEST_PATH
+    python ft_general.py [OPTIONS] --train TRAIN_PATH --valid VALID_PATH --test TEST_PATH
+
 
 .. rubric:: Options
 
@@ -136,3 +137,4 @@ This script is suitable for most purposes. It is designed to be a general-purpos
 .. option:: --perturbation-value
 
     Perturbation target level. *0* means knock-out perturbation, and *4* means over-expression perturbation. Default is *0*.
+
