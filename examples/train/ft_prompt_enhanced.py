@@ -23,7 +23,7 @@ def get_args():
     parser.add_argument("--val-check-interval", dest="val_check_interval", type=float, default=64, help="Validation check interval. ")
 
     # checkpoint arguments
-    parser.add_argument("--name", type=str, default="chrombert-ft-general", help="Name of the trainer. ")
+    parser.add_argument("--name", type=str, default="chrombert-ft-prompt-enhanced", help="Name of the trainer. ")
     parser.add_argument("--save-top-k", dest="save_top_k", type=int, default=3, help="Save top k checkpoints. ")
     parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default="bce", help="Checkpoint metric. ")
     parser.add_argument("--checkponit-mode", dest="checkpoint_mode", type=str, default="min", help="Checkpoint mode. ")
@@ -46,18 +46,18 @@ def get_args():
     parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the checkpoints used to initialize the model")
     parser.add_argument("--mask", type=str, required=False, default=None, help="Path to the mtx mask file. Optional if it could infered from other arguments")
 
-    parser.add_argument("-d","--hdf5-file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
+    parser.add_argument("-d","--hdf5-file", dest="hdf5_file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
     parser.add_argument("--dropout", type=float, default=0.1, help="Dropout rate. ")
 
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
     # cache_arguments
-    parser.add_argument("--preset_data", type=str, required=True, help="the path to the preset file of data")
-    parser.add_argument("--preset_model", type=str, required=True, help="the path to the preset file of model")
-    parser.add_argument("--prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
-    parser.add_argument("--prompt_dim_external", type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
-    parser.add_argument("--prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file, provided if you want to customize the cache file")
-    parser.add_argument("--prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file, provided if you want to customize the cache file")
+    parser.add_argument("--preset-data", dest="preset_data", type=str, required=True, help="the path to the preset file of data")
+    parser.add_argument("--preset-model", dest="preset_model", type=str, required=True, help="the path to the preset file of model")
+    parser.add_argument("--prompt-kind", dest="prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
+    parser.add_argument("--prompt-dim-external", dest="prompt_dim_external", type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
+    parser.add_argument("--prompt-celltype-cache-file", dest="prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file, provided if you want to customize the cache file")
+    parser.add_argument("--prompt-regulator-cache-file", dest="prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file, provided if you want to customize the cache file")
     
     return parser.parse_args()
 

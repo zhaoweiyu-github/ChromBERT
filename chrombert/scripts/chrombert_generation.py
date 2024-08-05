@@ -21,35 +21,37 @@ DEFAULT_BASEDIR = os.path.expanduser("~/.cache/chrombert/data")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Extract region embeddings from ChromBERT")
-    parser.add_argument("--supervised_file", type=str, help="Path to the supervised file")
-    parser.add_argument("--o_bw", type=str, required=False, default=None, help="Path of the bw file")
-    parser.add_argument("--o_table", type=str, required=False, default=None, help="Path to the output table if you want to output the table")
+    parser.add_argument("supervised-file", dest="supervised_file", type=str, help="Path to the supervised file")
+    parser.add_argument("--o-bw", dest="o_bw", type=str, required=False, default=None, help="Path of the bw file")
+    parser.add_argument("--o-table", dest="o_table", type=str, required=False, default=None, help="Path to the output table if you want to output the table")
 
     parser.add_argument("--basedir", type=str, default = DEFAULT_BASEDIR, help="Base directory for the required files")
     
     parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
-    parser.add_argument("-pc", "--pretrain_ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint. Optial if it could infered from other arguments")
-    parser.add_argument("-m", "--mtx_mask", type=str, required=False, default=None, help="Path to the mtx mask file for the mean pooling of the embedding of regulators")
+    parser.add_argument("-pc", "--pretrain-ckpt", dest="pretrain_ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint. Optial if it could infered from other arguments")
+    parser.add_argument("-m", "--mtx-mask", dest="mtx_mask", type=str, required=False, default=None, help="Path to the mtx mask file for the mean pooling of the embedding of regulators")
     parser.add_argument("-d","--hdf5-file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
-    parser.add_argument("--finetune_ckpt", type=str, required=True, default=None, help="Path to the finetune checkpoint")
-    parser.add_argument("--prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
-    parser.add_argument("--prompt_dim_external", type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
+    parser.add_argument("--finetune-ckpt", dest='finetune_ckpt', type=str, required=True, default=None, help="Path to the finetune checkpoint")
+    parser.add_argument("--prompt-kind", dest='prompt_kind', type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
+    parser.add_argument("--prompt-dim-external", dest ='prompt_dim_external', type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
     
-    parser.add_argument("--prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file")
-    parser.add_argument("--prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file")
-    parser.add_argument("--prompt_celltype", type=str, required=False, default=None, help="the cell-type-specific prompt. For example, 'dnase:k562' for cistrome prompt and 'k562' for expression prompt. It can also be provided in the supervised file if the format supports.")
-    parser.add_argument("--prompt_regulator", type=str, required=False, default=None, help="the regulator prompt. Determine the kind of output. For example, 'ctcf' or 'h3k27ac'. It can also be provided in the supervised file if the format supports.")
+    parser.add_argument("--prompt-celltype-cache-file", dest="prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file")
+    parser.add_argument("--prompt-regulator-cache-file", dest="prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file")
+    parser.add_argument("--prompt-celltype", dest="prompt_celltype", type=str, required=False, default=None, help="the cell-type-specific prompt. For example, 'dnase:k562' for cistrome prompt and 'k562' for expression prompt. It can also be provided in the supervised file if the format supports.")
+    parser.add_argument("--prompt-regulator", dest="prompt_regulator", type=str, required=False, default=None, help="the regulator prompt. Determine the kind of output. For example, 'ctcf' or 'h3k27ac'. It can also be provided in the supervised file if the format supports.")
 
     parser.add_argument("--gpu", type=int, default = 0, help="GPU index") 
-    parser.add_argument("--batch_size", type=int, required=False, default=8, help="batch size")
-    parser.add_argument("--num_workers", type=int, required=False, default=8, help="number of workers for dataloader")
+    parser.add_argument("--batch-size", dest="batch_size", type=int, required=False, default=8, help="batch size")
+    parser.add_argument("--num-workers", dest="num_workers", type=int, required=False, default=8, help="number of workers for dataloader")
 
     return parser.parse_args()
 
 def validate_args(args):
     assert os.path.exists(args.supervised_file), f"Supervised file does not exist: {args.supervised_file}"
+    if args.prompt_kind == "regression":
+        assert os.path.exists(args.prompt_regulator_cache_file), "prompt-regulator-cache-file must be provided if the prompt kind is regression"
 
 
 def get_finetune_config(args):
