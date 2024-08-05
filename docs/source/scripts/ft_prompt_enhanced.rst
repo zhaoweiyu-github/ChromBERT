@@ -1,4 +1,4 @@
-ft_prompt_enhanced
+Prompt-enhanced
 *******************
 
 Fine-tune a prompt-enhanced ChromBERT on a downstream task.

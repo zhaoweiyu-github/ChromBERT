@@ -1,21 +1,25 @@
-chrombert_extract_region_embeddings
+chrombert_generation_cistrome
 ************************************
 
-Generate prediction result (hdf5 format) from ChromBERT when given single cell, region and regulator.
+Generate prediction result (full bigwig file or table) from ChromBERT when given cell type name, region and regulator.
 
 .. code-block:: shell
 
-    chrombert_generation [OPTIONS] SUPERVISED_FILE --o-h5 H5_PATH --finetune-ckpt CKPT --prompt-kind KIND
+    chrombert_generation [OPTIONS] SUPERVISED_FILE --o-bw BW_PATH --o-table TABLE_PATH --finetune-ckpt CKPT --prompt-kind KIND
 
 .. rubric:: Options
 
-.. option:: --supervised-file
+.. option:: supervised-file
 
     Path to the supervised file.
 
-.. option:: --o-h5
+.. option:: --o-bw
 
-    Path of the output HDF5 file. This option is required.
+    Path of the output BigWig file. Optional.
+
+.. option:: --o-table
+
+    Path to the output table if you want to output the table. Optional.
 
 .. option:: --basedir
 
