@@ -1,5 +1,6 @@
 import os
 import sys 
+import shutil 
 import subprocess
 import argparse
 
@@ -26,8 +27,11 @@ class FileManager:
 class HuggingFaceDownloader:
     @staticmethod
     def download(ifile, odir, hf_endpoint="https://huggingface.co"):
-        huggingface_cli_path = os.path.join(os.path.dirname(sys.executable), "huggingface-cli")
-
+        # huggingface_cli_path = os.path.join(os.path.dirname(sys.executable), "huggingface-cli")
+        huggingface_cli_path = shutil.which("huggingface-cli")
+        if huggingface_cli_path is None:
+            raise FileNotFoundError("The 'huggingface-cli' command was not found in the system PATH.")
+        
         cmd = [
             huggingface_cli_path,
             "download",
