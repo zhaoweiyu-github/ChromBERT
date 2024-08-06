@@ -43,19 +43,18 @@ def get_args():
     parser.add_argument("--basedir", type=str, default=os.path.expanduser("~/.cache/chrombert/data"), help="Path to the base directory. ")
     parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
 
-    parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the checkpoints used to initialize the model")
-    parser.add_argument("--mask", type=str, required=False, default="config/hg38_6k_mask_matrix.tsv", help="Path to the mtx mask file. Optional if it could infered from other arguments")
+    parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the checkpoints used to initialize the model. Optional if it could infered from other arguments. ")
 
-    parser.add_argument("-d","--hdf5-file", dest="hdf5_file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
+    parser.add_argument("-d","--hdf5-file", dest="hdf5_file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments. ")
     parser.add_argument("--dropout", type=float, default=0.1, help="Dropout rate. ")
 
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
     # cache_arguments
-    parser.add_argument("--prompt-kind", dest="prompt_kind", type=str, required=True, default=None, help="prompt data class, choose from 'cistrome' or 'expression'")
-    parser.add_argument("--prompt-dim-external", dest="prompt_dim_external", type=int, required=False, default=512, help="dimension of external data. use 512 for scgpt")
-    parser.add_argument("--prompt-celltype-cache-file", dest="prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file, provided if you want to customize the cache file")
-    parser.add_argument("--prompt-regulator-cache-file", dest="prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file, provided if you want to customize the cache file")
+    parser.add_argument("--prompt-kind", dest="prompt_kind", type=str, required=True, default=None, help="Prompt data class, choose from 'cistrome' or 'expression'. ")
+    parser.add_argument("--prompt-dim-external", dest="prompt_dim_external", type=int, required=False, default=512, help="Dimension of external data. use 512 for scGPT. ")
+    parser.add_argument("--prompt-celltype-cache-file", dest="prompt_celltype_cache_file", type=str, required=False, default=None, help="Path to the cell type specific prompt cache file, provided if you want to use cache file to accelerate the training process. ")
+    parser.add_argument("--prompt-regulator-cache-file", dest="prompt_regulator_cache_file", type=str, required=False, default=None, help="Path to the regulator prompt cache file, provided if you want to use cache file to accelerate the training process. ")
     
     return parser.parse_args()
 
@@ -80,7 +79,8 @@ def get_datamodule(args):
         "num_workers": args.num_workers,
         "prompt_kind":args.prompt_kind,
         "prompt_celltype_cache_file":args.prompt_celltype_cache_file,
-        "prompt_regulator_cache_file":args.prompt_regulator_cache_file
+        "prompt_regulator_cache_file":args.prompt_regulator_cache_file,
+        "meta_file":os.path.join(args.basedir, f'config/{args.genome}_6k_meta.json')
     }
     if params["prompt_kind"] == "expression":
         assert params["prompt_celltype_cache_file"] is not None, "prompt_celltype_cache_file must be provided if the prompt kind is expression"
@@ -97,7 +97,18 @@ def get_datamodule(args):
     return data_module
 
 def get_model_config(args):
-    assert args.genome == "hg38", "Only hg38 is supported now"  
+    assert args.genome == "hg38", "Only hg38 is supported now"
+
+    if args.ckpt is not None:
+        ckpt = args.ckpt
+    else:
+        assert os.path.exists(args.basedir), f"Basedir does not exist: {args.basedir}. If you use default basedir, please make sure environment initialized correctly (see readme of the repo). "
+        if args.hr:
+            res = "200bp"
+        else:
+            res = "1kb"
+        ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")  
+
     parameters = {
         "task":"prompt",
         "genome": args.genome,
@@ -105,17 +116,12 @@ def get_model_config(args):
         "prompt_kind": args.prompt_kind,
         "prompt_dim_external":args.prompt_dim_external
     }
-    if args.ckpt is not None:
-        if chrombert.ChromBERTFTConfig.get_ckpt_type(args.ckpt) == "pretrain":
-            parameters["pretrain_ckpt"] = args.ckpt
-        else:
-            print("Warning: You are using a finetune checkpoint. Make sure it is the correct one!")
-            parameters["finetune_ckpt"] = args.ckpt
+    
+    if chrombert.ChromBERTFTConfig.get_ckpt_type(ckpt) == "pretrain":
+        parameters["pretrain_ckpt"] = ckpt
     else:
-        parameters["finetune_ckpt"] = args.ckpt
-
-    if args.mask is not None:
-        parameters["mtx_mask"] = args.mask
+        print("Warning: You are using a finetune checkpoint. Make sure it is the correct one!")
+        parameters["finetune_ckpt"] = ckpt
 
     config = chrombert.ChromBERTFTConfig.load(**parameters)
 
