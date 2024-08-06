@@ -110,11 +110,6 @@ class ZeroInflationPLModule(BasicPLModule):
         self.loss_funcs = {
             'zero_inflation': ZeroInflationLoss(),
         }
-
-
-        self.metrics_for_prob = {
-            
-        }
         self.loss_for_reg = {
             'mae': nn.L1Loss(),
             'mse': nn.MSELoss(),
@@ -140,19 +135,17 @@ class ZeroInflationPLModule(BasicPLModule):
         labels = self.logger_values.get_values("label")
 
         metrics_loss = {name: func.to(labels.device)((zero_prob_logit, reg_value), labels) for name, func in self.loss_funcs.items()}
-        # metrics_for_probs = {func(zero_prob_logit, labels > 0) for name, func in self.metrics_for_prob.items()}
         loss_for_reg =  {name: func.to(labels.device)(reg_value, labels) for name, func in self.loss_for_reg.items()}
         metrics_for_reg =  {name: func.to(labels.device)(reg_value, labels) for name, func in self.metrics_for_reg.items()}
 
         metrics = {}
         metrics.update(metrics_loss)
-        # metrics.update(metrics_for_probs)
         metrics.update(loss_for_reg)
         metrics.update(metrics_for_reg)
 
         state = {f"{self.config.tag}_validation/{name}": value for name, value in metrics.items()}
         for name, value in state.items():
-            self.log(name, value,  sync_dist = False, on_step = False, on_epoch = True, prog_bar = False)
+            self.log(name, value,  sync_dist = False, on_step = False, on_epoch = True, prog_bar = True)
 
         for k, func in self.metrics_for_reg.items():
             func.reset()

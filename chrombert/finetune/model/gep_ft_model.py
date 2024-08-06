@@ -2,7 +2,7 @@ import os,sys
 import torch
 import torch.nn as nn
 from chrombert import ChromBERTConfig
-from .utils import PoolFlankWindow,GepHeader
+from .utils import PoolFlankWindow,GepHeader,GeneralHeader
 from .basic_model import BasicModel
 from .utils import ChromBERTEmbedding
 class ChromBERTGEP(BasicModel):
@@ -27,15 +27,24 @@ class ChromBERTGEP(BasicModel):
                 parallel_embedding = self.finetune_config.gep_parallel_embedding,
                 gradient_checkpoint=self.finetune_config.gep_gradient_checkpoint
             )
-
-        self.ft_header = GepHeader(
-            self.pretrain_config.hidden_dim, 
-            self.finetune_config.dim_output, 
-            self.finetune_config.mtx_mask, 
-            self.finetune_config.ignore,
-            self.finetune_config.ignore_index,
-            self.finetune_config.dropout
-            )
+        if self.finetune_config.gep_zero_inflation:
+            self.ft_header = GepHeader(
+                self.pretrain_config.hidden_dim, 
+                self.finetune_config.dim_output, 
+                self.finetune_config.mtx_mask, 
+                self.finetune_config.ignore,
+                self.finetune_config.ignore_index,
+                self.finetune_config.dropout
+                )
+        else:
+            self.ft_header = GeneralHeader(
+                self.pretrain_config.hidden_dim, 
+                self.finetune_config.dim_output, 
+                self.finetune_config.mtx_mask, 
+                self.finetune_config.ignore,
+                self.finetune_config.ignore_index,
+                self.finetune_config.dropout
+                )
         return None
 
     def forward(self,batch):

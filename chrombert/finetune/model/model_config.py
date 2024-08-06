@@ -114,12 +114,8 @@ class ChromBERTFTConfig:
         pretrain_config = ChromBERTConfig.load(ckpt=pretrain_ckpt, genome=finetune_config.genome, dropout=finetune_config.dropout)
 
         if finetune_config.task == 'gep':
-            if finetune_config.gep_zero_inflation:
-                from .gep_ft_model import ChromBERTGEP
-                model =  ChromBERTGEP(pretrain_config, finetune_config)
-            else:
-                from .multi_flankwindow_ft_model import ChromBERTMultiFlankWindow
-                model = ChromBERTMultiFlankWindow(pretrain_config, finetune_config)
+            from .gep_ft_model import ChromBERTGEP
+            model =  ChromBERTGEP(pretrain_config, finetune_config)
     
         elif finetune_config.task == 'prompt':
             if finetune_config.prompt_kind == 'dna':

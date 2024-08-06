@@ -37,23 +37,18 @@ class RMSELoss(nn.Module):
         loss = torch.sqrt(loss.mean())
         return loss
     
-
 class ZeroInflationLoss(nn.Module):
     def __init__(self):
         super().__init__()
-        
+
     def forward(self, logit, target):
-        zero_prob_logit, reg_value = logit 
-        zero_target_indices = torch.nonzero(target == 0).squeeze()
-        if zero_target_indices.numel() == 0:
-            zero_loss = torch.tensor(0.0, device=zero_prob_logit.device)
-            zero_target = torch.tensor([], device=target.device)
-        else:
-            zero_target = target[zero_target_indices].squeeze() 
-            zero_prob_logit = zero_prob_logit[zero_target_indices].squeeze()
-            zero_loss = F.binary_cross_entropy_with_logits(zero_prob_logit, zero_target) 
-        reg_target_indices = torch.nonzero(target).squeeze()
-        reg_target = target[reg_target_indices].squeeze()
-        reg_value = reg_value[reg_target_indices].squeeze()
-        mae_loss = torch.abs(reg_value - reg_target).sum() / (reg_target.numel() + 1e-10)
-        return zero_loss + mae_loss
+        zero_prob_logit, reg_value = logit
+        changes_target = (target != 0).float() 
+        zero_mask = (target == 0).float()  
+        reg_mask = (target != 0).float()
+        zero_loss = F.binary_cross_entropy_with_logits(zero_prob_logit, changes_target,reduction='none')
+        zero_loss = (zero_loss * zero_mask).sum() / (zero_mask.sum() + 1e-10)
+        mae_loss = torch.abs(reg_value - target) * reg_mask
+        mae_loss = mae_loss.sum() / (reg_mask.sum() + 1e-10)
+        total_loss = zero_loss + mae_loss
+        return total_loss
