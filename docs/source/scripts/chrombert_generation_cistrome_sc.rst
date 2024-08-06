@@ -9,7 +9,7 @@ Generate prediction result (hdf5 format) from ChromBERT when given single cell, 
 
 .. rubric:: Options
 
-.. option:: --supervised-file
+.. option:: supervised_file
 
     Path to the supervised file.
 
@@ -25,13 +25,9 @@ Generate prediction result (hdf5 format) from ChromBERT when given single cell, 
 
     Genome version. For example, *hg38* or *mm10*. Only *hg38* is supported now. Default is *hg38*.
 
-.. option:: -pc, --pretrain-ckpt
+.. option:: --pretrain-ckpt
 
     Path to the pretrain checkpoint. Optional if it could be inferred from other arguments.
-
-.. option:: -m, --mtx-mask
-
-    Path to the mtx mask file for the mean pooling of the embedding of regulators. Optional if it could be inferred from other arguments.
 
 .. option:: -d, --hdf5-file
 
@@ -51,11 +47,11 @@ Generate prediction result (hdf5 format) from ChromBERT when given single cell, 
 
 .. option:: --prompt-dim-external
 
-    Dimension of external data. Use *512* for *scgpt*. Default is *512*.
+    Dimension of external data. Use *512* for *scGPT* and *768* for *ChromBERT*'s embedding. Default is *512*.
 
 .. option:: --prompt-celltype-cache-file
 
-    Path to the cell type specific prompt cache file. Optional.
+    Path to the cell-type-specific prompt cache file. Optional.
 
 .. option:: --prompt-regulator-cache-file
 

@@ -72,7 +72,8 @@ class ChromBERTFTConfig:
         assert self.task in task_avaliable, f"task must be one of {task_avaliable}, but got {self.task}"
         prompt_kind_avaliable = ['cistrome','expression','dna']
         assert self.prompt_kind in prompt_kind_avaliable, f"header must be one of {prompt_kind_avaliable}, but got {self.prompt_kind}"
-        assert self.mtx_mask is not None, "mtx_mask must be specified"
+        if self.prompt_kind not in ['cistrome','expression']:
+            assert self.mtx_mask is not None, "mtx_mask must be specified"
         return None
     
     def update(self, **kwargs):

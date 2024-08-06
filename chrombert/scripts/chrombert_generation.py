@@ -21,15 +21,14 @@ DEFAULT_BASEDIR = os.path.expanduser("~/.cache/chrombert/data")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Extract region embeddings from ChromBERT")
-    parser.add_argument("supervised-file", dest="supervised_file", type=str, help="Path to the supervised file")
+    parser.add_argument("supervised_file", type=str, help="Path to the supervised file")
     parser.add_argument("--o-bw", dest="o_bw", type=str, required=False, default=None, help="Path of the bw file")
     parser.add_argument("--o-table", dest="o_table", type=str, required=False, default=None, help="Path to the output table if you want to output the table")
 
     parser.add_argument("--basedir", type=str, default = DEFAULT_BASEDIR, help="Base directory for the required files")
     
     parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
-    parser.add_argument("-pc", "--pretrain-ckpt", dest="pretrain_ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint. Optial if it could infered from other arguments")
-    parser.add_argument("-m", "--mtx-mask", dest="mtx_mask", type=str, required=False, default=None, help="Path to the mtx mask file for the mean pooling of the embedding of regulators")
+    parser.add_argument("--pretrain-ckpt", dest="pretrain_ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint. Optial if it could infered from other arguments")
     parser.add_argument("-d","--hdf5-file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments")
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
@@ -56,11 +55,6 @@ def validate_args(args):
 
 def get_finetune_config(args):
 
-    if args.mtx_mask is not None:
-        mtx_mask = args.mtx_mask
-    else:
-        assert os.path.exists(args.basedir), f"Basedir does not exist: {args.basedir}. If you use default basedir, please make sure environment initialized correctly (see readme of the repo). "
-        mtx_mask = os.path.join(args.basedir, 'config', 'hg38_6k_mask_matrix.pt')
     if args.pretrain_ckpt is not None:
         pretrain_ckpt = args.pretrain_ckpt
     else:
@@ -71,7 +65,7 @@ def get_finetune_config(args):
             res = "1kb"
         pretrain_ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")
 
-    config = ChromBERTFTConfig(mtx_mask=mtx_mask,pretrain_ckpt=pretrain_ckpt, task='prompt', prompt_kind=args.prompt_kind, finetune_ckpt=args.finetune_ckpt, prompt_dim_external = args.prompt_dim_external, dropout=0)
+    config = ChromBERTFTConfig(pretrain_ckpt=pretrain_ckpt, task='prompt', prompt_kind=args.prompt_kind, finetune_ckpt=args.finetune_ckpt, prompt_dim_external = args.prompt_dim_external, dropout=0)
     return config
 
 def get_dataset_config(args):

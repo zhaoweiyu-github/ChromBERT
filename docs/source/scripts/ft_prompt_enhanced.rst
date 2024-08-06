@@ -113,11 +113,7 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 
 .. option:: -k, --ckpt
 
-    Path to the checkpoints used to initialize the model. Optional.
-
-.. option:: --mask
-
-    Path to the mtx mask file. Optional if it could be inferred from other arguments.
+    Path to the checkpoints used to initialize the model. Optional. Defualt is the pretrain checkpoint provided in the base directory.
 
 .. option:: -d, --hdf5-file
 
@@ -137,12 +133,12 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 
 .. option:: --prompt-dim-external
 
-    Dimension of external data. Use *512* for *scgpt*, and *768* for *ChromBERT*'s embedding. Default is *512*.
+    Dimension of external data. Use *512* for *scGPT*, and *768* for *ChromBERT*'s embedding. Default is *512*.
 
 .. option:: --prompt-celltype-cache-file
 
-    Path to the cell type specific prompt cache file. Provided if you want to customize the cache file. Optional. Default is not use it. 
+    Path to the cell-type-specific prompt cache file. Provided if you want to use cache file to accelerate the training process. Optional. Default is not use it. 
 
 .. option:: --prompt-regulator-cache-file
 
-    Path to the regulator prompt cache file. Provided if you want to customize the cache file. Optional.  Default is not use it. 
+    Path to the regulator prompt cache file. Provided if you want to use cache file to accelerate the training process. Optional.  Default is not use it. 
