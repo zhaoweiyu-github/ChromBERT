@@ -20,7 +20,7 @@ Execute the following commands to install the requried packages and [FlashAttent
 pip install packaging
 pip install ninja
 
-pip install flash-attn==2.4.* --no-build-isolation # FlashAttention-3 is not supported yet, please install FlashAttention-2
+pip install flash-attn<=2.4 --no-build-isolation # FlashAttention-3 is not supported yet, please install FlashAttention-2
 ```
 
 #### Installing ChromBERT

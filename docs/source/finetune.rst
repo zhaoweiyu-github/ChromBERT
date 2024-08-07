@@ -19,8 +19,8 @@ For detailed usage instructions, run the following command:
     :header: "Type", "Download", "Description"
 
     "`General`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py>`_ ", "Suitable for most purposes."
-    "`Prompt-enhanced`_", "`download <https://raw.githubusercontent.com/zhaoweiyu-github/ChromBERT/main/examples/train/ft_prompt_enhanced.py>`_", "Designed for prompt-enhanced tasks, such as cistrome generation."
-    "Multi-window", "download not available now", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
+    "`Prompt-enhanced`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_prompt_enhanced.py>`_", "Designed for prompt-enhanced tasks, such as cistrome generation."
+    "`Gep`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_gep.py>`_", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
 
 Details 
 ---------
@@ -33,3 +33,4 @@ Details
 
 ----
 
+.. include:: scripts/ft_gep.rst
