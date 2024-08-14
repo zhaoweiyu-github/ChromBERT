@@ -19,8 +19,6 @@ class TrainConfig:
     lr: float = field(default=1e-4, metadata={"help": "learning rate"})
     warmup_ratio: float = field(default=0.1, metadata={"help": "warmup ratio"})
     max_epochs: int = field(default=10, metadata={"help": "number of epochs"})
-    gradient_accumulation_steps: int = field(default=1, metadata={"help": "gradient accumulation steps"})
-
 
     accumulate_grad_batches: int = field(default=1, metadata={"help": "gradient accumulation steps"})
     limit_val_batches: Union[int, float] = field(default=64, metadata={"help":'number of batches to use for each validation'})
