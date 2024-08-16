@@ -14,7 +14,7 @@ ChromBERT is compatible with Python versions 3.8 or higher and requires PyTorch 
 Follow the detailed instructions on [PyTorch’s official site](https://pytorch.org/get-started/locally/) to install PyTorch according to your device and CUDA version specifications.
 
 #### Installing FlashAttention-2
-Execute the following commands to install the requried packages and [FlashAttention-2](https://github.com/Dao-AILab/flash-attention)
+Execute the following commands to install the requried packages and [FlashAttention-2](https://github.com/Dao-AILab/flash-attention).
 ```shell
 # install the required packages for FlashAttention-2
 pip install packaging
