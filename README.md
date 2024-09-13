@@ -38,7 +38,7 @@ chrombert_prepare_env
 
 Alternatively, if you're experiencing significant connectivity issues with Hugging Face, you can use the `--hf-endpoint` option to connect to a mirror of Hugging Face.
 ```shell
-chrombert_prepare_env --hf-endpoint <hf-endpoint>
+chrombert_prepare_env --hf-endpoint <Hugging Face endpoint>
 ```
 
 #### Verifying Installation
