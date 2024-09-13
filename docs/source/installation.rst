@@ -35,15 +35,12 @@ Then download required pre-trained model and annotation data files from Hugging 
     
     chrombert_prepare_env
 
-Note
-
-Alternatively, if you're experiencing significant connectivity issues with Hugging Face, you can use the `--hf-endpoint` option to connect to a mirror of Hugging Face.
+Alternatively, if you're experiencing significant connectivity issues with Hugging Face, you can use the ``--hf-endpoint`` option to connect to a mirror of Hugging Face.
 
 .. code-block:: shell
     
-    chrombert_prepare_env --hf-endpoint <hf-endpoint>
+    chrombert_prepare_env --hf-endpoint <Hugging Face endpoint>
 
-chrombert_prepare_env --hf-endpoint <hf-endpoint>
 
 Verifying Installation
 ----------------------
