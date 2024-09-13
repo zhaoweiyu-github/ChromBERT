@@ -26,10 +26,19 @@ pip install flash-attn==2.4.* --no-build-isolation # FlashAttention-3 is not sup
 #### Installing ChromBERT
 Clone the repository and install ChromBERT using the commands below:
 ```shell
-git clone git@github.com:TongjiZhanglab/ChromBERT.git
+git clone https://github.com/TongjiZhanglab/ChromBERT.git
 cd ChromBERT
 pip install .
-chrombert_prepare_env # download required pre-trained model and annotation data files from Hugging Face to ~/.cache/chrombert/data
+```
+
+Then download required pre-trained model and annotation data files from Hugging Face to ~/.cache/chrombert/data.
+```shell
+chrombert_prepare_env
+```
+
+Alternatively, if you're experiencing significant connectivity issues with Hugging Face, you can use the `--hf-endpoint` option to connect to a mirror of Hugging Face.
+```shell
+chrombert_prepare_env --hf-endpoint <hf-endpoint>
 ```
 
 #### Verifying Installation

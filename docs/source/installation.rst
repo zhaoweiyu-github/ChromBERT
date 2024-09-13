@@ -25,11 +25,25 @@ Clone the repository and install ``ChromBERT`` using the commands below:
 
 .. code-block:: shell
 
-    git clone git@github.com:TongjiZhanglab/ChromBERT.git
+    git clone https://github.com/TongjiZhanglab/ChromBERT.git
     cd ChromBERT
     pip install .
-    # Download required pre-trained model and annotation data files from Hugging Face to ~/.cache/chrombert/data
+    
+Then download required pre-trained model and annotation data files from Hugging Face to ~/.cache/chrombert/data.
+
+.. code-block:: shell
+    
     chrombert_prepare_env
+
+Note
+
+Alternatively, if you're experiencing significant connectivity issues with Hugging Face, you can use the `--hf-endpoint` option to connect to a mirror of Hugging Face.
+
+.. code-block:: shell
+    
+    chrombert_prepare_env --hf-endpoint <hf-endpoint>
+
+chrombert_prepare_env --hf-endpoint <hf-endpoint>
 
 Verifying Installation
 ----------------------
