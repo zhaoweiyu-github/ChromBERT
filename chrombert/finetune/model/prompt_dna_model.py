@@ -9,6 +9,18 @@ from .utils.general_header import GeneralHeader
 from .basic_model import BasicModel
 
 class ChromBERTPromptDNA(BasicModel):
+    '''
+    Fine-tuning a pre-trained ChromBERT model using DNA-enhanced prompt.
+    
+    pretrain_config: ChromBERTConfig object
+    finetune_config: FinetuneConfig
+
+    The model will be initialized using the following steps:
+        self.pretrain_config = pretrain_config
+        self.finetune_config = finetune_config
+        self.create_layers() 
+    '''
+
     NECESSARY_KEYS = ["input_ids", "position_ids","seq_raw", "seq_alt"]
 
     def create_layers(self):

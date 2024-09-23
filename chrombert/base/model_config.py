@@ -116,6 +116,9 @@ class ChromBERTConfig:
         return cls(**config_dict)
 
     def init_model(self, ckpt=None):
+        '''
+        Instantiate the model using the configuration.
+        '''
         model = ChromBERT(self)
         if ckpt is None:
             ckpt = self.ckpt

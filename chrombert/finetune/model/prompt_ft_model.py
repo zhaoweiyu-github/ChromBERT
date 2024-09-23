@@ -8,6 +8,17 @@ from .utils import PromptHeader,PromptsEmb,AdapterExternalEmb
 from .basic_model import BasicModel
 
 class ChromBERTPrompt(BasicModel):
+    '''
+    Fine-tuning a pre-trained ChromBERT model using enhanced prompt, for TFBS prediction.
+    
+    pretrain_config: ChromBERTConfig object
+    finetune_config: FinetuneConfig
+
+    The model will be initialized using the following steps:
+        self.pretrain_config = pretrain_config
+        self.finetune_config = finetune_config
+        self.create_layers() 
+    '''
 
     def create_layers(self):
         """add a supervised header to fine-tune model"""
@@ -19,7 +30,8 @@ class ChromBERTPrompt(BasicModel):
                 dropout=self.finetune_config.dropout
             )
 
-        self.gather_emb = PromptsEmb()
+        self.gather_emb = PromptsEmb() # for gather regulator and cell prompt
+
         self.ft_header = PromptHeader(n_parts = self.finetune_config.n_prompt_parts + 1,
                                       dropout=self.finetune_config.dropout)
         return None 
@@ -31,7 +43,10 @@ class ChromBERTPrompt(BasicModel):
         
         return header_out 
 
-    def get_emb_parts(self,batch, dtype =torch.bfloat16):    
+    def get_emb_parts(self,batch, dtype =torch.bfloat16):  
+        '''
+        Gather the necessary inputs for forwarding, handling cached embedding or forwarding directly.
+        '''  
         input_ids = batch["input_ids"]
         position_ids = batch["position_ids"]
         if 'emb_cell' not in batch.keys() or 'emb_regulator' not in batch.keys():

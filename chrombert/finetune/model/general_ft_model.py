@@ -8,11 +8,15 @@ from .basic_model import BasicModel
 
 class ChromBERTGeneral(BasicModel):
     '''
-    Attrs:
-        pretrain_config: pretrain configuration
-        finetune_config: finetune configuration
-        pretrain_model: basic chrombert model
-        ft_header: supervised header (GeneralHeader)
+    Fine-tuning a pre-trained ChromBERT model for general purposes.
+
+    pretrain_config: ChromBERTConfig object
+    finetune_config: FinetuneConfig
+
+    The model will be initialized using the following steps:
+        self.pretrain_config = pretrain_config
+        self.finetune_config = finetune_config
+        self.create_layers() 
     '''
 
     def create_layers(self):

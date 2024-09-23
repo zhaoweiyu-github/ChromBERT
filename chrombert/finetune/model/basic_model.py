@@ -7,16 +7,18 @@ from .utils import ChromBERTEmbedding
 from .utils import PoolFlankWindow
 
 class BasicModel(nn.Module, ABC):
+    '''
+    An abstract class for fine-tuning ChromBERT, which should not be instantiated directly. 
+    '''
     def __init__(self, pretrain_config, finetune_config):
         '''
         pretrain_config: ChromBERTConfig object
         finetune_config: FinetuneConfig
 
-        the model is initialized with attributes below:
+        The model will be initialized using the following steps:
             self.pretrain_config = pretrain_config
             self.finetune_config = finetune_config
-            self.ft_header = None
-            self.add_supervised_header() 
+            self.create_layers() 
         '''
         super().__init__()
         self.pretrain_config = pretrain_config
@@ -27,7 +29,7 @@ class BasicModel(nn.Module, ABC):
     @abstractmethod
     def create_layers(self):
         '''
-        add supervised header to the model
+        add a supervised header to the model
         '''
         raise NotImplementedError
 
@@ -96,9 +98,10 @@ class BasicModel(nn.Module, ABC):
 
     def freeze_pretrain(self, trainable = 2):
         '''
-        freeze parameters of the model, except for the last free layers. 
-        if trainable = 0, freeze all layers. if trainable < 0, freeze none. 
-        Noting: if trainable >=0, embedding layer will be frozen. 
+        Freeze the model's parameters, allowing fine-tuning of specific transformer blocks.
+        For trainable = N layers:
+        - If `N = 0`, all transformer blocks are frozen.
+        - If `N > 0`, only the last N transformer blocks are trainable and all other blocks are frozen.
         '''
         pretrain_model = self.get_pretrain()
         pretrain_model.freeze(trainable)
@@ -106,7 +109,7 @@ class BasicModel(nn.Module, ABC):
     
     def save_pretrain(self, save_path):
         '''
-        save the pretrain part of the model, so that it can be loaded later
+        save the pretrained part of the model to enable loading it later.
         '''
         pretrain_model = self.get_pretrain()
         state_dict = pretrain_model.state_dict()

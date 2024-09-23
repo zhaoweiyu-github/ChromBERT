@@ -104,7 +104,9 @@ class ChromBERTFTConfig:
         return f"ChromBERTFTConfig:\n{str(self)}"
     
     def init_model(self, **kwargs):
-
+        '''
+        Instantiate the model using the configuration. 
+        '''
         pretrain_ckpt = self.pretrain_ckpt if kwargs.get('pretrain_ckpt') is None else kwargs.get('pretrain_ckpt')
         if pretrain_ckpt is None:
             print("Warning: pretrain_ckpt is not specified in fine-tune model initiation")
@@ -154,8 +156,8 @@ def get_preset_model_config(preset: str = "default", basedir: str = os.path.expa
     '''
     A method to get the preset dataset configuration.
     Args:
-        preset: str, the pre-defined preset name of the dataset, or defined by user self.
-        basedir: str, the basedir of the preset file. Default is "".
+        preset: str, the predefined preset name of the dataset, or a user-defined file in JSON format. 
+        basedir: str, the basedir of the used files. Default is "~/.cache/chrombert/data".
         kwargs: dict, the additional arguments to update the preset. See chrombert.ChromBERTFTConfig for more details.
     '''
     basedir = os.path.abspath(basedir)

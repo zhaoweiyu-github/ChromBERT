@@ -7,13 +7,15 @@ from .basic_model import BasicModel
 from .utils import ChromBERTEmbedding
 class ChromBERTGEP(BasicModel):
     """
-    Finetune pre-trained ChromBERT to perform gene expression prediction. 
-    Attrs:
-        pretrain_config: pretrain configuration
-        finetune_config: finetune configuration
-        pretrain_model: basic chrombert model
-        pool_flank_window:[PoolFlankWindow]: layers to pool the flank window
-        ft_header:[GepHeader]: supervised header 
+    Fine-tuning a pre-trained ChromBERT model for multi window based gene expression prediction.
+    
+    pretrain_config: ChromBERTConfig object
+    finetune_config: FinetuneConfig
+
+    The model will be initialized using the following steps:
+        self.pretrain_config = pretrain_config
+        self.finetune_config = finetune_config
+        self.create_layers() 
     """
 
     def create_layers(self):
@@ -27,6 +29,7 @@ class ChromBERTGEP(BasicModel):
                 parallel_embedding = self.finetune_config.gep_parallel_embedding,
                 gradient_checkpoint=self.finetune_config.gep_gradient_checkpoint
             )
+        # use zero inflation 
         if self.finetune_config.gep_zero_inflation:
             self.ft_header = GepHeader(
                 self.pretrain_config.hidden_dim, 
@@ -55,7 +58,7 @@ class ChromBERTGEP(BasicModel):
         header_out = self.ft_header(pool_out)
         return header_out
     
-    
+    # While it differs slightly from other models, its usage remains the same.
     def get_embedding_manager(self, **kwargs):
         '''
         get a embedding manager for the pretrain model.
