@@ -8,7 +8,7 @@ from .utils import ChromBERTEmbedding
 class ChromBERT(nn.Module):
     def __init__(self, config):
         """
-        ChromBERT model : Epigenetic Network Bidirectional Encoder Representations from Transformers.
+        ChromBERT: pre-trained foundation model for context-specific transcription regulatory network.
         Args: 
             config (:obj:`ChromBERTConfig`): configuration of the model. 
         """
@@ -19,13 +19,12 @@ class ChromBERT(nn.Module):
         self.n_layers = config.num_layers
         self.attn_heads = config.num_attention_heads
 
-        # paper noted they used 4*hidden_size for ff_network_hidden_size
         self.feed_forward_hidden = config.hidden_dim * 4
 
-        # embedding for BERT, sum of positional, segment, token embeddings
+        # BERT-like embedding, sum of position and token embeddings
         self.embedding = BERTEmbedding(config)
 
-        # multi-layers transformer blocks, deep network
+        # multi-layers transformer blocks
         self.transformer_blocks = nn.ModuleList(
             [EncoderTransformerBlock(config) for _ in range(self.n_layers)])
 
@@ -60,24 +59,26 @@ class ChromBERT(nn.Module):
 
     def freeze(self, trainable = 2):
         '''
-        freeze parameters of the model, except for the last free layers. 
-        if trainable = 0, freeze all layers. if trainable < 0, freeze none. 
-        Noting: if trainable >=0, embedding layer will be frozen. 
+        Freeze the model's parameters, allowing fine-tuning of specific transformer blocks.
+        For trainable = N layers:
+        - If `N = 0`, all transformer blocks are frozen.
+        - If `N > 0`, only the last N transformer blocks are trainable and all other blocks are frozen.
         '''
         assert isinstance(trainable, int), 'trainable should be an integer'
+        assert trainable >= 0
         if trainable >= 0:
             for name, parameter in self.named_parameters():
                 parameter.requires_grad = False
 
             total_layers = len(self.transformer_blocks)
+            assert trainable <= total_layers, 'trainable should not be greater than total transformer blocks'
             for i in range(total_layers - trainable, total_layers):
                 for name, parameter in self.transformer_blocks[i].named_parameters():
                     parameter.requires_grad = True
 
-
-        if trainable < 0:
-            for name, parameter in self.named_parameters():
-                parameter.requires_grad = True
+        # if trainable < 0:
+        #     for name, parameter in self.named_parameters():
+        #         parameter.requires_grad = True
 
         return None
 
@@ -99,7 +100,7 @@ class ChromBERT(nn.Module):
 
     def get_embedding_manager(self, mtx_mask, ignore = False, ignore_index= None):
         '''
-        get a embedding manager for the pretrain model.
+        get an embedding manager for the pretrain model.
         params:
             mtx_mask: a matrix that mask the embedding, 1 for available, 0 for unavailable. 
             ignore: if True, ignore the embedding of the specified index. 
