@@ -5,6 +5,11 @@ from .interface import FastaInterface
 from .interface_manager import RegulatorInterfaceManager
 from ..basic_dataset import BasicDataset
 
+'''
+This file implements classes for the prompt-enhanced dataset used for DNA variation. 
+Direct usage is not recommended; please use through PromptDataset or DatasetConfig instead.
+'''
+
 class PromptDatasetForDNA(BasicDataset):
     def __init__(self,config):
         super().__init__(config)

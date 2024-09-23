@@ -6,6 +6,11 @@ from .prompt_dataset_single import PromptDatasetForDNA
 
 class PromptDataset(Dataset):
     def __init__(self, config):
+        '''
+        It's recommend to instantiate the class using DatasetConfig.init(). 
+        params:
+            config: DatasetConfig. supervised_file must be provided. 
+        '''
         super().__init__()
         self.config = config
         if isinstance(self.config.supervised_file, str):

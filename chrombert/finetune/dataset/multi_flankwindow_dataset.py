@@ -12,6 +12,11 @@ class MultiFlankwindowDataset(IgnoreDataset):
     def __init__(self, 
                  config = None, 
                  **params: Any):
+        '''
+        It's recommend to instantiate the class using DatasetConfig.init(). 
+        params:
+            config: DatasetConfig. supervised_file must be provided. 
+        '''
         super().__init__(config)
         self.flank_window = config.flank_window
         self.max_region_idx = self.len - 1 # self.len from BasicDataset, mean the maximum region idx

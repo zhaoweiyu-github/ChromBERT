@@ -5,15 +5,25 @@ from .basic_dataset import IgnoreDataset
 import numpy as np
 class GeneralDataset(IgnoreDataset):
     '''
-    Dataset class for supervised learning. Supervised file is required. 
+    Dataset class for general purposes. 
     '''
 
     def __init__(self,config = None, **params: Any):
+        '''
+        It's recommend to instantiate the class using DatasetConfig.init(). 
+        params:
+            config: DatasetConfig. supervised_file must be provided. 
+
+        '''
         super().__init__(config, **params)
         self.config = config
         self.supervised(config.supervised_file)
-        self.__getitem__(0)
+        self.__getitem__(0) # make sure initiation 
+
     def supervised(self, supervised_file = None):
+        '''
+        process supervised file to obtain necessary information
+        '''
         assert isinstance(supervised_file, str)
         if supervised_file.endswith('.csv'):
             df_supervised = pd.read_csv(supervised_file, header = 0) # csv format, [chrom, start, end, build_region_index, label, other meta datas]

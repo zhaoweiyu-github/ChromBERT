@@ -8,11 +8,16 @@ from .general_dataset import GeneralDataset
 from .prompt_dataset import PromptDataset
 
 class LitChromBERTFTDataModule(LightningDataModule):
+    '''
+    For training with pytorch lightning. 
+    '''
     def __init__(self, config=None, train_params={}, val_params={}, test_params={}, **params):
         '''
         LitENBERTDataModule is a class that defines the configuration of the dataset.
         Args:
-            config: Union[str, Dict[str, Any], "DatasetConfig"] = None
+            config: DatasetConfig. 
+            {train|val|test}_params: specific params to modify config for train|val|test respetively.
+            
         '''
         if isinstance(config, str):
             config = DatasetConfig(config, **params)

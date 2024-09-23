@@ -10,6 +10,11 @@ from torch.utils.data import Dataset
 from typing import Any
 from .dataset_config import DatasetConfig
 from functools import lru_cache
+
+
+'''
+This file implements dataset classes for processing the reference HDF5 dataset. Direct usage of these classes is not recommended. 
+'''
     
 class BasicDataset(Dataset):
     '''

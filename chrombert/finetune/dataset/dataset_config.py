@@ -11,8 +11,8 @@ class DatasetConfig:
         DatasetConfig is a class that defines the configuration of the dataset.
         Args: 
         [general]
-            hdf5_file: str or IO, the path to the reference cistromes, downloaded from we provided link.
-            supervised_file: str or IO, the path to the supervised file, contains information need to forward or fine-tune.
+            hdf5_file: str or IO, the path to the reference cistromes, downloaded from the link we provided.
+            supervised_file: str or IO, the path to samples for forward.
             kind: str, the class name of the dataset, one of ["BasicDataset","GeneralDataset","PerturbationDataset","MultiFlankwindowDataset","PromptDataset"]
             meta_file: str, path of a json file (downloaded from our website) that contains the preset prompt information. Can be ignored if no ignore or prompt is set.
 
@@ -26,15 +26,15 @@ class DatasetConfig:
 
         [perturbation]
             perturbation: bool, whether to perturb the input. If True, the input will be perturbation.
-            perturbation_object: str, perturbation object, example: 'ep300,crebbp' or 'ep400' or 'GSM1036403,GSM1070124,GSM1022944'
-            perturbation_value: int, the value to be perturbation.
+            perturbation_object: str, perturbation object, example: 'ep300,crebbp' or 'ep400' or 'GSM1036403,GSM1070124,GSM1022944'. 
+            perturbation_value: int, the value to be perturbation. 0 for knock-out and 1 for overexpression. 
 
         [prompt]
             prompt_kind: str, the class name of the prompt, one of ["expression", "cistrome", "dna"]
 
             [prompt.expression or prompt.cistrome]
-                prompt_regulator_cache_file: str, the path to the prompt cache file. To accelerate large scale prediction. See tutorial for more details. 
-                prompt_celltype_cache_file: str, the path to the cell-type-specific embedding file. To accelerate large scale prediction. See tutorial for more details. 
+                prompt_regulator_cache_file: str, the path to the regulator prompt cache file. for accelerating large scale prediction. See tutorial for more details. 
+                prompt_celltype_cache_file: str, the path to the celltype prompt cache  file, for accelerating large scale prediction. See tutorial for more details. 
 
                 prompt_regulator: str, the regulator prompt. Determine the kind of output. For example, "ctcf" or "h3k27ac". It can also be provided in the supervised file if the format supports. Ignored for "dna". 
                 prompt_celltype: str, the celltype of the expression/cistrom prompt. (e.g. k562 for expression prompt, atac:k562 for cistrom prompt). It can also be provided in the supervised file if the format supports.

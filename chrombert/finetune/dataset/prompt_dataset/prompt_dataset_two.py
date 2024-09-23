@@ -8,11 +8,19 @@ from torch.utils.data import Dataset
 from ..basic_dataset import BasicDataset
 from .interface_manager import RegulatorInterfaceManager, CelltypeInterfaceManager
 
+'''
+This file implements classes for the prompt-enhanced dataset used for TFBS prediction. 
+Direct usage is not recommended; please use through PromptDataset or DatasetConfig instead.
+'''
+
+
 class SupervisedForH5():
     '''
+    For hdf5 format supervised file processing. 
     input: h5 format supervised_file, which contains cell, regulator, label, build_region_index.  
         regulator is optional if provived in config, but must match the length of cell if provided. 
-        label is optional, with shape of (num_regions, num of cell-regulator)
+        label is optional, with shape of (num_regions, num of cell-regulator). 
+        See tutorials for detail format. 
     return: cell, regulator, label, build_region_index
     '''
     def __init__(self, config):
@@ -61,6 +69,8 @@ class SupervisedForH5():
             
 class SupervisedForTable():     
     '''
+    For table format supervised file processing. 
+
     input: supervised_file
     return: cell, regulator, label, build_region_index
     '''
@@ -123,6 +133,7 @@ class PromptDatasetForCCTP(BasicDataset):
         self.seq_len = self.gsm_num
         self.cell_interface = CelltypeInterfaceManager(config,self.prompt_map)
         self.regulator_interface = RegulatorInterfaceManager(config,self.prompt_map)
+
         self.supervised_file = config.supervised_file
         if self.supervised_file.endswith("h5"):
             self.sv_dataset = SupervisedForH5(config)
@@ -149,38 +160,3 @@ class PromptDatasetForCCTP(BasicDataset):
         item.update(regulator_item)
         item.update(sv_item)
         return item
-        
-# class PromptDatasetForExp(BasicDataset):
-#     def __init__(self,config):
-#         super().__init__(config)
-#         self.config = config
-#         self.exp_emb_interface = ExpCellEmbInterface(config.prompt_exp_cache_file)
-#         self.prompt_regulator_cache_file = config.prompt_regulator_cache_file
-#         self.prompt_map = {i:j for i,j in self.gsmid_to_did.items()} #self.gsmid_to_did from BasicDataset
-#         self.seq_len = self.gsm_num # self.gsm_num from BasicDataset        
-#         self.regulator_interface = RegulatorInterfaceManager(config,self.prompt_map)
-#         self.supervised_file = config.supervised_file
-#         if self.supervised_file.endswith("h5"):
-#             self.sv_dataset = SupervisedForH5(config)
-#         else:
-#             self.sv_dataset = SupervisedForTable(config)
-    
-#     def __len__(self):
-#         return len(self.sv_dataset)
-    
-#     def __getitem__(self,index):
-#         sv_item = self.sv_dataset[index]
-#         cell = sv_item['cell']
-#         regulator = sv_item['regulator']
-#         label = sv_item['label']
-#         build_region_index = sv_item['build_region_index']
-#         item = super().__getitem__(build_region_index)
-#         if label is not None:
-#             item['label'] = label
-#         else:
-#             del sv_item['label']
-#         item['emb_cell'] = self.exp_emb_interface.get_emb(cell)['emb_cell']
-#         regulator_item = self.regulator_interface.get_prompt_item(build_region_index, regulator, self.seq_len)
-#         item.update(regulator_item)
-#         item.update(sv_item)
-#         return item
