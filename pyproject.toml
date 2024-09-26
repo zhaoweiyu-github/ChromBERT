@@ -36,6 +36,7 @@ dependencies = [
     "torchvision",
     "tensorboard",
     "scikit-learn",
+    "pyBigWig"
 ]
 
 

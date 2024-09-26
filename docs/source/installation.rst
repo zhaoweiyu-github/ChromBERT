@@ -41,6 +41,7 @@ Alternatively, if you're experiencing significant connectivity issues with Huggi
     
     chrombert_prepare_env --hf-endpoint <Hugging Face endpoint>
 
+For built-in dataset preparation, it is recommended to install `bedtools <https://bedtools.readthedocs.io/en/latest/content/installation.html>`_.
 
 Verifying Installation
 ----------------------

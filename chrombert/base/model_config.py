@@ -21,7 +21,7 @@ class ChromBERTConfig:
         ChromBERTConfig, the configuration of ChromBERT model. It is able to instantiate a ChromBERT model through from the pretrained model.
         """ 
         assert self.genome in ['hg38', 'mm10'], f"genome should be hg38 for human, or mm10 for mouse, but got {self.genome}"
-        print(f"use organisim {self.genome}; max sequence length including cls is {self.n_datasets}")
+        print(f"use organisim {self.genome}; max sequence length is {self.n_datasets - 1}")
 
     @property
     def n_datasets(self):
