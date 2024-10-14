@@ -27,7 +27,7 @@ class ChromBERTConfig:
     def n_datasets(self):
         if self.genome == 'hg38':
             return 6392
-        elif self.organism == 'mm10':
+        elif self.genome == 'mm10':
             return 5616
        
     @property
