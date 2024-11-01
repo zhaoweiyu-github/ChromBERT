@@ -18,8 +18,13 @@ class RegulatorEmbInterface():
         self.h5emb = h5emb
         assert os.path.exists(self.h5emb)
         with h5py.File(self.h5emb, 'r') as h5f:
-            self.build_region_index_for_emb = h5f["regions"][:, 3]
-            self.dict_region_to_index = {region: i  for i, region in enumerate(h5f["regions"][:,3])}
+            if "region" in h5f.keys():
+                k = "region"
+            else:
+                assert "regions" in h5f.keys(), "`region` or `regions` must be in h5 file"
+                k = "regions"
+            self.build_region_index_for_emb = h5f[k][:, 3]
+            self.dict_region_to_index = {region: i  for i, region in enumerate(h5f[k][:,3])}
             self.regulators = list(regulator for regulator in h5f["emb"].keys())
         self.emb_handler = h5py.File(self.h5emb, 'r')
 
@@ -50,8 +55,13 @@ class CistromeCellEmbInterface():
         self.h5emb = h5emb
         assert os.path.exists(self.h5emb)
         with h5py.File(self.h5emb, 'r') as h5f:
-            self.build_region_index_for_emb = h5f["regions"][:, 3]
-            self.dict_region_to_index = {region: i  for i, region in enumerate(h5f["regions"][:,3])}
+            if "region" in h5f.keys():
+                k = "region"
+            else:
+                assert "regions" in h5f.keys(), "`region` or `regions` must be in h5 file"
+                k = "regions"
+            self.build_region_index_for_emb = h5f[k][:, 3]
+            self.dict_region_to_index = {region: i  for i, region in enumerate(h5f[k][:,3])}
             self.cistrome_cells = list(cistrome_cell for cistrome_cell in h5f["emb"].keys())
         self.emb_handler = h5py.File(self.h5emb, 'r')
 
