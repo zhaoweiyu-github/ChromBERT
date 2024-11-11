@@ -117,7 +117,13 @@ def get_cistrome_ids(ids, meta_file):
         meta = json.load(f)
 
     dict_ids = {i:i for i in gsm_ids}
-    dict_ids.update({k:meta[k] for k in reg_ids})
+    try:
+        dict_ids.update({k:meta[k] for k in reg_ids})
+    except:
+        for k in reg_ids:
+            if k not in meta:
+                print(f"{k} is not in the meta file!")
+        sys.exit(1)
 
     return dict_ids
 

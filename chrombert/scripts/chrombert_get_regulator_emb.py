@@ -115,7 +115,7 @@ def get_cistrome_ids(ids, meta_file):
         meta = json.load(f)
 
     for i in ids:
-        assert i in meta["regulator"]
+        assert i in meta["regulator"], f"Regulator {i} is not in the meta file"
     dict_ids = {i: i for i in ids}
     return dict_ids
 
