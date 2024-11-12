@@ -27,7 +27,7 @@ Welcome to ChromBERT's documentation!
     :maxdepth: 1
     :caption: Examples:
 
-    tutorial_prompt_cistrome_generation
+    tutorial_prompt_cistrome_imputation
     tutorial_locus_specific_TRN_eqtl
     tutorial_locus_specific_TRN_ezh2
     tutorial_locus_specific_TRN_starr
