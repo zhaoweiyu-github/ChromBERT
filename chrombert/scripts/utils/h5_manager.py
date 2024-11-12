@@ -2,15 +2,17 @@ import h5py
 import numpy as np
 
 class HDF5Manager:
-    def __init__(self, o_file, **kwargs):
+    def __init__(self, o_file, chunks = True, **kwargs):
         '''
         Initializes an HDF5 file with specified datasets.
 
         Parameters:
         - o_file (str): The name of the output HDF5 file.
+        - chunks: If True, datasets will be chunked automatically. Else, it should be a positive integer (>=2), indicating the chunk size of first dimension. Or use none to disable chunking.
         - kwargs (dict): Keyword arguments where each key is the dataset name and each value is the shape and dtype((*shapes), dtype) of the dataset.
         '''
         self.o_file = o_file
+        self.chunks = chunks
         self.kwargs = kwargs
         self.n_samples = 0
         self.file = None
@@ -21,7 +23,12 @@ class HDF5Manager:
         # Create datasets based on provided shapes
         for key, info in self.kwargs.items():
             shape, dtype = info[0], info[1]
-            self.file.create_dataset(key, shape=shape, dtype = dtype)
+            if self.chunks is True:
+                self.file.create_dataset(key, shape=shape, dtype = dtype, chunks = True, maxshape = (None, *shape[1:]))
+            elif self.chunks is None:
+                self.file.create_dataset(key, shape=shape, dtype = dtype)
+            else:
+                self.file.create_dataset(key, shape=shape, dtype = dtype, chunks = (self.chunks, *shape[1:]))
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
