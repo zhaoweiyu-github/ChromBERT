@@ -1,11 +1,15 @@
-chrombert_generation_cistrome_sc
+chrombert_generation_cistrome
 ************************************
 
-Generate prediction result (hdf5 format) from ChromBERT when given single cell, region and regulator.
+Generate prediction result (full bigwig file or table) from ChromBERT when given cell type name, region and regulator.
+
+.. note::
+
+   Either --o-bw or --o-table must be provided, depends on which format you want to output the results.
 
 .. code-block:: shell
 
-    chrombert_generation [OPTIONS] SUPERVISED_FILE --o-h5 H5_PATH --finetune-ckpt CKPT --prompt-kind KIND
+    chrombert_generation [OPTIONS] SUPERVISED_FILE --o-bw BW_PATH --o-table TABLE_PATH --finetune-ckpt CKPT --prompt-kind KIND
 
 .. rubric:: Options
 
@@ -13,9 +17,17 @@ Generate prediction result (hdf5 format) from ChromBERT when given single cell, 
 
     Path to the supervised file.
 
-.. option:: --o-h5
+.. option:: --o-bw
 
-    Path of the output HDF5 file. This option is required.
+    Path of the output BigWig file.
+
+.. option:: --o-table
+
+    Path to the output table if you want to output the table.
+
+.. option:: --prompt-kind
+
+Prompt data class. Choose from *cistrome* or *expression*. This option is required.
 
 .. option:: --basedir
 
@@ -39,11 +51,7 @@ Generate prediction result (hdf5 format) from ChromBERT when given single cell, 
 
 .. option:: --finetune-ckpt
 
-    Path to the finetune checkpoint. This option is required.
-
-.. option:: --prompt-kind
-
-    Prompt data class. Choose from *cistrome* or *expression*. This option is required.
+    Path to the finetune checkpoint. Optional.
 
 .. option:: --prompt-dim-external
 
