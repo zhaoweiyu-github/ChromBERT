@@ -91,7 +91,7 @@ class ExpCellEmbInterface():
     def __init__(self, prompt_exp_cache_file):
         self.emb_file = prompt_exp_cache_file
         assert os.path.exists(self.emb_file)
-        if self.emb_file.endswith('.pkl'):
+        if self.emb_file.endswith('.pkl') or self.emb_file.endswith('.pl'):
             with open(self.emb_file, 'rb') as f:
                 self.emb_dict = pickle.load(f)
         elif self.emb_file.endswith('.json'):

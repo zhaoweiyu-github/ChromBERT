@@ -49,8 +49,8 @@ class SupervisedForH5():
                 raise ValueError('prompt regulator needs to be set')
 
             assert len(self.prompt_celltype) == len(self.prompt_regulator), "Celltype and regulator lengths do not match"
-            self.supervised_indices = np.tile(self.h5_regions, (len(self.prompt_celltype), 1))[:, 3]
-            self.supervised_indices_len = len(self.supervised_indices)
+            self.supervised_indices = self.h5_regions[:, 3]
+            self.supervised_indices_len = self.h5_regions.shape[0] * len(self.prompt_celltype)
 
             self.supervised_labels = hdf['label'][:] > 0 if 'label' in hdf.keys() else None
 
@@ -61,7 +61,7 @@ class SupervisedForH5():
         index_row = index % len(self.h5_regions)
         index_col = index // len(self.h5_regions)
         return {
-            'build_region_index': self.supervised_indices[index],
+            'build_region_index': self.supervised_indices[index_row],
             'cell': self.prompt_celltype[index_col],
             'regulator': self.prompt_regulator[index_col],
             'label': self.supervised_labels[index_row, index_col] if self.supervised_labels is not None else None

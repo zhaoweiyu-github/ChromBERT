@@ -1,4 +1,4 @@
-chrombert_generation_cistrome
+chrombert_imputation_cistrome
 ************************************
 
 Generate prediction result (full bigwig file or table) from ChromBERT when given cell type name, region and regulator.
@@ -9,7 +9,7 @@ Generate prediction result (full bigwig file or table) from ChromBERT when given
 
 .. code-block:: shell
 
-    chrombert_generation [OPTIONS] SUPERVISED_FILE --o-bw BW_PATH --o-table TABLE_PATH --finetune-ckpt CKPT --prompt-kind KIND
+    chrombert_imputation_cistrome [OPTIONS] SUPERVISED_FILE --o-bw BW_PATH --o-table TABLE_PATH --finetune-ckpt CKPT --prompt-kind KIND
 
 .. rubric:: Options
 

@@ -62,6 +62,7 @@ class DatasetConfig:
         self.batch_size: int = 8
         self.num_workers: int = 20
         self.shuffle: bool = False
+        self.pin_memory: bool = True
 
         # [perturbation]
         self.perturbation: bool = False

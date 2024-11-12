@@ -1,11 +1,11 @@
-chrombert_generation_cistrome_sc
+chrombert_imputation_cistrome_sc
 ************************************
 
 Generate prediction result (hdf5 format) from ChromBERT when given single cell, region and regulator.
 
 .. code-block:: shell
 
-    chrombert_generation [OPTIONS] SUPERVISED_FILE --o-h5 H5_PATH --finetune-ckpt CKPT --prompt-kind KIND
+    chrombert_imputation_cistrome_sc [OPTIONS] SUPERVISED_FILE --o-h5 H5_PATH --finetune-ckpt CKPT --prompt-kind KIND
 
 .. rubric:: Options
 
