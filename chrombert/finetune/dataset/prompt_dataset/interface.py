@@ -13,9 +13,10 @@ class RegulatorEmbInterface():
     '''
     return regulator embedding
     '''
-    def __init__(self, h5emb):
+    def __init__(self, h5emb, cache = False, cache_limit = 3):
         super().__init__()
         self.h5emb = h5emb
+        self.cache = cache
         assert os.path.exists(self.h5emb)
         with h5py.File(self.h5emb, 'r') as h5f:
             if "region" in h5f.keys():
@@ -27,6 +28,11 @@ class RegulatorEmbInterface():
             self.dict_region_to_index = {region: i  for i, region in enumerate(h5f[k][:,3])}
             self.regulators = list(regulator for regulator in h5f["emb"].keys())
         self.emb_handler = h5py.File(self.h5emb, 'r')
+        if self.cache:
+            self.emb_all = torch.from_numpy(self.emb_handler[f"/all"][:])
+        self.emb_cache = {}
+        self.cache_limit = cache_limit
+        
 
     def __len__(self):
         return len(self.build_region_index_for_emb)
@@ -39,11 +45,23 @@ class RegulatorEmbInterface():
         index=self.dict_region_to_index[build_region_index]
         assert index is not None
         item={}
-        if self.valid_regulator(regulator):
-            item["emb_regulator"] = self.emb_handler[f"/emb/{regulator}"][index,:]
-        else:
+
+        if not self.valid_regulator(regulator):
             raise ValueError(f'{regulator} not in embedding flie')
-        item["emb_all"] = self.emb_handler[f"/all"][index,:]
+        elif not self.cache:
+            item["emb_regulator"] = self.emb_handler[f"/emb/{regulator}"][index,:]
+        elif regulator in self.emb_cache.keys():
+            item["emb_regulator"] = self.emb_cache[regulator][index,:]
+        elif len(self.emb_cache) < self.cache_limit - 1:
+            self.emb_cache[regulator] = self.emb_handler[f"/emb/{regulator}"][:]
+            item["emb_regulator"] = self.emb_cache[regulator][index,:]
+        else:
+            raise ValueError(f'Cache limit reached! Much regulator embedding in cache! If you want to cache more regulator embedding, please set cache_limit larger!')
+
+        if self.cache:
+            item["emb_all"] = self.emb_all[index,:]
+        else:
+            item["emb_all"] = self.emb_handler[f"/all"][index,:]
         return item
 
 class CistromeCellEmbInterface():

@@ -149,13 +149,17 @@ class PromptDatasetForCCTP(BasicDataset):
         regulator = sv_item['regulator']
         label = sv_item['label']
         build_region_index = sv_item['build_region_index']
-        item = super().__getitem__(build_region_index)
+
+        celltype_item = self.cell_interface.get_prompt_item(build_region_index,cell,self.seq_len)    
+        regulator_item = self.regulator_interface.get_prompt_item(build_region_index, regulator, self.seq_len)
+        if self.config.prompt_regulator_cache_file is None or self.config.prompt_celltype_cache_file is None:
+            item = super().__getitem__(build_region_index)
+        else:
+            item = {"build_region_index": build_region_index}
         if label is not None:
             item['label'] = label
         else:
             del sv_item['label']
-        celltype_item = self.cell_interface.get_prompt_item(build_region_index,cell,self.seq_len)    
-        regulator_item = self.regulator_interface.get_prompt_item(build_region_index, regulator, self.seq_len)
         item.update(celltype_item)
         item.update(regulator_item)
         item.update(sv_item)

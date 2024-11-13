@@ -47,9 +47,10 @@ class ChromBERTPrompt(BasicModel):
         '''
         Gather the necessary inputs for forwarding, handling cached embedding or forwarding directly.
         '''  
-        input_ids = batch["input_ids"]
-        position_ids = batch["position_ids"]
+
         if 'emb_cell' not in batch.keys() or 'emb_regulator' not in batch.keys():
+            input_ids = batch["input_ids"]
+            position_ids = batch["position_ids"]
             chrombert_out= self.pretrain_model.forward(
             input_ids.long(), position_ids
             )

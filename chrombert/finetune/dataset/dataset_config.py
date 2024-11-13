@@ -75,6 +75,9 @@ class DatasetConfig:
         self.prompt_regulator_cache_file: str = None
         self.prompt_celltype: str = None
         self.prompt_celltype_cache_file: str = None
+
+        self.prompt_regulator_cache_pin_memory: bool = False
+        self.prompt_regulator_cache_limit: int = 3
         
         # [prompt.dna]
         self.fasta_file: str = None

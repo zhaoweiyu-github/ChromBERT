@@ -6,11 +6,12 @@ class RegulatorInterfaceManager():
         self.prompt_regulator_cache_file = config.prompt_regulator_cache_file
         self.meta_file = config.meta_file
         self.prompt_map = prompt_map
+        self.config = config
         self.interface = self._create_interface()
 
     def _create_interface(self):
         if self.prompt_regulator_cache_file is not None:
-            return RegulatorEmbInterface(self.prompt_regulator_cache_file)
+            return RegulatorEmbInterface(self.prompt_regulator_cache_file, cache=self.config.prompt_regulator_cache_pin_memory, cache_limit=self.config.prompt_regulator_cache_limit)
         else:
             return PromptsCistromInterface(self.meta_file, self.prompt_map)
             

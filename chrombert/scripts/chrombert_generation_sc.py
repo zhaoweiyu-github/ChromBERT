@@ -37,6 +37,8 @@ def parse_args():
     
     parser.add_argument("--prompt-celltype-cache-file", dest="prompt_celltype_cache_file", type=str, required=False, default=None, help="the path to the cell type specific prompt cache file")
     parser.add_argument("--prompt-regulator-cache-file", dest="prompt_regulator_cache_file", type=str, required=False, default=None, help="the path to the regulator prompt cache file")
+    parser.add_argument("--prompt-regulator-cache-pin-memory", dest="prompt_regulator_cache_pin_memory", action="store_true", default = False, help="whether to pin memory for regulator prompt cache")
+    parser.add_argument("--prompt-regulator-cache-limit", dest="prompt_regulator_cache_limit", type=int, required=False, default=3, help="the limit of regulator prompt cache")
     parser.add_argument("--prompt-celltype", dest="prompt_celltype", type=str, required=False, default=None, help="the cell-type-specific prompt. For example, 'dnase:k562' for cistrome prompt and 'k562' for expression prompt. It can also be provided in the supervised file if the format supports.")
     parser.add_argument("--prompt-regulator", dest="prompt_regulator", type=str, required=False, default=None, help="the regulator prompt. Determine the kind of output. For example, 'ctcf' or 'h3k27ac'. It can also be provided in the supervised file if the format supports.")
 
@@ -83,6 +85,8 @@ def get_dataset_config(args):
         supervised_file = args.supervised_file,
         prompt_celltype_cache_file = args.prompt_celltype_cache_file,
         prompt_regulator_cache_file = args.prompt_regulator_cache_file,
+        prompt_regulator_cache_pin_memory = args.prompt_regulator_cache_pin_memory,
+        prompt_regulator_cache_limit = args.prompt_regulator_cache_limit,
         prompt_regulator = args.prompt_regulator,
         prompt_celltype = args.prompt_celltype,
         hdf5_file = hdf5_file,
