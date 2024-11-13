@@ -82,3 +82,43 @@ class PromptDatasetForDNA(BasicDataset):
         #     item['metadata'] = self.metadata[index,:]
 
         return item
+
+class PromptDatasetForDNASequence(BasicDataset):
+    def __init__(self,config):
+        super().__init__(config)
+        self.config = config
+        assert isinstance(config.fasta_file, str)
+        assert os.path.exists(config.fasta_file), f"fasta file {config.fasta_file=} does not exist"
+        self.fasta_interface = FastaInterface(config.fasta_file)
+        self.supervised_file = config.supervised_file
+        self.supervised(self.supervised_file)
+
+    def supervised(self, supervised_file = None):
+        assert isinstance(supervised_file, str) or isinstance(supervised_file, pd.DataFrame)
+
+        if isinstance(supervised_file, pd.DataFrame):
+            df_supervised = supervised_file.copy().reset_index(drop=True)
+        elif supervised_file.endswith(".csv"):
+            df_supervised = pd.read_csv(supervised_file, header = 0) # csv format, [chrom, start, end, build_region_index, label, pos_alt, base_ref, base_ref, metadata]
+        elif supervised_file.endswith(".tsv"):
+            df_supervised = pd.read_csv(supervised_file, sep="\t", header = 0)
+        else:
+            raise ValueError(f"suffix of supervised_file {supervised_file} should be csv or tsv")
+
+        self.df_supervised = df_supervised
+
+        self.supervised_indices = df_supervised["build_region_index"]
+        self.supervised_indices_len = len(self.supervised_indices)
+        self.sequences = df_supervised["sequence"]
+        self.supervised_labels = df_supervised["label"]
+
+    def __len__(self):
+        return self.supervised_indices_len
+
+    def __getitem__(self, index):
+        basic_index = self.supervised_indices[index]
+        item = super().__getitem__(basic_index) # call the __getitem__ method of the class BasicDataset
+        item['sequence'] = self.sequences[index]
+        item['label'] = self.supervised_labels[index]
+        
+        return item

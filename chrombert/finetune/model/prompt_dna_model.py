@@ -25,7 +25,7 @@ class ChromBERTPromptDNA(BasicModel):
 
     def create_layers(self):
         """add a supervised header to fine-tune model"""
-        assert self.finetune_config.prompt_kind == "dna", "prompt_kind must be dna here!"
+        assert self.finetune_config.prompt_kind in ["dna", "sequence"], "prompt_kind must be dna or sequence here!"
         assert self.finetune_config.prompt_dim_external == 768, "prompt_dim_external must be 768 here, only DNABERT2 supported now!"
 
         self.pretrain_model = self.pretrain_config.init_model()
@@ -72,3 +72,33 @@ class ChromBERTPromptDNA(BasicModel):
         emb_factor = self.adapter_chrombert.interface(chrom_embedding)
         return emb_factor
 
+class ChromBERTPromptSequence(ChromBERTPromptDNA):
+    
+    NECESSARY_KEYS = ["input_ids", "position_ids","sequence"]
+    
+    def create_layers(self):
+        super().create_layers()
+        
+    def forward(self, batch):
+        super().valid_batch(batch)
+
+        dna_embed_alt = self.dnabert2(batch["sequence"])["embedding_dna"]
+        dna_emb = self.adapter_dna_emb(dna_embed_alt)
+
+        chrom_embedding = self.pretrain_model(
+            batch["input_ids"], batch["position_ids"]
+        )
+        chrom_embedding = self.adapter_chrombert(chrom_embedding, return_emb = True) # (batch_size, 768)
+
+        logit = self.head_output(dna_emb, chrom_embedding)
+        return logit
+
+    @DeprecationWarning
+    def get_factor_emb(self, batch):
+        self.valid_batch(batch)
+        chrom_embedding = self.pretrain_model(
+            batch["input_ids"], batch["position_ids"]
+        )
+        emb_factor = self.adapter_chrombert.interface(chrom_embedding)
+        return emb_factor
+        

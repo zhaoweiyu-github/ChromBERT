@@ -70,7 +70,7 @@ class ChromBERTFTConfig:
         assert self.genome in ['hg38', 'mm10'], f"genome must be one of ['hg38', 'mm10'], but got {self.genome}"
         task_avaliable = ['general','gep','prompt']
         assert self.task in task_avaliable, f"task must be one of {task_avaliable}, but got {self.task}"
-        prompt_kind_avaliable = ['cistrome','expression','dna']
+        prompt_kind_avaliable = ['cistrome','expression','dna','sequence']
         assert self.prompt_kind in prompt_kind_avaliable, f"header must be one of {prompt_kind_avaliable}, but got {self.prompt_kind}"
         if self.prompt_kind not in ['cistrome','expression']:
             assert self.mtx_mask is not None, "mtx_mask must be specified"
@@ -90,10 +90,10 @@ class ChromBERTFTConfig:
             return 2
         elif self.prompt_kind == 'expression':
             return 2
-        elif self.prompt_kind == 'dna':
+        elif self.prompt_kind in ['dna', 'sequence']:
             return 1
         else:
-            raise ValueError(f"prompt_kind must be one of ['cistrome', 'expression', 'dna'], but got {self.prompt_kind}")
+            raise ValueError(f"prompt_kind must be one of ['cistrome', 'expression', 'dna', 'sequence], but got {self.prompt_kind}")
 
     def __str__(self):
         s = self.to_dict()
@@ -120,14 +120,18 @@ class ChromBERTFTConfig:
             model =  ChromBERTGEP(pretrain_config, finetune_config)
     
         elif finetune_config.task == 'prompt':
-            if finetune_config.prompt_kind == 'dna':
-                assert finetune_config.dnabert2_ckpt is not None, "dnabert2_ckpt must be specified for prompt_kind=dna"
+            if finetune_config.prompt_kind == 'dna' or finetune_config.prompt_kind == 'sequence':
+                assert finetune_config.dnabert2_ckpt is not None, "dnabert2_ckpt must be specified for prompt_kind=dna or sequence"
                 if finetune_config.dnabert2_ckpt is not None:
                     assert isinstance(finetune_config.dnabert2_ckpt, str)
                     if not os.path.exists(finetune_config.dnabert2_ckpt):
                         print(f"Warning: {finetune_config.dnabert2_ckpt} does not exist! Try to use huggingface cached...")
-                from .prompt_dna_model import ChromBERTPromptDNA
-                model =  ChromBERTPromptDNA(pretrain_config, finetune_config)
+                if finetune_config.prompt_kind == 'dna':
+                    from .prompt_dna_model import ChromBERTPromptDNA
+                    model =  ChromBERTPromptDNA(pretrain_config, finetune_config)
+                elif finetune_config.prompt_kind == 'sequence':
+                    from .prompt_dna_model import ChromBERTPromptSequence
+                    model = ChromBERTPromptSequence(pretrain_config, finetune_config)
             else:
                 from .prompt_ft_model import ChromBERTPrompt
                 model = ChromBERTPrompt(pretrain_config, finetune_config)
