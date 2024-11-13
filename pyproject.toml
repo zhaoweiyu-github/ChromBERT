@@ -46,8 +46,8 @@ chrombert_get_region_emb = "chrombert.scripts.chrombert_get_region_emb:main"
 chrombert_get_cistrome_emb = "chrombert.scripts.chrombert_get_cistrome_emb:main"
 chrombert_get_regulator_emb = "chrombert.scripts.chrombert_get_regulator_emb:main"
 chrombert_prepare_env = "chrombert.scripts.chrombert_prepare_env:main"
-chrombert_imputation_cistrome = "chrombert.scripts.chrombert_generation:main"
-chrombert_imputation_cistrome_sc = "chrombert.scripts.chrombert_generation_sc:main"
+chrombert_imputation_cistrome = "chrombert.scripts.chrombert_imputation:main"
+chrombert_imputation_cistrome_sc = "chrombert.scripts.chrombert_imputation_sc:main"
 
 [tool.setuptools]
 include-package-data = true 

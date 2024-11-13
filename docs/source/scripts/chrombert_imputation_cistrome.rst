@@ -73,10 +73,6 @@ Prompt data class. Choose from *cistrome* or *expression*. This option is requir
 
     The regulator prompt. Determine the kind of output. For example, *ctcf* or *h3k27ac*. It can also be provided in the supervised file if the format supports. Optional.
 
-.. option:: --gpu
-
-    GPU index. Default is *0*.
-
 .. option:: --batch-size
 
     Batch size. Default is *8*.
