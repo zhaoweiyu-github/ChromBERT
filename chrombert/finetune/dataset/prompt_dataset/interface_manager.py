@@ -33,7 +33,7 @@ class CelltypeInterfaceManager():
         self.interface = self._create_interface()
         
     def _create_interface(self):
-        if self.prompt_kind == "cistrome":
+        if self.prompt_kind in ["cistrome", "cctp_sequence"]:
             if self.prompt_celltype_cache_file is not None:
                 return CistromeCellEmbInterface(self.prompt_celltype_cache_file)
             else:

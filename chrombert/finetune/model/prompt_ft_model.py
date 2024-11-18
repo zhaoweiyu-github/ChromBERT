@@ -33,7 +33,7 @@ class ChromBERTPrompt(BasicModel):
         self.gather_emb = PromptsEmb() # for gather regulator and cell prompt
 
         self.ft_header = PromptHeader(n_parts = self.finetune_config.n_prompt_parts + 1,
-                                      dropout=self.finetune_config.dropout)
+                                      dropout = self.finetune_config.dropout)
         return None 
 
     def forward(self,batch):
@@ -59,7 +59,7 @@ class ChromBERTPrompt(BasicModel):
             emb_cell = batch["emb_cell"]
         else:
             prompts_cell = batch["prompts_cell"]
-            emb_cell =  self.gather_emb(chrombert_out,prompts_cell)
+            emb_cell = self.gather_emb(chrombert_out,prompts_cell)
             
         if 'emb_regulator' in batch.keys():
             emb_regulator = batch["emb_regulator"]
@@ -67,8 +67,8 @@ class ChromBERTPrompt(BasicModel):
         else:
             prompts_all = batch["prompts_all"]
             prompts_regulator = batch["prompts_regulator"]
-            emb_regulator =  self.gather_emb(chrombert_out,prompts_regulator)
-            emb_all =  self.gather_emb(chrombert_out,prompts_all)
+            emb_regulator = self.gather_emb(chrombert_out,prompts_regulator)
+            emb_all = self.gather_emb(chrombert_out,prompts_all)
         
         if self.finetune_config.prompt_kind == 'expression':
             emb_cell = self.adapter_cell_emb(emb_cell)

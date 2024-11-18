@@ -84,12 +84,10 @@ class PromptDatasetForDNA(BasicDataset):
         return item
 
 class PromptDatasetForDNASequence(BasicDataset):
+    """Dataset for prompt-enhanced fine-tuning directly on DNA sequence inputs"""
     def __init__(self,config):
         super().__init__(config)
         self.config = config
-        assert isinstance(config.fasta_file, str)
-        assert os.path.exists(config.fasta_file), f"fasta file {config.fasta_file=} does not exist"
-        self.fasta_interface = FastaInterface(config.fasta_file)
         self.supervised_file = config.supervised_file
         self.supervised(self.supervised_file)
 

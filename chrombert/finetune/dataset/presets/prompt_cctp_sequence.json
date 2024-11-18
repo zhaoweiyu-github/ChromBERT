@@ -1,0 +1,9 @@
+{
+    "kind":"PromptDataset",
+    "prompt_kind": "cctp_sequence",
+    "hdf5_file":"hg38_6k_1kb.hdf5",
+    "meta_file":"config/hg38_6k_meta.json",
+    "ignore": false,
+    "perturbation": false,
+    "fasta_file":"other/hg38.fa"
+}
