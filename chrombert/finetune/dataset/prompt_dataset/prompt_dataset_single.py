@@ -33,7 +33,7 @@ class PromptDatasetForDNA(BasicDataset):
             raise ValueError(f"suffix of supervised_file {supervised_file} should be csv or tsv")
 
         self.df_supervised = df_supervised
-
+        self.regions = df_supervised[['chrom', 'start', 'end']].values
         self.supervised_indices = df_supervised["build_region_index"]
         self.supervised_indices_len = len(self.supervised_indices)
         self.pos_alt = df_supervised["pos"].values - df_supervised["start"].values -1
@@ -65,8 +65,8 @@ class PromptDatasetForDNA(BasicDataset):
         item['label'] = self.supervised_labels[index]
         
         pos_alt = self.pos_alt[index] 
-        region = item["region"]
-        coord = [region[0].item(), region[1].item() + pos_alt - fw, region[1].item() + pos_alt + fw]
+        region = self.regions[index, :]
+        coord = [region[0], region[1] + pos_alt - fw, region[1] + pos_alt + fw]
         seq_raw = self.fasta_interface[coord]
         item['seq_raw'] = seq_raw
 

@@ -92,7 +92,8 @@ class CistromeCellEmbInterface():
     def get_emb(self, build_region_index, cistrome_cell):
         cistrome=cistrome_cell.split(':')[0].lower()
         cell=cistrome_cell.split(':')[-1].lower().replace('-','').replace('_','').replace(' ','')
-        cistrome_cell = f'{cistrome}:{cell}'
+        # cistrome_cell = f'{cistrome}:{cell}'
+        cistrome_cell = f'{cell}'
         index=self.dict_region_to_index[build_region_index]
         assert index is not None
         item={}
@@ -199,13 +200,13 @@ class FastaInterface():
                 seq =  fasta[chrom][start:end].seq.upper()
             else:
                 raise(TypeError(f"chrom in str format 'chr' prefix"))
-        # print(chrom, start, end)
-        if chrom == 24:
-            seq =  fasta[f'chrX'][start:end].seq.upper()
-        elif chrom == 25:
-            seq =  fasta[f'chrY'][start:end].seq.upper()
         else:
-            seq = fasta[f'chr{chrom}'][start:end].seq.upper()
+            if chrom == 24:
+                seq =  fasta[f'chrX'][start:end].seq.upper()
+            elif chrom == 25:
+                seq =  fasta[f'chrY'][start:end].seq.upper()
+            else:
+                seq = fasta[f'chr{chrom}'][start:end].seq.upper()
         fasta.close()
         return seq
         
