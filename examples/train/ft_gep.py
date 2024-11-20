@@ -25,7 +25,7 @@ def get_args():
     parser.add_argument("--name", type=str, default="chrombert-ft-gep", help="Name of the trainer. ")
     parser.add_argument("--save-top-k", dest="save_top_k", type=int, default=3, help="Save top k checkpoints. ")
     parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default="zero_inflation", help="Checkpoint metric. ")
-    parser.add_argument("--checkponit-mode", dest="checkpoint_mode", type=str, default="min", help="Checkpoint mode. ")
+    parser.add_argument("--checkpoint-mode", dest="checkpoint_mode", type=str, default="min", help="Checkpoint mode. ")
     parser.add_argument("--log-every-n-steps",dest="log_every_n_steps", type=int, default=50, help="Log every n steps. ")
     # loss arguments
     parser.add_argument("--kind", choices=["regression", "zero_inflation"], default="zero_inflation", help="Kind of the task. ")
@@ -76,7 +76,8 @@ def get_datamodule(args):
         "hdf5_file": hdf5_file,
         "batch_size": args.batch_size,
         "num_workers": args.num_workers,
-        "flank_window": args.flank_window
+        "flank_window": args.flank_window,
+        "basedir": args.basedir,
     }
     dc = chrombert.get_preset_dataset_config("multi_flank_window",**params, supervised_file = None)
     data_module = chrombert.LitChromBERTFTDataModule(
