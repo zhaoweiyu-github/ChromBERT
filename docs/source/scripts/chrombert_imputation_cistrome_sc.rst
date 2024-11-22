@@ -57,6 +57,12 @@ Prompt data class. Choose from *cistrome* or *expression*. This option is requir
 
     Path to the regulator prompt cache file. Optional.
 
+.. option:: --prompt-regulator-cache-pin-memory
+    Pin memory for regulator prompt cache for further accelerating. Default is False. 
+
+.. option:: --prompt-regulator-cache-limit
+    The limit of regulator prompt cached in memory. Be mindful of your memory usage! 
+
 .. option:: --prompt-celltype
 
     The cell-type-specific prompt. For example, *dnase:k562* for cistrome prompt and *k562* for expression prompt. It can also be provided in the supervised file if the format supports. Optional.

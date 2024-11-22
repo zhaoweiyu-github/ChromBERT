@@ -14,8 +14,8 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
     # use cache file for acceleration 
     python ft_prompt_enhanced.py [OPTIONS] \  
         --prompt-kind KIND  \  
-        --prompt_regulator_cache_file CACHE_PATH1 \  
-        --prompt_celltype_cache_file CACHE_PATH2 \  
+        --prompt-regulator-cache-file CACHE_PATH1 \  
+        --prompt-celltype-cache-file CACHE_PATH2 \  
         --train TRAIN_PATH \  
         --valid VALID_PATH \  
         --test TEST_PATH 
@@ -97,7 +97,7 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 
 .. option:: --batch-size
 
-    Batch size. Default is *8*.
+    Batch size. Default is *8*. It's suggested to set a larger number to accelerate training here. 
 
 .. option:: --num-workers
 
@@ -114,6 +114,9 @@ Fine-tune a prompt-enhanced ChromBERT on a downstream task.
 .. option:: -k, --ckpt
 
     Path to the checkpoints used to initialize the model. Optional. Defualt is the pretrain checkpoint provided in the base directory.
+
+.. option:: --mask
+    Path to the mtx mask file. Optional if it could infered from other arguments. 
 
 .. option:: -d, --hdf5-file
 

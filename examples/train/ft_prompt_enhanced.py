@@ -44,6 +44,7 @@ def get_args():
     parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
 
     parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the checkpoints used to initialize the model. Optional if it could infered from other arguments. ")
+    parser.add_argument("--mask", type=str, required=False, default=None, help="Path to the mtx mask file. Optional if it could infered from other arguments. ")
 
     parser.add_argument("-d","--hdf5-file", dest="hdf5_file", type=str, required=False, default=None, help="Path to the hdf5 file that contains the dataset. Optional if it could infered from other arguments. ")
     parser.add_argument("--dropout", type=float, default=0.1, help="Dropout rate. ")
@@ -122,6 +123,10 @@ def get_model_config(args):
     else:
         print("Warning: You are using a finetune checkpoint. Make sure it is the correct one!")
         parameters["finetune_ckpt"] = ckpt
+
+
+    if args.mask is not None:
+        parameters["mtx_mask"] = args.mask
 
     config = chrombert.ChromBERTFTConfig.load(**parameters)
 
