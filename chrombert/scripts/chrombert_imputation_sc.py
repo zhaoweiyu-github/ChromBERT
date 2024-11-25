@@ -123,8 +123,8 @@ def predict(dl, ds, model, o_h5):
 
 def get_hdf5(regions, probs, logits, cells, regulators, o_h5):
     num_regions = regions.shape[0]
-    probs = probs.reshape(num_regions, -1)
-    logits = logits.reshape(num_regions, -1)
+    probs = probs.reshape(-1, num_regions).T
+    logits = logits.reshape(-1, num_regions).T
     with h5py.File(o_h5, 'w') as f:
         f1 = f.create_dataset("regions", data=regions)
         f2= f.create_dataset("probs", data=probs)
