@@ -126,11 +126,11 @@ def get_hdf5(regions, probs, logits, cells, regulators, o_h5):
     probs = probs.reshape(-1, num_regions).T
     logits = logits.reshape(-1, num_regions).T
     with h5py.File(o_h5, 'w') as f:
-        f1 = f.create_dataset("regions", data=regions)
-        f2= f.create_dataset("probs", data=probs)
-        f3= f.create_dataset("logits", data=logits)
-        f4 = f.create_dataset("cells", data=cells, dtype = h5py.string_dtype(encoding='utf-8'))
-        f5 = f.create_dataset("regulators", data=regulators, dtype = h5py.string_dtype(encoding='utf-8'))
+        f1 = f.create_dataset("region", data=regions)
+        f2= f.create_dataset("prob", data=probs)
+        f3= f.create_dataset("logit", data=logits)
+        f4 = f.create_dataset("cell", data=cells, dtype = h5py.string_dtype(encoding='utf-8'))
+        f5 = f.create_dataset("regulator", data=regulators, dtype = h5py.string_dtype(encoding='utf-8'))
 
 
 def main():
