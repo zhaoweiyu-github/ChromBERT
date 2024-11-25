@@ -92,8 +92,7 @@ class CistromeCellEmbInterface():
     def get_emb(self, build_region_index, cistrome_cell):
         cistrome=cistrome_cell.split(':')[0].lower()
         cell=cistrome_cell.split(':')[-1].lower().replace('-','').replace('_','').replace(' ','')
-        # cistrome_cell = f'{cistrome}:{cell}'
-        cistrome_cell = f'{cell}'
+        cistrome_cell = f'{cistrome}:{cell}'
         index=self.dict_region_to_index[build_region_index]
         assert index is not None
         item={}
