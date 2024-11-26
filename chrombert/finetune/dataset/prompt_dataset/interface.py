@@ -92,14 +92,16 @@ class CistromeCellEmbInterface():
     def get_emb(self, build_region_index, cistrome_cell):
         cistrome=cistrome_cell.split(':')[0].lower()
         cell=cistrome_cell.split(':')[-1].lower().replace('-','').replace('_','').replace(' ','')
-        cistrome_cell = f'{cistrome}:{cell}'
+        cistrome_cell_cleaned = f'{cistrome}:{cell}'
         index=self.dict_region_to_index[build_region_index]
         assert index is not None
         item={}
         if self.valid_cell(cistrome_cell):
             item["emb_cell"] = self.emb_handler[f"/emb/{cistrome_cell}"][index,:]
+        elif self.valid_cell(cistrome_cell_cleaned):
+            item["emb_cell"] = self.emb_handler[f"/emb/{cistrome_cell_cleaned}"][index,:]
         else:
-            raise ValueError(f'{cistrome_cell} not in embedding flie')
+            raise ValueError(f'{cistrome_cell} or {cistrome_cell_cleaned} not in embedding flie')
         return item
 
 class ExpCellEmbInterface():
