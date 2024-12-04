@@ -42,7 +42,7 @@ class BasicPLModule(pl.LightningModule, ABC):
  
         state = {f"{self.config.tag}_{mode}/{name}": value for name, value in metrics.items()}
         for name, value in state.items():
-            self.log(name, value,  sync_dist = False, on_step = True, on_epoch = True, prog_bar = pbar)
+            self.log(name, value,  sync_dist = True, on_step = True, on_epoch = True, prog_bar = pbar)
         return loss, metrics
 
     def clean_inputs(self, logits, labels, *args, **kwargs):

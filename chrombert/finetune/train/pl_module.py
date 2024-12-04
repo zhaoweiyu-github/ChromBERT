@@ -52,7 +52,7 @@ class ClassificationPLModule(BasicPLModule):
 
         state = {f"{self.config.tag}_validation/{name}": value for name, value in metrics.items()}
         for name, value in state.items():
-            self.log(name, value,  sync_dist = False, on_step = False, on_epoch = True, prog_bar = True)
+            self.log(name, value,  sync_dist = True, on_step = False, on_epoch = True, prog_bar = True)
 
         for k, func in self.metric_funcs.items():
             func.reset()
@@ -93,7 +93,7 @@ class RegressionPLModule(BasicPLModule):
 
         state = {f"{self.config.tag}_validation/{name}": value for name, value in metrics.items()}
         for name, value in state.items():
-            self.log(name, value,  sync_dist = False, on_step = False, on_epoch = True, prog_bar = True)
+            self.log(name, value,  sync_dist = True, on_step = False, on_epoch = True, prog_bar = True)
 
         for k, func in self.metric_funcs.items():
             func.reset()
@@ -145,7 +145,7 @@ class ZeroInflationPLModule(BasicPLModule):
 
         state = {f"{self.config.tag}_validation/{name}": value for name, value in metrics.items()}
         for name, value in state.items():
-            self.log(name, value,  sync_dist = False, on_step = False, on_epoch = True, prog_bar = True)
+            self.log(name, value,  sync_dist = True, on_step = False, on_epoch = True, prog_bar = True)
 
         for k, func in self.metrics_for_reg.items():
             func.reset()
