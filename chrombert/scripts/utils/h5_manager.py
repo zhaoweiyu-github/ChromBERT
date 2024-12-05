@@ -49,13 +49,21 @@ class HDF5Manager:
         - AssertionError: If inserting more samples than the dataset can hold.
         ''' 
         assert self.file is not None, "File is not open."
-        
+        assert set(data.keys()) == set(self.kwargs.keys()), (
+            f"Please ensure all data are passed and correctly saved in the file. {set(self.kwargs.keys())-set(set(data.keys()))} not be save"
+        ) 
         # Ensure all keys in data match the datasets in the file
         assert all(key in self.file for key in data.keys()), \
             "All keys in data must match the datasets in the file."
         
         # Ensure the first dimension of all values is the same
-        samples = [data[key].shape[0] for key in data.keys()]
+        try:
+            samples = [data[key].shape[0] for key in data.keys()]
+        except:
+            samples = [1 for key in data.keys()]
+            
+        # samples = [data[key].shape[0] if hasattr(data[key], 'shape') else 1 for key in data.keys()]
+
         assert len(set(samples)) == 1, "First dimension of all values should be the same."
         
         # Check if the total number of samples will exceed dataset size
