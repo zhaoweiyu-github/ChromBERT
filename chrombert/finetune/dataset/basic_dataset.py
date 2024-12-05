@@ -82,7 +82,7 @@ class PerturbationDataset(BasicDataset):
             assert os.path.exists(self.config.meta_file)
             with open(self.config.meta_file, 'r') as f:
                 self.meta_file = json.load(f)
-                self.regulators = self.meta_file['regulator']
+                self.regulators = sorted(self.meta_file['regulator'])
             self.perturbation_value = self.config.perturbation_value
             
         
@@ -126,7 +126,7 @@ class IgnoreDataset(PerturbationDataset):
             assert os.path.exists(self.config.meta_file)
             with open(self.config.meta_file, 'r') as f:
                 self.meta_file = json.load(f)
-                self.regulators = self.meta_file['regulator']
+                self.regulators = sorted(self.meta_file['regulator'])
 
     def __getitem__(self, index):
         item = super().__getitem__(index)

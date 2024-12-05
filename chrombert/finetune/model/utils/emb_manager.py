@@ -9,6 +9,7 @@ class CistromeEmbeddingManager(nn.Module):
         assert isinstance(mtx_mask, str), "mtx_mask must be a path to a mtx_mask" 
         assert os.path.exists(mtx_mask), f"{mtx_mask} does not exist"
         self.mtx_mask_df = pd.read_csv(mtx_mask, sep='\t', index_col=0)
+        self.mtx_mask_df = self.mtx_mask_df[sorted(self.mtx_mask_df.columns)]
         self.mtx_mask = torch.tensor(self.mtx_mask_df.values) # (datasets, factors)
         self.gsmid_names = self.mtx_mask_df.index.tolist()
         self.regulator_names = self.mtx_mask_df.columns.tolist()
