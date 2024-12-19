@@ -2,7 +2,7 @@ import os
 import torch
 import json
 from copy import deepcopy
-from typing import Optional, Union, Any, Dict,Tuple
+from typing import Optional, Union, Any, Dict, Tuple, List
 from dataclasses import dataclass, field, asdict
 import numpy as np
 from chrombert.base import ChromBERTConfig
@@ -18,7 +18,7 @@ class ChromBERTFTConfig:
     finetune_ckpt: str = field(default = None, metadata= {"help": "loading finetune checkpoint"})
     
     ignore: bool = False
-    ignore_index: Tuple[Optional[np.ndarray], Optional[np.ndarray]] = field(default = (None, None), metadata = {"help": "ignore index for regulators and gsmids. See tutorials for detail. "})
+    ignore_index: Tuple[Optional[List], Optional[List]] = field(default = (None, None), metadata = {"help": "ignore index for regulators and gsmids. See tutorials for detail. "})
 
     gep_flank_window: int = field(default = 4, metadata = {"help": "the number of flank region"})
     gep_parallel_embedding: bool = field(default=False, metadata = {"help": "whether use parallel embedding which need more GPU memrory"})
@@ -32,6 +32,23 @@ class ChromBERTFTConfig:
 
     def __post_init__(self):
         self.validation()
+
+        tmp = self.ignore_index
+        if tmp[0] is not None:
+            if isinstance(tmp[0], np.ndarray):
+                tmp0 = tmp[0].tolist()
+            else:
+                tmp0 = tmp[0]
+        else:
+            tmp0 = None
+        if tmp[1] is not None:
+            if isinstance(tmp[1], np.ndarray):
+                tmp1 = tmp[1].tolist()
+            else:
+                tmp1 = tmp[1]
+        else:
+            tmp1 = None
+        self.ignore_index = (tmp0, tmp1)
     
     def to_dict(self):
         state = {}
