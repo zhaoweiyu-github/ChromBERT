@@ -28,7 +28,7 @@ dependencies = [
     "matplotlib",
     "torchinfo",
     "h5py",
-    "lightning",
+    "lightning >= 2.0.0",
     "transformers",
     "triton",
     "huggingface_hub[cli]",
