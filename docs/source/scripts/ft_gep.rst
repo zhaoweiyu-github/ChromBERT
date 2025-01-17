@@ -1,7 +1,7 @@
-Gep
-*********************
+Gene expression prediction
+**************************
 
-Fine-tune the ChromBERT model with a multiflank window setting to predict genome-wide changes in the transcriptome.
+Gene expression is influenced by multiple regulatory regions, often extending over significant genomic distances, particularly near the transcription start site (TSS). This task uses a flank window to consider multiple nearby regions, providing a holistic view of regulatory impacts on gene expression.
 
 .. code-block:: shell
 

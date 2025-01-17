@@ -1,7 +1,7 @@
-General
-************
+Single-region-based prediction
+****************************
 
-This script is suitable for most purposes. It is designed to be a general-purpose fine-tuning script for ChromBERT.
+This task is aimed at scenarios where the model makes predictions using only the features of a single region. The user has the flexibility to specify features to perturb or omit, which is particularly useful when simulating regulatory changes or testing hypotheses about specific regulatory elements.
 
 .. code-block:: shell
 

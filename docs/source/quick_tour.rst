@@ -18,20 +18,21 @@ OK! Let’s get started!
 You can customize the model’s input by assigning parameters to the ``chrombert.DatasetConfig`` class. Key
 parameters include:
 
-``hdf5_file``: A preprocessed HDF5 file containing features for 1kb bins
-across the genome. This file is cached in the default directory
-(``~/.cache/chrombert/data/hg38_6k_1kb.hdf5``) upon installation, unless
-customized.
-
 ``kind``: Specifies the input format, which varies across tasks. It is
 crucial to assign this based on your specific task. Different tasks may
 require additional parameters, which you can find
 `here <https://github.com/zhaoweiyu-github/ChromBERT/blob/main/chrombert/finetune/dataset/dataset_config.py>`__.
 
+``hdf5_file``: A preprocessed HDF5 file containing features for 1kb bins
+across the genome. This file is cached in the default directory
+(``~/.cache/chrombert/data/hg38_6k_1kb.hdf5``) upon installation, unless
+customized.
+
 ``supervised_file``: A input dataset containing at least four columns:
 ``chrom``,\ ``start``,\ ``end``, ``build_region_index``. These four
 columns are used to locate and retrieve features for the regions. Depending on the task, you can add additional
-columns, such as: ``label``
+columns like ``label``. The ``build_region_index`` for each region is cached in the default directory
+(``~/.cache/chrombert/config/hg38_6k_1kb_region.bed``) upon installation, unless customized.
 
 You can also configure other parameters like ``batch_size`` and
 ``num_workers``.
@@ -42,7 +43,7 @@ You can also configure other parameters like ``batch_size`` and
 
    # Create a DatasetConfig object with your settings
    dc = chrombert.DatasetConfig(hdf5_file="~/.cache/chrombert/data/hg38_6k_1kb.hdf5", 
-   kind="GeneralDataset", supervised_file="<your_path_input_data>")
+                           kind="GeneralDataset", supervised_file="<your_path_input_data>")
 
    # Initialize inputs in whatever formats you want
    ds = dc.init_dataset()  # Dataset
@@ -50,9 +51,9 @@ You can also configure other parameters like ``batch_size`` and
    dl = dc.init_dataloader()  # Dataloader
 
    dm = chrombert.LitChromBERTFTDataModule(config=dc, 
-   train_params={"supervised_file": args.train}, 
-   val_params={"supervised_file": args.valid},
-   test_params={"supervised_file": args.test})  # LightningDataModule
+                           train_params={"supervised_file": args.train}, 
+                           val_params={"supervised_file": args.valid},
+                           test_params={"supervised_file": args.test})  # LightningDataModule
 
 2 Customize the model
 ---------------------
@@ -85,9 +86,9 @@ Different tasks may require additional parameters, which you can find
 Once the input and model are configured, you can customize the training
 process, including:
 
+• Task Type (``kind``): ``"regression"`` or ``"classification"``.
 • Loss Function (``loss``): Specify the type of loss (e.g., ``"bce"`` for binary cross-entropy). 
 • Learning Rate (``lr``): Set the desired learning rate. 
-• Task Type (``kind``): Choose from ["classification", "regression", "zero_inflation"].
 
 Explore other customizable training parameters `here <https://github.com/zhaoweiyu-github/ChromBERT/blob/main/chrombert/finetune/train/train_config.py>`__.
 

@@ -18,9 +18,9 @@ For detailed usage instructions, run the following command:
 .. csv-table:: Fine-Tune Scripts
     :header: "Type", "Download", "Description"
 
-    "`General`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py>`_ ", "Suitable for most purposes."
-    "`Prompt-enhanced`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_prompt_enhanced.py>`_", "Designed for prompt-enhanced tasks, such as cistrome generation."
-    "`Gep`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_gep.py>`_", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
+    "`Single-region-based prediction`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py>`_ ", "Designed for scenarios where the model makes predictions using only the features of a single region."
+    "`Prompt-enhanced`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_prompt_enhanced.py>`_", "This task is designed for situations where the pre-trained model's default single-region embeddings are insufficient, such as cistrome imputation."
+    "`Gene expression prediction`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_gep.py>`_", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
 
 Details 
 ---------

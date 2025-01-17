@@ -1,8 +1,7 @@
 Prompt-enhanced
 *******************
 
-
-Fine-tune a prompt-enhanced ChromBERT on a downstream task.
+This task is designed for situations where the pre-trained model's default single-region embeddings are insufficient. By incorporating additional prompts, such as cell-type specific embeddings or DNA sequence embeddings, the model can make more informed predictions by leveraging extra contextual knowledge.
 
 .. code-block:: shell
 
