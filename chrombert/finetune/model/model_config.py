@@ -23,7 +23,7 @@ class ChromBERTFTConfig:
     gep_flank_window: int = field(default = 4, metadata = {"help": "the number of flank region"})
     gep_parallel_embedding: bool = field(default=False, metadata = {"help": "whether use parallel embedding which need more GPU memrory"})
     gep_gradient_checkpoint: bool = field(default=False, metadata = {"help": "whether use gradient_checkpoint which no more GPU memrory"})
-    gep_zero_inflation: bool = field(default=True, metadata = {"help": "whether use zero inflation header, if false, use general header"})
+    gep_zero_inflation: bool = field(default=False, metadata = {"help": "whether use zero inflation header, if false, use general header"})
     
     prompt_kind: str = field(default='cistrome', metadata={"help": "prompt data class"})
     prompt_dim_external: int = field(default = 512, metadata = {"help": "dimension of external data. use 512 for scgpt, 768 for dnabert2"})

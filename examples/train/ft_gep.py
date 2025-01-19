@@ -24,12 +24,12 @@ def get_args():
     # checkpoint arguments
     parser.add_argument("--name", type=str, default="chrombert-ft-gep", help="Name of the trainer. ")
     parser.add_argument("--save-top-k", dest="save_top_k", type=int, default=3, help="Save top k checkpoints. ")
-    parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default="zero_inflation", help="Checkpoint metric. ")
-    parser.add_argument("--checkpoint-mode", dest="checkpoint_mode", type=str, default="min", help="Checkpoint mode. ")
+    parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default="pcc", help="Checkpoint metric (Pearson correlation coefficient). ")
+    parser.add_argument("--checkpoint-mode", dest="checkpoint_mode", type=str, default="max", help="Checkpoint mode. ")
     parser.add_argument("--log-every-n-steps",dest="log_every_n_steps", type=int, default=50, help="Log every n steps. ")
     # loss arguments
-    parser.add_argument("--kind", choices=["regression", "zero_inflation"], default="zero_inflation", help="Kind of the task. ")
-    parser.add_argument("--loss", type=str, default="zero_inflation", help="Loss function. ")
+    parser.add_argument("--kind", choices=["regression", "zero_inflation"], default="regression", help="Kind of the task. ")
+    parser.add_argument("--loss", type=str, default="rmse", help="Loss function. ")
 
     # data arguments
     parser.add_argument("--train", type=str, required=True, help="Path to the training data. ")
@@ -52,7 +52,7 @@ def get_args():
         
     # gep arguments
     parser.add_argument("--flank-window", dest="flank_window", type=int, default=4, help="Flank window size.")
-    parser.add_argument("--gep-zero-inflation", action="store_false", default=True, help="Use GEP header that includes zero inflation output. ")
+    parser.add_argument("--gep-zero-inflation", action="store_true", default=False, help="Use GEP header that includes zero inflation output. ")
     parser.add_argument("--gep-parallel-embedding", action="store_true", help="Parallel pick embedding, which is quick but requires more GPU memory. ")
     parser.add_argument("--gep-gradient-checkpoint", action="store_true", help="Use gradient checkpoint, which requires less GPU memory but is slower ")    
     

@@ -6,5 +6,5 @@
     "gep_flank_window":4,
     "gep_parallel_embedding":false,
     "gep_gradient_checkpoint":false,
-    "gep_zero_inflation":true
+    "gep_zero_inflation":false
 }
