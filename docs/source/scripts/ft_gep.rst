@@ -54,11 +54,11 @@ Gene expression is influenced by multiple regulatory regions, often extending ov
 
 .. option:: --checkpoint-metric
 
-    Metric for checkpointing. Default is *zero_inflation*.
+    Metric for checkpointing. Default is *pcc*.
 
 .. option:: --checkpoint-mode
 
-    Mode for checkpointing. Default is *min*.
+    Mode for checkpointing. Default is *max*.
 
 .. option:: --log-every-n-steps
 
@@ -66,11 +66,11 @@ Gene expression is influenced by multiple regulatory regions, often extending ov
 
 .. option:: --kind
 
-    Type of task, such as *regression*, *zero_inflation*. Default is *zero_inflation*.
+    Type of task, such as *regression*, *zero_inflation*. Default is *regression*.
 
 .. option:: --loss
 
-    Loss function to be used. Default is *zero_inflation*.
+    Loss function to be used. Default is *rmse*.
 
 .. option:: --train
 
@@ -126,7 +126,7 @@ Gene expression is influenced by multiple regulatory regions, often extending ov
 
 .. option:: --gep-zero-inflation
 
-    Specifies whether to include zero inflation in the GEP header. Default is *True*.
+    Specifies whether to include zero inflation in the GEP header. Default is *False*.
 
 .. option:: --gep-parallel-embedding
 
