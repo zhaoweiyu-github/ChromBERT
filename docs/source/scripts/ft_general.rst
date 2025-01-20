@@ -1,5 +1,5 @@
 Cell-type-specific regulatory effects
-****************************
+****************************************
 
 This script enables fine-tuning ChromBERT for analyzing cell-type-specific regulatory effects. Users can selectively perturb or omit specific genomic features, making it valuable for simulating regulatory changes and testing hypotheses about the role of individual regulatory elements in cell-type-specific gene regulation.
 
