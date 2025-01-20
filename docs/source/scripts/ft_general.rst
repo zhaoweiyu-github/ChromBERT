@@ -1,7 +1,7 @@
-Single-region-based prediction
+Cell-type-specific regulatory effects
 ****************************
 
-This task is aimed at scenarios where the model makes predictions using only the features of a single region. The user has the flexibility to specify features to perturb or omit, which is particularly useful when simulating regulatory changes or testing hypotheses about specific regulatory elements.
+This script enables fine-tuning ChromBERT for analyzing cell-type-specific regulatory effects. Users can selectively perturb or omit specific genomic features, making it valuable for simulating regulatory changes and testing hypotheses about the role of individual regulatory elements in cell-type-specific gene regulation.
 
 .. code-block:: shell
 

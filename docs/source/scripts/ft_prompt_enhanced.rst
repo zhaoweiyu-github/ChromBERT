@@ -1,7 +1,7 @@
 Prompt-enhanced
 *******************
 
-This task is designed for situations where the pre-trained model's default single-region embeddings are insufficient. By incorporating additional prompts, such as cell-type specific embeddings or DNA sequence embeddings, the model can make more informed predictions by leveraging extra contextual knowledge.
+This script allows you to fine-tune ChromBERT by adding extra information as prompts. You can include things like cell-type features or DNA sequence patterns to help the model make better predictions. The model uses these prompts as additional clues when analyzing genomic data.
 
 .. code-block:: shell
 

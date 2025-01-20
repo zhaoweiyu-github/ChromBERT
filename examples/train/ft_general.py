@@ -25,7 +25,7 @@ def get_args():
     # checkpoint arguments
     parser.add_argument("--name", type=str, default="chrombert-ft-general", help="Name of the trainer. ")
     parser.add_argument("--save-top-k", dest="save_top_k", type=int, default=3, help="Save top k checkpoints. ")
-    parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default=None, help="Checkpoint metric. ")
+    parser.add_argument("--checkpoint-metric", dest="checkpoint_metric", type=str, default=None, help="Checkpoint metric. If None, use the loss as the checkpoint metric. ")
     parser.add_argument("--checkpoint-mode", dest="checkpoint_mode", type=str, default="min", help="Checkpoint mode. ")
     parser.add_argument("--log-every-n-steps",dest="log_every_n_steps", type=int, default=50, help="Log every n steps. ")
     # loss arguments

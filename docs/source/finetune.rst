@@ -18,8 +18,8 @@ For detailed usage instructions, run the following command:
 .. csv-table:: Fine-Tune Scripts
     :header: "Type", "Download", "Description"
 
-    "`Single-region-based prediction`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py>`_ ", "Designed for scenarios where the model makes predictions using only the features of a single region."
-    "`Prompt-enhanced`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_prompt_enhanced.py>`_", "This task is designed for situations where the pre-trained model's default single-region embeddings are insufficient, such as cistrome imputation."
+    "`Cell-type-specific regulatory effects`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_general.py>`_ ", "Designed for scenarios where the model fine-tuning for cell-type-specific regulatory effects."
+    "`Prompt-enhanced`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_prompt_enhanced.py>`_", "Designed for scenarios that require incorporating additional information into the model."
     "`Gene expression prediction`_", "`download <https://raw.githubusercontent.com/TongjiZhanglab/ChromBERT/main/examples/train/ft_gep.py>`_", "Intended for tasks that use multiple 1-kb bins as input, such as gene expression prediction."
 
 Details 
