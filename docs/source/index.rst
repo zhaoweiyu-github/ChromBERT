@@ -19,7 +19,7 @@ Welcome to ChromBERT's documentation!
     :maxdepth: 1
     :caption: Tutorials: 
 
-    tutorial_finetuning_ChromBERT_from_scratch
+    tutorial_finetuning_ChromBERT
     finetune
     tutorial_embedding_extraction
     cli

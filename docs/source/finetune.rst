@@ -5,7 +5,7 @@ Compiled Scripts for fine-tuning of ChromBERT
 Overview
 ----------
 
-For a hands-on tutorial, see the documentation on :doc:`tutorial_finetuning_ChromBERT_from_scratch`.  
+For a hands-on tutorial, see the documentation on :doc:`tutorial_finetuning_ChromBERT`.  
 
 We provide three scripts for fine-tuning, designed for your convenience. All scripts can be downloaded and executed anywhere, provided that your installation is correct.
 
