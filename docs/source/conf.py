@@ -9,7 +9,7 @@ author = 'Zhaowei Yu, Dongxu Yang, Qianqian Chen, Yuxuan Zhang'
 
 release = '1.0.0'
 version = '1.0.0'
-sphinx = True
+
 # -- General configuration
 
 extensions = [
