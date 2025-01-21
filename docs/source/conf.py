@@ -37,6 +37,14 @@ templates_path = ['_templates']
 html_theme = 'sphinx_rtd_theme'
 html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 
+html_context = {
+    "display_github": True, # Integrate GitHub
+    "github_user": "zhaoweiyu-github", # Username
+    "github_repo": "ChromBERT", # Repo name
+    "github_version": "main/", # Branch
+    "conf_py_path": "/docs/source/", # Path in the repo to conf.py
+}
+
 # -- Options for EPUB output
 epub_show_urls = 'footnote'
 nbsphinx_execute = "never"
