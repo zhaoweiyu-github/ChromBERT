@@ -165,27 +165,3 @@ class PromptDatasetForCCTP(BasicDataset):
         item.update(regulator_item)
         item.update(sv_item)
         return item
-
-class PromptDatasetForCCTPSequence(PromptDatasetForDNASequence):
-    """Dataset for prompt-enhanced fine-tuning directly on DNA sequence input and cell-type-specific cistrome information"""
-    def __init__(self,config):
-        super().__init__(config)
-        self.config = config
-        self.prompt_map = {i:j for i,j in self.gsmid_to_did.items()} #self.gsmid_to_did from BasicDataset
-        self.seq_len = self.gsm_num
-        self.cell_interface = CelltypeInterfaceManager(config, self.prompt_map)
-        self.cells = self.df_supervised['cell']
-        self.prompt_all = torch.ones(self.seq_len, dtype=torch.int64)
-        
-    def __len__(self):
-        return super().__len__()
-    
-    def __getitem__(self,index):
-        item = super().__getitem__(index)
-        build_region_index = item['build_region_index']
-        cell = self.cells[index]
-        celltype_item = self.cell_interface.get_prompt_item(build_region_index, cell, self.seq_len)
-        item.update(celltype_item)
-        item['prompts_all'] = self.prompt_all
-
-        return item
