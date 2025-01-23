@@ -6,7 +6,6 @@ import pandas as pd
 from torch.utils.data import Dataset
 
 from ..basic_dataset import BasicDataset
-from .prompt_dataset_single import PromptDatasetForDNASequence
 from .interface_manager import RegulatorInterfaceManager, CelltypeInterfaceManager
 
 '''

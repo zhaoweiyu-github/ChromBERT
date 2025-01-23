@@ -137,7 +137,7 @@ class ChromBERTFTConfig:
             model =  ChromBERTGEP(pretrain_config, finetune_config)
     
         elif finetune_config.task == 'prompt':
-            if finetune_config.prompt_kind in == 'dna':
+            if finetune_config.prompt_kind == 'dna':
                 assert finetune_config.dnabert2_ckpt is not None, "dnabert2_ckpt must be specified for prompt_kind=dna or sequence"
                 if finetune_config.dnabert2_ckpt is not None:
                     assert isinstance(finetune_config.dnabert2_ckpt, str)
