@@ -32,7 +32,8 @@ class AdapterExternalEmb(nn.Module):
         self.fc2 = ResidualBlock(dim2, dim2, dropout = dropout)
     
     def forward(self, x):
-        x = x.bfloat16()
+        # x = x.bfloat16()
+        x = x.to(self.fc1.fc1.weight.dtype)
         x = self.fc1(x)
         x = self.fc2(x)
         return x
