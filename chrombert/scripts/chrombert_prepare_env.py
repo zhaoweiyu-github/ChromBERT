@@ -83,12 +83,21 @@ def download(basedir = "~/.cache/chrombert/data", hf_endpoint="https://huggingfa
         ("hg38_6k_meta.json", "config"),
         ("hg38_6k_mask_matrix.tsv", "config"),
         ("hg38.fa", "other"),
-        ("demo.tar.gz",".")
+        ("demo.tar.gz","."),
+
+        ("mm10_5k_1kb.hdf5.gz", "."),
+        ("mm10_5k_1kb_pretrain.ckpt", "checkpoint"),
+        ("mm10_5k_1kb_region.bed", "config"),
+        ("mm10_5k_meta.tsv", "config"),
+        ("mm10_5k_regulators_list.txt", "config"),
+        ("mm10_5k_meta.json", "config"),
+        ("mm10_5k_mask_matrix.tsv", "config")
         
     ]
 
     files_to_decompress = [
         "hg38_6k_1kb.hdf5.gz",
+        "mm10_5k_1kb.hdf5.gz"
     ]
 
     files_to_unpack = [
