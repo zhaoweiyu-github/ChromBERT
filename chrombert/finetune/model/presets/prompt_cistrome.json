@@ -1,5 +1,6 @@
 {
     "task":"prompt",
+    "genome":"hg38",
     "prompt_kind":"cistrome",
     "prompt_dim_external":768,
     "ignore": false,

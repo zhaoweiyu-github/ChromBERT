@@ -1,5 +1,6 @@
 {
     "task":"prompt",
+    "genome":"hg38",
     "prompt_kind":"dna",
     "prompt_dim_external":768,
     "mtx_mask":"config/hg38_6k_mask_matrix.tsv",

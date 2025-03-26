@@ -1,5 +1,6 @@
 {
     "task":"gep",
+    "genome":"hg38",
     "mtx_mask":"config/hg38_6k_mask_matrix.tsv",
     "ignore": false,
     "pretrain_ckpt":"checkpoint/hg38_6k_1kb_pretrain.ckpt",

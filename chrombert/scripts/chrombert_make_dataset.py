@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument("--no-filter",dest="no_filter", default=False, action = "store_true", help="Do not filter the regions that are not overlapped. ")
 
     parser.add_argument("--basedir", type=str, default = DEFAULT_BASEDIR, help="Base directory for the required files")
-    parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
+    parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. ")
     parser.add_argument("-hr","--high-resolution", dest = "hr", action = "store_true", help="Use 200-bp resolution instead of 1-kb resolution. Caution: 200-bp resolution is preparing for the future release of ChromBERT, which is not available yet.")
 
     return parser.parse_args()
@@ -31,7 +31,6 @@ def validate_args(args):
     assert os.path.exists(args.bed), f"Bed file does not exist: {args.bed}"
     assert os.path.exists(args.basedir), f"Basedir does not exist: {args.basedir}. If you use default basedir, please make sure environment initialized correctly (see readme of the repo). "
     assert args.genome in ["hg38", "mm10"], f"Genome version {args.genome} is not supported. "
-    assert args.genome == "hg38", "Only hg38 is supported now. "
     assert args.hr == False, "200-bp resolution is not supported now. "
     if args.oname is not None:
         assert isinstance(args.oname, str), f"Output file name should be string. Given: {args.oname}"
@@ -50,10 +49,18 @@ def run_cmd(cmd):
     return run
 
 def get_regions(basedir = DEFAULT_BASEDIR, genome="hg38", high_resolution = False):
-    if high_resolution:
-        oname = os.path.join(basedir, "config", f"{genome}_6k_200bp_region.bed")
+    if genome == "hg38":
+        if high_resolution:
+            oname = os.path.join(basedir, "config", f"{genome}_6k_200bp_region.bed")
+        else:
+            oname = os.path.join(basedir, "config", f"{genome}_6k_1kb_region.bed")
+    elif genome == "mm10":
+        if high_resolution:
+            oname = os.path.join(basedir, "config", f"{genome}_5k_200bp_region.bed")
+        else:
+            oname = os.path.join(basedir, "config", f"{genome}_5k_1kb_region.bed")
     else:
-        oname = os.path.join(basedir, "config", f"{genome}_6k_1kb_region.bed")
+        raise ValueError(f"Genome {genome} is not supported. ")
     return oname
 
 def get_overlap(supervised, regions, no_filter = False, center = False):

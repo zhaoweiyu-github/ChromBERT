@@ -1,5 +1,6 @@
 {
     "task":"prompt",
+    "genome":"hg38",
     "prompt_kind":"expression",
     "prompt_dim_external":512,
     "ignore": false,

@@ -34,6 +34,8 @@ class ChromBERTFTConfig:
         self.validation()
 
         tmp = self.ignore_index
+        if tmp is None :
+            tmp = (None, None)
         if tmp[0] is not None:
             if isinstance(tmp[0], np.ndarray):
                 tmp0 = tmp[0].tolist()

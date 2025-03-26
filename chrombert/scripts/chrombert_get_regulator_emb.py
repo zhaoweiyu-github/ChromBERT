@@ -27,7 +27,7 @@ def parse_args():
 
     parser.add_argument("--basedir", type=str, default = DEFAULT_BASEDIR, help="Base directory for the required files")
     
-    parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
+    parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. ")
     parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint or fine-tuned. Optial if it could infered from other arguments")
     parser.add_argument("--meta", type=str, required=False, default=None, help="Path to the meta file. Optional if it could infered from other arguments")
     parser.add_argument("--mask", type=str, required=False, default=None, help="Path to the mtx mask file. Optional if it could infered from other arguments")
@@ -42,13 +42,15 @@ def parse_args():
 
 def validate_args(args):
     assert os.path.exists(args.supervised_file), f"Supervised file does not exist: {args.supervised_file}"
+    assert args.genome in ["hg38", "mm10"], f"Genome {args.genome} is not supported. "
+    assert args.hr == False, "200-bp resolution is not supported now. "
     print(f"Extracting embeddings for {len(args.ids)} ids")
     args.ids = [i.lower().strip() for i in args.ids]
     print(f"{args.ids}")
 
 
 def get_model_config(args):
-    assert args.genome == "hg38", "Only hg38 is supported now"  
+    assert args.genome in ["hg38", "mm10"], f"Genome {args.genome} is not supported. "
     if args.ckpt is not None:
         ckpt = args.ckpt
     else:
@@ -57,7 +59,12 @@ def get_model_config(args):
             res = "200bp"
         else:
             res = "1kb"
-        ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")
+        if args.genome == "hg38":
+            ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")
+        elif args.genome == "mm10":
+            ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_5k_{res}_pretrain.ckpt")
+        else:
+            raise ValueError(f"Genome {args.genome} is not supported. ")
     parameters = {
         "genome": args.genome,
         "dropout": 0,
@@ -83,6 +90,8 @@ def get_meta_file(meta_file,basedir, genome):
     if meta_file is None:
         if genome == "hg38":
             meta_file = os.path.join(basedir, "config", f"{genome}_6k_meta.json")
+        elif genome == "mm10":
+            meta_file = os.path.join(basedir, "config", f"{genome}_5k_meta.json")
         else:
             raise ValueError(f"Genome {genome} is not supported now")
     return meta_file
@@ -97,7 +106,12 @@ def get_dataset_config(args):
         hdf5_file = args.hdf5_file
     else:
         assert os.path.exists(args.basedir), f"Basedir does not exist: {args.basedir}. If you use default basedir, please make sure environment initialized correctly (see readme of the repo). "
-        hdf5_file = os.path.join(args.basedir, f"{args.genome}_6k_{res}.hdf5")
+        if args.genome == "hg38":
+            hdf5_file = os.path.join(args.basedir, f"{args.genome}_6k_{res}.hdf5")
+        elif args.genome == "mm10":
+            hdf5_file = os.path.join(args.basedir, f"{args.genome}_5k_{res}.hdf5")
+        else:
+            raise ValueError(f"Genome {args.genome} is not supported. ")
 
     dataset_config = DatasetConfig(
         kind = "GeneralDataset", 

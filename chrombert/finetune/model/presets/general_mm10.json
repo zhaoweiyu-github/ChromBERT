@@ -1,0 +1,7 @@
+{
+    "task":"general",
+    "genome":"mm10",
+    "mtx_mask":"config/mm10_5k_mask_matrix.tsv",
+    "ignore": false,
+    "pretrain_ckpt":"checkpoint/mm10_5k_1kb_pretrain.ckpt"
+}

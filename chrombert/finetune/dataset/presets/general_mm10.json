@@ -1,0 +1,7 @@
+{
+    "kind":"GeneralDataset",
+    "hdf5_file":"mm10_5k_1kb.hdf5",
+    "meta_file":"config/mm10_5k_meta.json",
+    "ignore": false,
+    "perturbation": false
+}

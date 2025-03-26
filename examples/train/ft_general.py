@@ -41,7 +41,7 @@ def get_args():
 
     # model arguments
     parser.add_argument("--basedir", type=str, default=os.path.expanduser("~/.cache/chrombert/data"), help="Path to the base directory. ")
-    parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. only hg38 is supported now.")
+    parser.add_argument("-g", "--genome", type=str, default = "hg38", help="genome version. For example, hg38 or mm10. ")
 
     parser.add_argument("-k", "--ckpt", type=str, required=False, default=None, help="Path to the pretrain checkpoint. Optial if it could infered from other arguments")
     parser.add_argument("--mask", type=str, required=False, default=None, help="Path to the mtx mask file. Optional if it could infered from other arguments")
@@ -73,10 +73,23 @@ def get_datamodule(args):
         hdf5_file = args.hdf5_file
     else:
         assert os.path.exists(args.basedir), f"Basedir does not exist: {args.basedir}. If you use default basedir, please make sure environment initialized correctly (see readme of the repo). "
-        hdf5_file = os.path.join(args.basedir, f"{args.genome}_6k_{res}.hdf5")
+        if args.genome == "hg38":
+            hdf5_file = os.path.join(args.basedir, f"{args.genome}_6k_{res}.hdf5")
+        elif args.genome == "mm10":
+            hdf5_file = os.path.join(args.basedir, f"{args.genome}_5k_{res}.hdf5")
+        else:
+            raise ValueError(f"Genome {args.genome} is not supported. ")
+
+    if args.genome == "hg38":
+        meta_file = os.path.join(args.basedir, "config", f"{args.genome}_6k_meta.json")
+    elif args.genome == "mm10":
+        meta_file = os.path.join(args.basedir, "config", f"{args.genome}_5k_meta.json")
+    else:
+        raise ValueError(f"Genome {args.genome} is not supported. ")
 
     params = {
         "hdf5_file": hdf5_file,
+        "meta_file": meta_file,
         "batch_size": args.batch_size,
         "num_workers": args.num_workers,
         "ignore": args.ignore,
@@ -102,7 +115,6 @@ def get_datamodule(args):
     return data_module, ignore_index
 
 def get_model_config(args, ignore_index=None):
-    assert args.genome == "hg38", "Only hg38 is supported now"  
     if args.ckpt is not None:
         ckpt = args.ckpt
     else:
@@ -111,7 +123,12 @@ def get_model_config(args, ignore_index=None):
             res = "200bp"
         else:
             res = "1kb"
-        ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")
+        if args.genome == "hg38":
+            ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_6k_{res}_pretrain.ckpt")
+        elif args.genome == "mm10":
+            ckpt = os.path.join(args.basedir, "checkpoint", f"{args.genome}_5k_{res}_pretrain.ckpt")
+        else:
+            raise ValueError(f"Genome {args.genome} is not supported. ")
     parameters = {
         "genome": args.genome,
         "dropout": args.dropout,
@@ -127,6 +144,13 @@ def get_model_config(args, ignore_index=None):
 
     if args.mask is not None:
         parameters["mtx_mask"] = args.mask
+    else:
+        if args.genome == "hg38":
+            parameters["mtx_mask"] = os.path.join(args.basedir, "config", f"{args.genome}_6k_mask_matrix.tsv")
+        elif args.genome == "mm10":
+            parameters["mtx_mask"] = os.path.join(args.basedir, "config", f"{args.genome}_5k_mask_matrix.tsv")
+        else:
+            raise ValueError(f"Genome {args.genome} is not supported. ")
 
     config = chrombert.get_preset_model_config(
         basedir = args.basedir,

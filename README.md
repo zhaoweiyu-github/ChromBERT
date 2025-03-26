@@ -57,10 +57,11 @@ For detailed information on usage, please checkout the documentations and tutori
 
 ## Pre-trained Model Zoo
 
-ChromBERT has been initially trained on the human Cistrome-Human-6K dataset at 1-kb resolution. Plans for further training on the mouse Cistrome-Mouse-5K dataset at the same resolution are underway. Currently available pre-trained models include:
+ChromBERT has been initially trained on the human Cistrome-Human-6K dataset at 1-kb resolution. Currently available pre-trained models include:
 | Model Name                | Description                                              | Download Link                                                                                     |
 | :------------------------ | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
 | Human-6K-1kb | Pre-trained on Cistrome-Human-6K dataset at 1-kb resolution | [Download](https://huggingface.co/datasets/TongjiZhanglab/chrombert) |
+| Mouse-5K-1kb | Pre-trained on Cistrome-Mouse-5K dataset at 1-kb resolution | [Download](https://huggingface.co/datasets/TongjiZhanglab/chrombert) |
 
 Note: Models can also be downloaded via the `chrombert_prepare_env` command, as outlined in the installation section.
 
