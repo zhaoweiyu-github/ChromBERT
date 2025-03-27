@@ -1,0 +1,11 @@
+{
+    "task":"gep",
+    "genome":"mm10",
+    "mtx_mask":"config/mm10_5k_mask_matrix.tsv",
+    "ignore": false,
+    "pretrain_ckpt":"checkpoint/mm10_5k_1kb_pretrain.ckpt",
+    "gep_flank_window":4,
+    "gep_parallel_embedding":false,
+    "gep_gradient_checkpoint":false,
+    "gep_zero_inflation":false
+}
