@@ -1,0 +1,10 @@
+{
+    "task":"prompt",
+    "genome":"mm10",
+    "prompt_kind":"cistrome",
+    "prompt_dim_external":768,
+    "ignore": false,
+    "pretrain_ckpt":"checkpoint/mm10_5k_1kb_pretrain.ckpt",
+    "finetune_ckpt":"checkpoint/mm10_5k_1kb_prompt_cistrome.ckpt"
+
+}
