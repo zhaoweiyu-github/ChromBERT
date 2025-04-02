@@ -8,7 +8,7 @@
 ![ChromBERT Framework](docs/_static/ChromBERT_framework.png "Framework")
 
 ## Installation
-For direct usage, it is recommended to utilize the [Singularity image](#installation-from-singularity). For development purposes, installing from source is advised.
+For direct usage, it is recommended to utilize the [Singularity image](#installation-using-singularity). For development purposes, installing from [source](#installation-from-source) is advised.
 
 ### Installation from source
 
