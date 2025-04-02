@@ -8,7 +8,12 @@
 ![ChromBERT Framework](docs/_static/ChromBERT_framework.png "Framework")
 
 ## Installation
+For direct usage, it is recommended to utilize the [Singularity image](#installation-from-singularity). For development purposes, installing from source is advised.
+
+### Installation from source
+
 ChromBERT is compatible with Python versions 3.8 or higher and requires PyTorch 2.0 or above, along with FlashAttention-2. These dependencies must be installed prior to ChromBERT.
+
 
 #### Installing PyTorch 
 Follow the detailed instructions on [PyTorch’s official site](https://pytorch.org/get-started/locally/) to install PyTorch according to your device and CUDA version specifications.
@@ -44,10 +49,43 @@ chrombert_prepare_env --hf-endpoint <Hugging Face endpoint>
 ```
 
 #### Verifying Installation
+
 To verify installation, execute the following command:
 ```python
 import chrombert
 ```
+
+### Installation Using Singularity
+
+We provide a pre-built Singularity image available [here](https://drive.google.com/file/d/1ePmDK6DANSq-zkRgVBTxSBnKBZk-cEzM/view?usp=sharing).
+
+After installing `Singularity` (or `Apptainer`) and downloading the image (`chrombert.sif`), you can use the built-in `python` environment with:
+
+```bash
+singularity exec --nv chrombert.sif python -c "import chrombert; print('hello chrombert!')"
+```
+
+You can execute other built-in commands through the image as well. For example, to download the required pre-trained models and annotation files from Hugging Face to `~/.cache/chrombert/data`, run:
+
+> **Note:** You must execute this command to prepare the environment, as the image does not include checkpoints and additional data by default to minimize size.
+
+```bash
+singularity exec --nv chrombert.sif chrombert_prepare_env
+```
+
+To run your own Python scripts, use:
+
+```bash
+singularity exec --nv chrombert.sif python <your_script.py>
+```
+
+The image also includes a built-in Jupyter kernel for interactive script development via `jupyter notebook` or editors like `VSCode`:
+
+```bash
+singularity exec --nv chrombert.sif jupyter notebook [other parameters]
+```
+
+By default, Singularity mounts your home directory inside the container. If you need to mount additional directories, use the `--bind` parameter. Refer to the [Singularity documentation](https://docs.sylabs.io/guides/3.0/user-guide/bind_paths_and_mounts.html) for more details.
 
 
 ## Usage
