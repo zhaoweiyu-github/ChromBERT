@@ -109,4 +109,13 @@ Explore detailed examples of how to fine-tune ChromBERT for downstream tasks suc
 
 ## Citing ChromBERT
 
-Our work is ongoing and contributions are continually being made.
+```bibtex
+@article {Yu2025.03.29.646077,
+	author = {Yu, Zhaowei and Yang, Dongxu and Chen, Qianqian and Zhang, Yuxuan and Li, Zhanhao and Wang, Yucheng and Wang, Chenfei and Zhang, Yong},
+	title = {Learning interpretable representation for context-specific transcription regulatory networks using a foundation model},
+	year = {2025},
+	doi = {10.1101/2025.03.29.646077},
+	publisher = {Cold Spring Harbor Laboratory},
+	journal = {bioRxiv}
+}
+```
