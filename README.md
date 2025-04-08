@@ -38,6 +38,9 @@ cd ChromBERT
 pip install .
 ```
 
+Installation typically takes less than five minutes.
+
+
 Then download required pre-trained model and annotation data files from Hugging Face to ~/.cache/chrombert/data.
 ```shell
 chrombert_prepare_env
