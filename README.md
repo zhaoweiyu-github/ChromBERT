@@ -10,7 +10,7 @@
 ## Installation
 For direct usage, it is recommended to utilize the [Singularity image](#installation-using-singularity). For development purposes, installing from [source](#installation-from-source) is advised.
 
-### Installation from source
+### Installation From Source
 
 ChromBERT is compatible with Python versions 3.8 or higher and requires PyTorch 2.0 or above, along with FlashAttention-2. These dependencies must be installed prior to ChromBERT.
 
