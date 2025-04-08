@@ -7,8 +7,8 @@ project = 'ChromBERT'
 copyright = '2024, Zhang Lab'
 author = 'Zhaowei Yu, Dongxu Yang, Qianqian Chen, Yuxuan Zhang'
 
-release = '1.0.0'
-version = '1.0.0'
+release = '1.1.0'
+version = '1..0'
 
 # -- General configuration
 
