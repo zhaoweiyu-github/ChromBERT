@@ -74,7 +74,7 @@ After installing ``Singularity`` (or ``Apptainer``) and downloading the image (`
 
 .. code-block:: bash
 
-    singularity exec --nv chrombert.sif python -c "import chrombert; print('hello chrombert!')"
+    singularity exec --nv chrombert.sif python -c "import chrombert; print('hello chrombert')"
 
 
 You can execute other built-in commands through the image as well. For example, to download the required pre-trained models and annotation files from Hugging Face to `~/.cache/chrombert/data`, run:

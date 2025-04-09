@@ -65,7 +65,7 @@ We provide a pre-built Singularity image available [here](https://drive.google.c
 After installing `Singularity` (or `Apptainer`) and downloading the image (`chrombert.sif`), you can use the built-in `python` environment with:
 
 ```bash
-singularity exec --nv chrombert.sif python -c "import chrombert; print('hello chrombert!')"
+singularity exec --nv chrombert.sif python -c "import chrombert; print('hello chrombert')"
 ```
 
 You can execute other built-in commands through the image as well. For example, to download the required pre-trained models and annotation files from Hugging Face to `~/.cache/chrombert/data`, run:
