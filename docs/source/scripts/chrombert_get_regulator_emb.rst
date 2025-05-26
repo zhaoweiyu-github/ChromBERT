@@ -5,7 +5,7 @@ Extract regulator embeddings from ChromBERT.
 
 .. code-block:: shell
 
-    chrombert_extract_regulator_embeddings [OPTIONS] SUPERVISED_FILE IDS... -o ONAME 
+    chrombert_get_regulator_emb [OPTIONS] SUPERVISED_FILE IDS... -o ONAME 
 
 .. rubric:: Options 
 
