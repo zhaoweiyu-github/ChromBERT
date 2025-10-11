@@ -106,6 +106,16 @@ ChromBERT has been initially trained on the human Cistrome-Human-6K dataset at 1
 
 Note: Models can also be downloaded via the `chrombert_prepare_env` command, as outlined in the installation section.
 
+
+We also provide ChromBERT checkpoints trained at other resolutions in the [repository](https://huggingface.co/datasets/TongjiZhanglab/chrombert), distinguished by prefix. These versions have not been thoroughly tested but should work in principle.
+| Model Name                | Description                                              | prefix  |
+| :------------------------ | :------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| Human-6K-200bp | Pre-trained on Cistrome-Human-6K dataset at 200-bp resolution | hg38_6k_200bp |
+| Human-6K-2kb | Pre-trained on Cistrome-Human-6K dataset at 2-kb resolution | hg38_6k_2kb  |
+| Human-6K-4kb | Pre-trained on Cistrome-Human-6K dataset at 4-kb resolution | hg38_6k_4kb  |
+
+Note: Currently, the `chrombert_prepare_env` command only prepares the recommended 1-kb resolution. For other resolutions, please download the dependencies (`prefix.hdf5.gz`, `prefix_pretrain.ckpt`, `prefix_region.bed`) manually and decompress using `gzip -d prefix.hdf5.gz`.
+
 ## Fine-tuning ChromBERT for downstream tasks
 
 Explore detailed examples of how to fine-tune ChromBERT for downstream tasks such as prompt-enhanced fine-tuning for generative prediction, and analyses focused on locus specificities and cellular dynamics of TRNs, by visiting our examples page at [chrombert.readthedocs.io](https://chrombert.readthedocs.io/en/latest/).
