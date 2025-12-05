@@ -1,4 +1,4 @@
-# Learning interpretable representation for context-specific transcription regulatory networks using a foundation model 
+# ChromBERT: A foundation model for learning interpretable representations for context-specific transcriptional regulatory networks 
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen)](https://chrombert.readthedocs.io/en/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-brightgreen.svg)](https://chrombert.readthedocs.io/en/)
