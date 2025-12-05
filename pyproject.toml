@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "chrombert"
-version = "1.1.0"
+version = "1.1.1"
 description = "ChromBERT: A pre-trained foundation model for context-specific transcription regulatory network"
 authors = [
     {name = "Zhaowei Yu", email = "zhaoweiyu@tongji.edu.cn"},
