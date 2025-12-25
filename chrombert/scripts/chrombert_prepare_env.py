@@ -27,10 +27,13 @@ class FileManager:
 class HuggingFaceDownloader:
     @staticmethod
     def download(ifile, odir, hf_endpoint="https://huggingface.co"):
-        # huggingface_cli_path = os.path.join(os.path.dirname(sys.executable), "hf")
+        # Try to find 'hf' command first, then fall back to 'huggingface-cli'
         huggingface_cli_path = shutil.which("hf")
         if huggingface_cli_path is None:
-            raise FileNotFoundError("The 'hf' command was not found in the system PATH.")
+            huggingface_cli_path = shutil.which("huggingface-cli")
+        
+        if huggingface_cli_path is None:
+            raise FileNotFoundError("Neither 'hf' nor 'huggingface-cli' command was found in the system PATH.")
         
         cmd = [
             huggingface_cli_path,
@@ -43,6 +46,7 @@ class HuggingFaceDownloader:
             ifile
         ]
         # cmd = f"hf download --repo-type dataset --local-dir {odir} TongjiZhanglab/chrombert {ifile}"
+        # cmd = f"huggingface-cli download --repo-type dataset --local-dir {odir} TongjiZhanglab/chrombert {ifile}"
         result = subprocess.run(cmd, env={"HF_ENDPOINT": hf_endpoint})
         if result.returncode != 0:
             print(f"Error downloading {ifile}")
