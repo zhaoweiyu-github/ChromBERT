@@ -1,4 +1,6 @@
 # ChromBERT: A foundation model for learning interpretable representations for context-specific transcriptional regulatory networks 
+[ChromBERT-tools](https://github.com/TongjiZhanglab/ChromBERT-tools) is a lightweight GitHub toolkit that exposes core ChromBERT functionality through easy-to-use command-line tools (CLI). **ChromBERT-tools v1.0 will be released on December 26, 2025**
+
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen)](https://chrombert.readthedocs.io/en/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-brightgreen.svg)](https://chrombert.readthedocs.io/en/)
@@ -133,3 +135,6 @@ Explore detailed examples of how to fine-tune ChromBERT for downstream tasks suc
 	journal = {bioRxiv}
 }
 ```
+
+## Contact us
+If you have any questions or suggestions, please feel free to contact us at [zhaoweiyu@tongji.edu.cn](mailto:zhaoweiyu@tongji.edu.cn).
