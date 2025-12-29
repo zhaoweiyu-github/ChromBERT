@@ -1,5 +1,4 @@
 # ChromBERT: A foundation model for learning interpretable representations for context-specific transcriptional regulatory networks 
-[ChromBERT-tools](https://github.com/TongjiZhanglab/ChromBERT-tools) is a lightweight GitHub toolkit that exposes core ChromBERT functionality through easy-to-use command-line tools (CLI). **ChromBERT-tools v1.0 will be released on December 26, 2025**
 
 [![Documentation](https://img.shields.io/badge/docs-available-brightgreen)](https://chrombert.readthedocs.io/en/)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -7,6 +6,8 @@
 [![DOI](https://zenodo.org/badge/767976655.svg)](https://doi.org/10.5281/zenodo.17824395)
 
 **ChromBERT** is a pre-trained deep learning model designed to capture the genome-wide co-association patterns of approximately one thousand transcription regulators, thereby enabling accurate representations of context-specific transcriptional regulatory networks (TRNs). As a foundational model, ChromBERT can be fine-tuned to adapt to various biological contexts through transfer learning. This significantly enhances our understanding of transcription regulation and offers a powerful tool for a broad range of research and clinical applications in different biological settings.
+
+[ChromBERT-tools](https://github.com/TongjiZhanglab/ChromBERT-tools) is a lightweight GitHub toolkit that exposes core ChromBERT functionality through easy-to-use command-line tools (CLI). **ChromBERT-tools v1.0 will be released on December 26, 2025**
 
 ![ChromBERT Framework](docs/_static/ChromBERT_framework.png "Framework")
 
